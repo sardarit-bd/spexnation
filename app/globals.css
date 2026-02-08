@@ -1,0 +1,68 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+
+:root {
+  --primary: #9d6d09;
+  --secondary: #cfaf6a;
+  --accent: #e67e22;
+  --background: #f5f5f5;
+  --text-primary: #333333;
+  --text-secondary: #777777;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+
+.heroBG {
+  background: linear-gradient(to left, rgba(0, 0, 0, 0.294), rgba(0, 0, 0, 0.705)), url("../public/hero.avif");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.pBg {
+  background: var(--primary);
+}
+
+.pCl {
+  color: var(--primary) !important;
+}
+
+.sBg {
+  background: var(--secondary);
+}
+
+.sCl {
+  color: var(--secondary) !important;
+}
+
+.forMan {
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.482), rgba(0, 0, 0, 0)), url("../public/forman.webp");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+}
+
+.forwoman {
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.482), rgba(0, 0, 0, 0)), url("../public/forwoman.webp");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  /* border-radius: 5px; */
+
+}
