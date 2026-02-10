@@ -1,11 +1,11 @@
-import AfterViewing from '@/components/AfterViewing'
-import BrandStory from '@/components/BrandStory'
-import ProductBreadcrumb from '@/components/ProductBreadcrumb'
-import ProductDetails from '@/components/ProductDetails'
-import ProductGallery from '@/components/ProductGallery'
-import ProductTabs from '@/components/ProductTabs'
-import SimilarProducts from '@/components/SimilarProducts'
+import AfterViewing from '../../../components/AfterViewing'
+import BrandStory from '../../../components/BrandStory'
 import Container from '../../../components/Container'
+import ProductBreadcrumb from '../../../components/ProductBreadcrumb'
+import ProductDetails from '../../../components/ProductDetails'
+import ProductGallery from '../../../components/ProductGallery'
+import ProductTabs from '../../../components/ProductTabs'
+import SimilarProducts from '../../../components/SimilarProducts'
 
 export default function ProductPage() {
   return (
