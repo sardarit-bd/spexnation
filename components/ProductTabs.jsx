@@ -12,7 +12,7 @@ export default function ProductTabs() {
   ]
 
   return (
-    <div className="space-y-8 mt-12">
+    <div className="space-y-8 mt-12 bg-white p-4 border border-gray-200">
       {/* Tab Navigation */}
       <div className="border-b border-gray-200">
         <div className="flex gap-8">
@@ -20,11 +20,10 @@ export default function ProductTabs() {
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`py-4 px-2 font-semibold text-sm md:text-base transition relative ${
-                activeTab === tab.id
-                  ? 'text-gray-900'
-                  : 'text-gray-600 hover:text-gray-900'
-              }`}
+              className={`py-4 px-2 font-semibold text-sm md:text-base transition relative ${activeTab === tab.id
+                ? 'text-gray-900'
+                : 'text-gray-600 hover:text-gray-900'
+                }`}
             >
               {tab.label}
               {activeTab === tab.id && (

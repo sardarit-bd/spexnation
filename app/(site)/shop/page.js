@@ -3,6 +3,13 @@ import Container from "@/components//Container";
 import ProductBreadcrumb from "../../../components/ProductBreadcrumb";
 import ProductCard from "../../../components/ProductCard";
 
+
+const breadcrumbs = [
+    { label: 'Home', href: '/' },
+    { label: 'Shop', href: '/shop' },
+]
+
+
 export default function ProductPage() {
 
 
@@ -93,15 +100,15 @@ export default function ProductPage() {
 
 
     return (
-        <main className="min-h-screen bg-white">
+        <main className="min-h-screen bg-gray-100">
 
             <Container>
 
-                <ProductBreadcrumb />
+                <ProductBreadcrumb breadcrumbs={breadcrumbs} />
 
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-                    {glasses.map((item) => (
-                        <div key={item.id} className="text-center">
+                    {glasses.map((item, index) => (
+                        <div key={index} className="text-center">
                             <ProductCard />
                         </div>
                     ))}

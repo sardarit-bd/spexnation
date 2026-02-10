@@ -32,9 +32,6 @@ export default function Header() {
               <Link href="/shop" className="text-gray-600 hover:text-yellow-700 text-lg font-semibold">
                 Shop
               </Link>
-              <Link href="/basket" className="text-gray-600 hover:text-yellow-700 text-lg font-semibold">
-                Our Basket
-              </Link>
               <Link href="/contact" className="text-gray-600 hover:text-yellow-700 text-lg font-semibold">
                 Contact Us
               </Link>
@@ -42,9 +39,9 @@ export default function Header() {
 
             {/* Icons */}
             <div className="flex items-center gap-4">
-              <button className="text-gray-600 hover:text-yellow-700">
+              <Link href="/basket" className="text-gray-600 hover:text-yellow-700">
                 <ShoppingBag size={26} />
-              </button>
+              </Link>
               <button className="hidden sm:block text-gray-600 hover:text-yellow-700">
                 <User size={26} />
               </button>

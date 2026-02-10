@@ -27,16 +27,18 @@ const glasses = [
 
 export default function PopularGlasses() {
   return (
-    <section className="max-w-7xl mx-auto px-4 py-16">
-      <h2 className="text-3xl font-bold text-center mb-12 text-gray-900">Best-Selling Frames</h2>
+    <section className="bg-gray-100">
+      <section className="max-w-7xl mx-auto px-4 py-16">
+        <h2 className="text-3xl font-bold text-center mb-12 text-gray-900">Best-Selling Frames</h2>
 
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-        {glasses.map((item) => (
-          <div key={item.id} className="text-center">
-            <ProductCard />
-          </div>
-        ))}
-      </div>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+          {glasses.map((item) => (
+            <div key={item.id} className="text-center">
+              <ProductCard />
+            </div>
+          ))}
+        </div>
+      </section>
     </section>
   )
 }

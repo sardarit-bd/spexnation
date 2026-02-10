@@ -37,7 +37,7 @@ export default function ProductCard() {
             </div>
 
             {/* Content */}
-            <div className="p-6 border-t border-gray-200">
+            <div className="p-4 border-t border-gray-200 bg-yellow-200/10">
                 {/* Rating */}
                 <div className="flex items-center gap-2 mb-3">
                     <div className="flex items-center gap-1">
@@ -57,7 +57,7 @@ export default function ProductCard() {
                 </div>
 
                 {/* Product Name */}
-                <h3 className="text-left text-xl font-bold text-gray-900 mb-2 line-clamp-2 hover:text-purple-600 transition-colors cursor-pointer">
+                <h3 className="text-left text-xl font-bold text-gray-900/80 mb-2 line-clamp-2 transition-colors cursor-pointer">
                     {product.name}
                 </h3>
 

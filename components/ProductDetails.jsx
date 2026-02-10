@@ -3,12 +3,16 @@
 import { motion } from 'framer-motion'
 import { Star } from 'lucide-react'
 import { useState } from 'react'
+import Loading from "../components/Loading"
+import useLenseStore from '../store/useLenseStore'
 import useStepStore from '../store/useStepStore'
 
 export default function ProductDetails() {
   const [selectedColor, setSelectedColor] = useState('black')
   const [isWishlisted, setIsWishlisted] = useState(false)
   const { step, setStep } = useStepStore();
+  const { lens, setLens } = useLenseStore();
+  const [isLoading, setisLoading] = useState(false);
 
   const colors = [
     { name: 'Black', value: 'black', hex: '#000000' },
@@ -21,12 +25,20 @@ export default function ProductDetails() {
   // handle wishlist
   const hanldleSelete = (e) => {
     e.preventDefault();
+    setisLoading(true);
 
-    setStep(1);
+    setLens({ ...lens, LenseName: "Elegance TF2249" })
+
+    setTimeout(() => {
+      setisLoading(false);
+      setStep(1);
+    }, 700);
   }
 
 
 
+
+  console.log(lens);
 
 
 
@@ -37,11 +49,11 @@ export default function ProductDetails() {
       initial={{ opacity: 0, x: -50 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{
-        duration: 1,
+        duration: .7,
         delay: 0,
         ease: "easeOut"
       }}
-      className="space-y-6 border border-gray-200 p-4 h-full">
+      className="space-y-6 bg-white border border-gray-200 p-4 h-full">
       {/* Product Title */}
       <div>
         <p className="text-yellow-600 font-bold text-sm mb-1">LUXURY COLLECTION</p>
@@ -101,7 +113,9 @@ export default function ProductDetails() {
       {/* Action Buttons */}
       <div className="space-y-3">
         <button type="button" onClick={(e) => { hanldleSelete(e) }} className="w-full pBg text-white font-bold py-4 rounded-lg transition flex items-center justify-center gap-2">
-          SELECT LENSES
+          {
+            isLoading ? <Loading /> : "SELECT LENSES"
+          }
         </button>
       </div>
 

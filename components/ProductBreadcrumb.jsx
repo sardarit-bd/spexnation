@@ -1,12 +1,8 @@
 import { ChevronRight } from 'lucide-react'
 
-export default function ProductBreadcrumb() {
-  const breadcrumbs = [
-    { label: 'Home', href: '#' },
-    { label: 'Frames', href: '#' },
-    { label: 'Elegance & Co', href: '#' },
-    { label: 'TF2249', href: '#' },
-  ]
+export default function ProductBreadcrumb({ breadcrumbs }) {
+
+
 
   return (
     <nav className="flex items-center gap-2 text-sm text-gray-600 py-4">

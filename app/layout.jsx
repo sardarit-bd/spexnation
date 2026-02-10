@@ -1,25 +1,21 @@
-import { Geist, Geist_Mono } from 'next/font/google'
-
+import { Arimo } from 'next/font/google'
 import './globals.css'
 
-const _geist = Geist({ subsets: ['latin'] })
-const _geistMono = Geist_Mono({ subsets: ['latin'] })
+const arimo = Arimo({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-arimo', // optional but recommended
+})
 
 export const metadata = {
   title: 'Glasses Direct - Designer Frames & Prescription Glasses Online',
   description: 'Shop affordable designer glasses, sunglasses and prescription frames online. Free home trial, next day delivery and expert advice.',
-  // viewport: {
-  //   width: 'device-width',
-  //   initialScale: 1,
-  //   maximumScale: 5,
-  //   userScalable: true,
-  // },
 }
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className="font-sans antialiased">{children}</body>
+      <body className={`${arimo.className} antialiased`}>{children}</body>
     </html>
   )
 }

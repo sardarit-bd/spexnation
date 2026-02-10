@@ -2,8 +2,6 @@
 
 import { motion } from "framer-motion";
 import { useState } from "react";
-import toast, { Toaster } from "react-hot-toast";
-import useLenseStore from "../../store/useLenseStore";
 import useStepStore from "../../store/useStepStore";
 import Loading from "../Loading";
 import BackBtn from "./BackBtn";
@@ -11,57 +9,51 @@ import CircularProgress from "./CircularProgress";
 
 const options = [
     {
-        id: "distance",
-        title: "Distance",
-        description:
-            "You mostly need glasses to see things in the distance, e.g. whilst driving.",
+        id: "no-transition",
+        title: "No Transition",
+        description: "",
+        price: "£00",
     },
     {
-        id: "reading",
-        title: "Reading",
+        id: "transitions",
+        title: "Transitions",
         description:
-            "You mostly need glasses to see things up close, e.g. papers, documents, etc.",
+            "ODAK Clean&CleAR 1.6 lens with anti-reflective, scratch-resistant, water repellent coating, extra durability, Anti-UV, and greater contrast.",
+        price: "£69",
     },
     {
-        id: "computerorintermediate",
-        title: "Computer or Intermediate",
+        id: "transitionxtraactive",
+        title: "Transition Xtra Active",
         description:
-            "You need glasses to see things up close and in the distance.",
+            "ODAK Clean&CleAR 1.6 lens with anti-reflective, scratch-resistant, water repellent coating, extra durability, Anti-UV, and greater contrast.",
+        price: "£99",
+    },
+    {
+        id: "standard photocromic",
+        title: "Standard Photocromic",
+        description: "ODAK Clean&CleAR 1.6 lens with anti-reflective, scratch-resistant, water repellent coating, extra durability, Anti-UV, and greater contrast.",
+        price: "£49",
     }
 ];
 
 
-export default function VisionType() {
+export default function Transition() {
 
-
-    const { lens, setLens } = useLenseStore();
+    const [selected, setSelected] = useState(null);
     const { step, setStep } = useStepStore();
     const [isLoading, setisLoading] = useState(false);
 
 
 
 
-
-
     //handle next function is here
     const handleNext = () => {
-
-
-        if (lens?.LenseUseCase) {
-            setisLoading(true);
-            setTimeout(() => {
-                setisLoading(false);
-                setStep(2);
-            }, 700);
-        } else {
-            toast.error("Please select an option");
-            return;
-        }
-
-
+        setisLoading(true);
+        setTimeout(() => {
+            setisLoading(false);
+            setStep(6);
+        }, 700);
     }
-
-
 
 
 
@@ -78,34 +70,42 @@ export default function VisionType() {
             {/* Header */}
             <div className="flex items-center justify-between">
                 <BackBtn step={step} setStep={setStep} />
-                <CircularProgress initialValue={15} />
+                <CircularProgress initialValue={80} />
             </div>
 
-            <h2 className="text-2xl font-semibold mb-4">How will you use these glasses?</h2>
+            <h2 className="text-2xl font-semibold mb-4">Transition and Final Touches</h2>
+
+            <p className="pb-6 font-medium text-lg text-gray-600/70">
+                Add photochromic technology to your lenses for enhanced clarity and contrast.
+            </p>
 
             {/* Options */}
             <div className="space-y-4">
                 {options.map((opt, index) => (
                     <button
                         key={opt.id}
-                        onClick={(e) => { setLens({ ...lens, LenseUseCase: opt?.id }) }}
+                        onClick={() => setSelected(opt.id)}
                         className={`w-full bg-gray-100 text-left p-4 rounded-md border transition-all
-              ${lens?.LenseUseCase === opt.id
+              ${selected === opt.id
                                 ? "border-yellow-500 bg-yellow-50"
                                 : "border-gray-200 hover:border-yellow-500/80"
                             }`}
                     >
-                        <h3 className="text-lg font-semibold text-gray-900/90">{opt.title}</h3>
-                        <p className="text-md text-gray-600 mt-1">{opt.description}</p>
+                        <div className="flex items-center justify-between">
+                            <h3 className="font-semibold text-gray-900">{opt.title}</h3>
+                            <h2 className="text-xl font-bold">{opt.price}</h2>
+                        </div>
+                        <p className="text-sm text-gray-600 mt-1">{opt.description}</p>
                     </button>
                 ))}
             </div>
 
+
             {/* Footer */}
             <div className="mt-8 flex items-center justify-between border-t pt-4">
                 <p
-                    className="text-md font-semibold text-gray-900">SUBTOTAL:</p>
-                <span className="text-md font-semibold">
+                    className="text-lg font-semibold text-gray-900/90">SUBTOTAL:</p>
+                <span className="text-md text-gray-600 mt-1">
                     £124
                 </span>
             </div>
@@ -121,7 +121,8 @@ export default function VisionType() {
                     }
                 </button>
             </div>
-            <Toaster position="bottom-center" />
+
+
         </motion.div>
     );
 }

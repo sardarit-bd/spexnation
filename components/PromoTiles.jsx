@@ -1,6 +1,7 @@
 'use client'
 
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight } from 'lucide-react';
+import Link from "next/link";
 
 export default function PromoTiles() {
   return (
@@ -14,9 +15,9 @@ export default function PromoTiles() {
                 For<span className="ml-2">Men</span>
               </h3>
               <p className="text-sm md:text-base mb-4">CRYSTAL CLARITY & UV PROTECTION</p>
-              <button className="pBg text-white px-4 py-2 rounded font-bold text-sm hover:bg-yellow-600 transition flex items-center gap-2 w-fit">
+              <Link href={'/shop'} className="pBg text-white px-4 py-2 rounded font-bold text-sm hover:bg-yellow-600 transition flex items-center gap-2 w-fit">
                 SHOP NOW <ArrowRight size={16} />
-              </button>
+              </Link>
             </div>
           </div>
         </div>
@@ -29,9 +30,9 @@ export default function PromoTiles() {
                 For<span className="ml-2">women</span>
               </h3>
               <p className="text-sm md:text-base mb-4">CRYSTAL CLARITY & UV PROTECTION</p>
-              <button className="pBg text-white px-4 py-2 rounded font-bold text-sm hover:bg-yellow-600 transition flex items-center gap-2 w-fit">
+              <Link href={'/shop'} className="pBg text-white px-4 py-2 rounded font-bold text-sm hover:bg-yellow-600 transition flex items-center gap-2 w-fit">
                 SHOP NOW <ArrowRight size={16} />
-              </button>
+              </Link>
             </div>
           </div>
         </div>
