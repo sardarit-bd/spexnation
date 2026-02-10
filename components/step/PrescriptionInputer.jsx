@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
+import { toast, Toaster } from "react-hot-toast";
 import ADDNumberOPtions from "../../Data/ADDNumberOPtions";
 import AxisNumberOPtion from "../../Data/AxisNumberOPtion";
 import CyLNumberOPtions from "../../Data/CyLNumberOPtions";
@@ -18,22 +19,25 @@ export default function EnterPrescription() {
 
     const { step, setStep } = useStepStore();
     const { lens, setLens } = useLenseStore();
+    const [confirm, setconfirm] = useState(false);
     const [isLoading, setisLoading] = useState(false);
-    const [pdt, setpdt] = useState('spd');
+
 
 
     //handle next function is here
     const handleNext = () => {
-        setisLoading(true);
-        setTimeout(() => {
-            setisLoading(false);
-            setStep(3);
-        }, 700);
+
+        if (confirm) {
+            setisLoading(true);
+            setTimeout(() => {
+                setisLoading(false);
+                setStep(3);
+            }, 700);
+        } else {
+            toast.error("Please select all option and Confirm");
+            return;
+        }
     }
-
-
-
-
 
 
 
@@ -224,8 +228,8 @@ export default function EnterPrescription() {
                 </div>
                 <div className="flex items-center gap-6">
                     <div className="flex flex-col items-start gap-1 mt-5">
-                        <h2 className="font-semibold text-sm text-gray-600">{pdt === 'spd' ? `Single PD (MM)` : `Right PD (MM)`} </h2>
-                        <td className="">
+                        <h2 className="font-semibold text-sm text-gray-600">{lens?.pdType === 'spd' ? `Single PD (MM)` : `Right PD (MM)`} </h2>
+                        <div>
                             <select
                                 // value={field}
                                 className="border p-2 rounded-md focus:outline-yellow-500/60"
@@ -234,12 +238,12 @@ export default function EnterPrescription() {
                                     <option className="text-md text-gray-600 font-medium" key={n} value={n}>{n}</option>
                                 ))}
                             </select>
-                        </td>
+                        </div>
                     </div>
 
 
                     {
-                        pdt === 'dpd' && (
+                        lens?.pdType === 'dpd' && (
                             <div className="flex flex-col items-start gap-1 mt-5">
                                 <h2 className="font-semibold text-sm text-gray-600">{`Left PD (MM)`} </h2>
                                 <td className="">
@@ -278,8 +282,8 @@ export default function EnterPrescription() {
                 <input
                     className="mt-1.5 w-6 h-6"
                     type="checkbox"
-                // checked={form.agree}
-                // onChange={(e) => setForm({ ...form, agree: e.target.checked })}
+                    checked={confirm}
+                    onChange={(e) => setconfirm(!confirm)}
                 />
                 <p className="font-medium text-lg text-gray-600/70">
                     I confirm that I’ve read and agree to the <span className="underline">Terms and Conditions</span> and that the prescription is valid.
@@ -289,7 +293,6 @@ export default function EnterPrescription() {
             {/* Footer */}
             <div className="mt-8 flex items-center justify-between" >
                 <button
-                    // disabled={!form.agree}
                     onClick={handleNext}
                     className="w-full px-6 py-3 pBg text-white font-bold rounded-md disabled:opacity-50 flex items-center justify-center"
                 >
@@ -298,6 +301,7 @@ export default function EnterPrescription() {
                     }
                 </button>
             </div>
+            <Toaster position="bottom-center" reverseOrder={false} />
         </motion.div >
     );
 }

@@ -21,7 +21,7 @@ export default function ProductCard() {
     };
 
     return (
-        <div className="w-full max-w-sm bg-white rounded-lg border border-gray-200 overflow-hidden hover:shadow-md transition-all duration-300 group">
+        <div className="w-full bg-white rounded-lg border border-gray-200 overflow-hidden hover:shadow-md transition-all duration-300 group">
             {/* Image Container */}
             <div className="relative overflow-hidden bg-white">
                 <Image
@@ -57,13 +57,13 @@ export default function ProductCard() {
                 </div>
 
                 {/* Product Name */}
-                <h3 className="text-left text-xl font-bold text-gray-900/80 mb-2 line-clamp-2 transition-colors cursor-pointer">
+                <h3 className="text-left text-xl font-light text-gray-900/80 mb-2 line-clamp-2 transition-colors cursor-pointer">
                     {product.name}
                 </h3>
 
                 {/* Price */}
                 <div className="flex items-center gap-3 mb-4">
-                    <span className="text-2xl font-bold text-gray-700/60">
+                    <span className="text-2xl font-light text-gray-700/60">
                         ${product.price}
                     </span>
                     {/* {product.originalPrice && (
@@ -80,7 +80,7 @@ export default function ProductCard() {
                 <Link
                     href={`/shop/${`5345`}`}
                     disabled={!product.inStock}
-                    className="pBg text-white font-bold px-6 py-3 rounded transition flex items-center justify-center gap-2"
+                    className="pBg text-white font-light px-6 py-3 rounded transition flex items-center justify-center gap-2"
                 >
                     Explore <ArrowRight size={18} />
                 </Link>

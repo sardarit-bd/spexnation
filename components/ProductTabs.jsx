@@ -12,7 +12,7 @@ export default function ProductTabs() {
   ]
 
   return (
-    <div className="space-y-8 mt-12 bg-white p-4 border border-gray-200">
+    <div className="space-y-8 mt-6 bg-white p-4 border border-gray-200">
       {/* Tab Navigation */}
       <div className="border-b border-gray-200">
         <div className="flex gap-8">

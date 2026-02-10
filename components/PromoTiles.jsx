@@ -11,11 +11,11 @@ export default function PromoTiles() {
         <div className="forMan">
           <div className="relative h-64 md:h-72 flex flex-col justify-end p-6">
             <div className="text-white">
-              <h3 className="text-2xl md:text-3xl font-bold mb-2 text-gray-100">
+              <h3 className="text-2xl md:text-3xl font-light mb-2 text-gray-100">
                 For<span className="ml-2">Men</span>
               </h3>
-              <p className="text-sm md:text-base mb-4">CRYSTAL CLARITY & UV PROTECTION</p>
-              <Link href={'/shop'} className="pBg text-white px-4 py-2 rounded font-bold text-sm hover:bg-yellow-600 transition flex items-center gap-2 w-fit">
+              <p className="text-sm md:text-base font-light mb-4">CRYSTAL CLARITY & UV PROTECTION</p>
+              <Link href={'/shop'} className="pBg text-white px-4 py-2 rounded font-light text-sm hover:bg-yellow-600 transition flex items-center gap-2 w-fit">
                 SHOP NOW <ArrowRight size={16} />
               </Link>
             </div>
@@ -26,11 +26,11 @@ export default function PromoTiles() {
         <div className="forwoman">
           <div className="relative h-64 md:h-72 flex flex-col justify-end p-6">
             <div className="text-white">
-              <h3 className="text-2xl md:text-3xl font-bold mb-2 text-gray-100">
+              <h3 className="text-2xl md:text-3xl font-light mb-2 text-gray-100">
                 For<span className="ml-2">women</span>
               </h3>
-              <p className="text-sm md:text-base mb-4">CRYSTAL CLARITY & UV PROTECTION</p>
-              <Link href={'/shop'} className="pBg text-white px-4 py-2 rounded font-bold text-sm hover:bg-yellow-600 transition flex items-center gap-2 w-fit">
+              <p className="text-sm md:text-base font-light mb-4">CRYSTAL CLARITY & UV PROTECTION</p>
+              <Link href={'/shop'} className="pBg text-white px-4 py-2 rounded font-light text-sm hover:bg-yellow-600 transition flex items-center gap-2 w-fit">
                 SHOP NOW <ArrowRight size={16} />
               </Link>
             </div>

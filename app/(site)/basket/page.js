@@ -37,7 +37,7 @@ export default function CartPage() {
 
                 {/* CART ITEMS */}
                 <div className="lg:col-span-2 space-y-6">
-                    <h1 className="text-2xl font-semibold text-gray-800 bg-white border p-3">
+                    <h1 className="text-2xl font-light text-gray-800 bg-white border p-3">
                         Your Basket ({cartItems.length})
                     </h1>
 
@@ -94,17 +94,6 @@ export default function CartPage() {
                                     </div>
                                 </div>
 
-                                <div className="mt-4 flex items-start gap-2 text-sm">
-                                    <input type="checkbox" className="mt-1" />
-                                    <div>
-                                        <p className="font-medium">
-                                            Lens Protect <span className="text-gray-400">+£20</span>
-                                        </p>
-                                        <p className="text-gray-500">
-                                            Improve lens clarity and durability with advanced coating
-                                        </p>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     ))}
@@ -112,10 +101,10 @@ export default function CartPage() {
 
                 {/* SUMMARY */}
                 <div className="bg-white border p-6 h-fit sticky top-28">
-                    <h2 className="text-xl font-semibold mb-4">Summary</h2>
+                    <h2 className="text-xl font-light mb-4">Summary</h2>
 
                     <p className="text-sm text-teal-600 mb-4">
-                        🚚 Enjoy free shipping
+                        Enjoy free shipping
                     </p>
 
                     <div className="space-y-3 text-sm">
@@ -134,40 +123,9 @@ export default function CartPage() {
                         </div>
                     </div>
 
-                    <button className="w-full mt-6 bg-teal-600 hover:bg-teal-700 text-white py-3 rounded-lg font-semibold transition">
-                        PROCEED TO CHECKOUT
+                    <button className="w-full mt-6 bg-teal-600 hover:bg-teal-700 text-lg text-white py-3 rounded-lg font-light transition">
+                        Proceed to checkout
                     </button>
-
-                    <button className="w-full mt-3 bg-gray-800 text-white py-3 rounded-lg font-semibold flex items-center justify-center gap-2">
-                        EXPRESS CHECKOUT
-                        <span className="bg-white text-black px-2 py-1 text-xs rounded">
-                            PayPal
-                        </span>
-                        <span className="bg-white text-black px-2 py-1 text-xs rounded">
-                            Klarna
-                        </span>
-                    </button>
-
-                    <div className="mt-6 flex justify-between text-xs text-gray-500">
-                        <span>🔁 120-day free returns</span>
-                        <span>🚚 Free delivery over £95</span>
-                    </div>
-
-                    <div className="mt-6">
-                        <p className="text-sm text-blue-600 mb-2">
-                            Been referred by a friend?
-                        </p>
-                        <div className="flex">
-                            <input
-                                type="text"
-                                placeholder="Promo Code"
-                                className="flex-1 border rounded-l-lg px-3 py-2 text-sm"
-                            />
-                            <button className="bg-gray-300 px-4 rounded-r-lg text-sm font-medium">
-                                Apply
-                            </button>
-                        </div>
-                    </div>
                 </div>
             </div>
         </section>

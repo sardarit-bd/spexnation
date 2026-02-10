@@ -1,5 +1,8 @@
 'use client'
 
+import { Facebook, Instagram, Link as LinkIcon, Music, Twitter } from 'lucide-react';
+
+
 export default function Footer() {
   return (
     <footer className="bg-black text-white">
@@ -28,7 +31,7 @@ export default function Footer() {
           {/* Column 1 */}
           <div>
             <h4 className="font-bold mb-4 sCl">FRAMES</h4>
-            <ul className="space-y-2 text-lg">
+            <ul className="space-y-2 text-md">
               <li><a href="#" className="hover:text-yellow-300 transition">Men's Frames</a></li>
               <li><a href="#" className="hover:text-yellow-300 transition">Women's Frames</a></li>
               <li><a href="#" className="hover:text-yellow-300 transition">Kids' Frames</a></li>
@@ -39,7 +42,7 @@ export default function Footer() {
           {/* Column 2 */}
           <div>
             <h4 className="font-bold mb-4 sCl">LENSES</h4>
-            <ul className="space-y-2 text-lg">
+            <ul className="space-y-2 text-md">
               <li><a href="#" className="hover:text-yellow-300 transition">Single Vision</a></li>
               <li><a href="#" className="hover:text-yellow-300 transition">Progressive</a></li>
               <li><a href="#" className="hover:text-yellow-300 transition">Premium Optics</a></li>
@@ -50,7 +53,7 @@ export default function Footer() {
           {/* Column 3 */}
           <div>
             <h4 className="font-bold mb-4 sCl">COMPANY</h4>
-            <ul className="space-y-2 text-lg">
+            <ul className="space-y-2 text-md">
               <li><a href="#" className="hover:text-yellow-300 transition">About Spex Nation</a></li>
               <li><a href="#" className="hover:text-yellow-300 transition">Help & Contact</a></li>
               <li><a href="#" className="hover:text-yellow-300 transition">Store Locator</a></li>
@@ -61,25 +64,58 @@ export default function Footer() {
           {/* Column 4 */}
           <div>
             <h4 className="font-bold mb-4 sCl">SUPPORT</h4>
-            <ul className="space-y-2 text-lg">
+            <ul className="space-y-2 text-md">
               <li><a href="#" className="hover:text-yellow-300 transition">Shipping & Returns</a></li>
               <li><a href="#" className="hover:text-yellow-300 transition">Track Order</a></li>
               <li><a href="#" className="hover:text-yellow-300 transition">Privacy Policy</a></li>
-              <li><a href="#" className="hover:text-yellow-300 transition">Terms & Conditions</a></li>
+              <li><a href="#" className="hover:text-yellow-300 transition ">Terms & Conditions</a></li>
             </ul>
           </div>
         </div>
 
         {/* Social & Bottom */}
-        <div className="border-t border-yellow-900/70 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4">
-          <div className="flex gap-4">
-            <a href="#" className="text-yellow-400 hover:text-yellow-300 transition font-bold">f</a>
-            <a href="#" className="text-yellow-400 hover:text-yellow-300 transition">𝕏</a>
-            <a href="#" className="text-yellow-400 hover:text-yellow-300 transition font-bold">in</a>
-            <a href="#" className="text-yellow-400 hover:text-yellow-300 transition">📷</a>
+        <div className="border-t pt-8 border-yellow-900/70 flex flex-col sm:flex-row justify-between items-center gap-4">
+          <div>
+            <div className="flex gap-4">
+              <a
+                href="#"
+                className="w-10 h-10 rounded-full pBg flex items-center justify-center text-white hover:bg-gray-700 transition-colors"
+                aria-label="Instagram"
+              >
+                <Instagram size={20} />
+              </a>
+              <a
+                href="#"
+                className="w-10 h-10 rounded-full pBg flex items-center justify-center text-white hover:bg-gray-700 transition-colors"
+                aria-label="Facebook"
+              >
+                <Facebook size={20} />
+              </a>
+              <a
+                href="#"
+                className="w-10 h-10 rounded-full pBg flex items-center justify-center text-white hover:bg-gray-700 transition-colors"
+                aria-label="Twitter"
+              >
+                <Twitter size={20} />
+              </a>
+              <a
+                href="#"
+                className="w-10 h-10 rounded-full pBg flex items-center justify-center text-white hover:bg-gray-700 transition-colors"
+                aria-label="TikTok"
+              >
+                <Music size={20} />
+              </a>
+              <a
+                href="#"
+                className="w-10 h-10 rounded-full pBg flex items-center justify-center text-white hover:bg-gray-700 transition-colors"
+                aria-label="Website"
+              >
+                <LinkIcon size={20} />
+              </a>
+            </div>
           </div>
 
-          <p className="text-md text-gray-400">
+          <p className="text-md font-light text-gray-400">
             © 2024 Spex Nation. All rights reserved. Premium eyewear for the discerning eye.
           </p>
         </div>

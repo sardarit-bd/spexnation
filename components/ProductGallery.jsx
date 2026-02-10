@@ -23,7 +23,7 @@ export default function ProductGallery() {
   ]
 
   return (
-    <div className="flex flex-col gap-0 border border-gray-200 bg-white">
+    <div className="flex flex-col justify-between h-full gap-0 border border-gray-200 bg-white">
       {/* Main Image */}
       <motion.div
         initial={{ opacity: 0, x: -45 }}
@@ -33,7 +33,7 @@ export default function ProductGallery() {
           delay: 0,
           ease: "easeOut"
         }}
-        className="bg-white rounded-lg aspect-square flex items-center justify-center relative overflow-hidden group">
+        className="bg-white rounded-lg flex items-center justify-center relative overflow-hidden group h-fit">
         <Image
           width={1000}
           height={1000}

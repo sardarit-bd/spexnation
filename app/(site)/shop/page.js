@@ -74,27 +74,7 @@ export default function ProductPage() {
             id: 4,
             name: 'Prada BROWLINE',
             price: '£189',
-        },
-        {
-            id: 1,
-            name: 'LONDON BLUE CATECAT',
-            price: '£99',
-        },
-        {
-            id: 2,
-            name: 'TIFFANY & Co. TRIANGL',
-            price: '£149',
-        },
-        {
-            id: 3,
-            name: 'Ray-Ban BROWLINE',
-            price: '£125',
-        },
-        {
-            id: 4,
-            name: 'Prada BROWLINE',
-            price: '£189',
-        },
+        }
     ]
 
 
@@ -106,7 +86,7 @@ export default function ProductPage() {
 
                 <ProductBreadcrumb breadcrumbs={breadcrumbs} />
 
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-5 lg:gap-6">
                     {glasses.map((item, index) => (
                         <div key={index} className="text-center">
                             <ProductCard />

@@ -12,28 +12,12 @@ const breadcrumbs = [
 
 export default function ProductPage() {
     return (
-        <main className="min-h-screen bg-gray-100">
+        <main className="min-h-screen bg-gray-50">
 
-
-            {/* Product Section */}
             <Container>
-                {/* Breadcrumb */}
                 <ProductBreadcrumb breadcrumbs={breadcrumbs} />
-
-                {/* Product Main */}
                 <ProductMainFeature />
-
-                {/* Tabs */}
                 <ProductTabs />
-
-                {/* Brand Story */}
-                {/* <BrandStory /> */}
-
-                {/* Similar Products */}
-                {/* <SimilarProducts /> */}
-
-                {/* After Viewing */}
-                {/* <AfterViewing /> */}
             </Container>
 
         </main>

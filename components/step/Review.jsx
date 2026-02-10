@@ -1,13 +1,28 @@
 import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import useStepStore from "../../store/useStepStore";
+import Loading from "../Loading";
 import BackBtn from "./BackBtn";
 import CircularProgress from "./CircularProgress";
-
 
 export default function Review() {
 
 
     const { step, setStep } = useStepStore();
+    const router = useRouter();
+    const [isLoading, setisLoading] = useState(false);
+
+
+    // handle confirm function is here
+    function handleConfirm() {
+
+        setisLoading(true);
+        setTimeout(() => {
+            setisLoading(false);
+            router.push('/basket');
+        }, 700);
+    }
 
 
     return (
@@ -141,8 +156,11 @@ export default function Review() {
             </p> */}
 
             {/* CTA */}
-            <button className="mt-6 w-full pBg text-white font-semibold py-3 rounded-md transition">
-                CONFIRM & ADD TO BASKET
+            <button onClick={() => { handleConfirm() }} className="mt-6 w-full pBg text-white font-semibold py-3 rounded-md transition flex items-center justify-center">
+
+                {
+                    isLoading ? <Loading /> : "Confirm & Add to Basket"
+                }
             </button>
         </motion.div>
     );

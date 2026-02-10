@@ -21,27 +21,27 @@ export default function ContactPage() {
     };
 
     return (
-        <section className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
+        <section className="min-h-screen bg-gray-50 flex items-center justify-center px-4 py-8">
             <div className="max-w-6xl w-full bg-white rounded-2xl shadow-lg overflow-hidden grid grid-cols-1 md:grid-cols-2">
 
                 {/* Left Info Section */}
                 <div className="bg-gradient-to-br from-yellow-600 to-yellow-900 text-white p-10 flex flex-col justify-center">
-                    <h2 className="text-3xl font-bold mb-4">Get in Touch</h2>
-                    <p className="text-indigo-100 mb-8">
+                    <h2 className="text-4xl font-light mb-4">Get in Touch</h2>
+                    <p className="text-indigo-100 font-light mb-8">
                         Have a project in mind or just want to say hello?
                         We’d love to hear from you.
                     </p>
 
                     <div className="space-y-4 text-sm">
-                        <p>📍 Dhaka, Bangladesh</p>
-                        <p>📧 contact@example.com</p>
-                        <p>📞 +880 1234-567890</p>
+                        <p> Dhaka, Bangladesh</p>
+                        <p> contact@example.com</p>
+                        <p> +880 1234-567890</p>
                     </div>
                 </div>
 
                 {/* Right Form Section */}
                 <div className="p-10">
-                    <h3 className="text-2xl font-semibold text-gray-800 mb-6">
+                    <h3 className="text-4xl font-light text-gray-800 mb-6">
                         Contact Us
                     </h3>
 

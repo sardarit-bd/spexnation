@@ -10,10 +10,10 @@ export default function Header() {
   return (
     <>
       {/* Top Banner */}
-      {/* <div className="bg-amber-900 text-white text-center py-2 text-xs md:text-sm">
+      <div className="sBg text-white text-center py-2 text-xs md:text-sm">
         <span>EXCLUSIVE OFFER | UP TO 60% OFF | LUXURY FRAMES</span>
-        <span className="ml-2">→ SHOP NOW</span>
-      </div> */}
+        <Link href="/shop" className="ml-2 underline">→ SHOP NOW</Link>
+      </div>
 
       {/* Main Header */}
       <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
@@ -26,13 +26,13 @@ export default function Header() {
           <div className='flex gap-12'>
             {/* Desktop Navigation */}
             <nav className="hidden md:flex gap-8">
-              <Link href="/" className="text-gray-600 hover:text-yellow-700 text-lg font-semibold">
+              <Link href="/" className="text-gray-600 hover:text-yellow-700 text-lg font-light">
                 Home
               </Link>
-              <Link href="/shop" className="text-gray-600 hover:text-yellow-700 text-lg font-semibold">
+              <Link href="/shop" className="text-gray-600 hover:text-yellow-700 text-lg font-light">
                 Shop
               </Link>
-              <Link href="/contact" className="text-gray-600 hover:text-yellow-700 text-lg font-semibold">
+              <Link href="/contact" className="text-gray-600 hover:text-yellow-700 text-lg font-light">
                 Contact Us
               </Link>
             </nav>
@@ -57,17 +57,14 @@ export default function Header() {
 
         {/* Mobile Menu */}
         {isOpen && (
-          <nav className="flex flex-col md:hidden bg-gray-900 border-t border-yellow-600 py-4 px-4 space-y-2">
-            <Link href="/" className="text-gray-600 hover:text-yellow-700 text-lg font-semibold">
+          <nav className="flex flex-col md:hidden bg-gray-100 border-t border-yellow-600/20 py-6 px-4 space-y-2">
+            <Link onClick={() => setIsOpen(!isOpen)} href="/" className="text-gray-600 hover:text-yellow-700 text-lg font-semibold">
               Home
             </Link>
-            <Link href="/shop" className="text-gray-600 hover:text-yellow-700 text-lg font-semibold">
+            <Link onClick={() => setIsOpen(!isOpen)} href="/shop" className="text-gray-600 hover:text-yellow-700 text-lg font-light">
               Shop
             </Link>
-            <Link href="/basket" className="text-gray-600 hover:text-yellow-700 text-lg font-semibold">
-              Our Basket
-            </Link>
-            <Link href="/contact" className="text-gray-600 hover:text-yellow-700 text-lg font-semibold">
+            <Link onClick={() => setIsOpen(!isOpen)} href="/contact" className="text-gray-600 hover:text-yellow-700 text-lg font-light">
               Contact Us
             </Link>
           </nav>

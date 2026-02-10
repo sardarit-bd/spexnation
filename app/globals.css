@@ -84,6 +84,8 @@ html {
 
 
 
+
+
 /* loading css is here */
 /* HTML: <div class="loader"></div> */
 .loader {
@@ -98,5 +100,12 @@ html {
 @keyframes l1 {
   to {
     clip-path: inset(0 -34% 0 0)
+  }
+}
+
+
+@media (max-width:768px) {
+  .heroBG {
+    background-position: right 30% center;
   }
 }
