@@ -1,6 +1,6 @@
-import ProductBreadcrumb from '@/components/ProductBreadcrumb'
-import ProductTabs from '@/components/ProductTabs'
 import Container from '../../../../components/Container'
+import ProductBreadcrumb from '../../../../components/ProductBreadcrumb'
+import ProductTabs from '../../../../components/ProductTabs'
 import ProductMainFeature from '../../../../components/step/ProductMainFeature'
 
 const breadcrumbs = [

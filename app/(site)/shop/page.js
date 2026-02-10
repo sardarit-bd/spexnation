@@ -1,5 +1,5 @@
 
-import Container from "@/components//Container";
+import Container from "../../../components//Container";
 import ProductBreadcrumb from "../../../components/ProductBreadcrumb";
 import ProductCard from "../../../components/ProductCard";
 

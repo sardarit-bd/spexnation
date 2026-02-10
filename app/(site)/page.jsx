@@ -1,6 +1,6 @@
-import HeroBanner from '@/components/HeroBanner'
-import PopularGlasses from '@/components/PopularGlasses'
-import PromoTiles from '@/components/PromoTiles'
+import HeroBanner from '../../components/HeroBanner'
+import PopularGlasses from '../../components/PopularGlasses'
+import PromoTiles from '../../components/PromoTiles'
 
 export default function Page() {
   return (
