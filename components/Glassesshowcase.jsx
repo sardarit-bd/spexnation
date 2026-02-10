@@ -44,9 +44,8 @@ export default function GlassesShowcase() {
                             </h2>
                             <p className="text-gray-600 text-lg leading-relaxed mb-8">
                                 Check out these trendy designs then showcase your look. For a chance to be
-                                featured in our gallery, share your new pair of frames by tagging{' '}
-                                <span className="font-medium">@glasses_direct</span> and{' '}
-                                <span className="font-medium">#myglassesmyway</span>.
+                                featured in our gallery, share your new pair of frames by tagging. Our optical eyewear combines durable materials with precise lens fitting, giving you stylish vision correction you can trust — with sunglasses available as a complementary option.
+
                             </p>
 
                             <Link href="/shop" className="border-2 border-gray-900 hover:border-gray-900/10 text-gray-900 px-8 py-3 font-medium hover:bg-yellow-700/90 hover:text-white transition-colors duration-300 focus:outline-none">

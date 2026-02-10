@@ -1,6 +1,7 @@
 'use client'
 
-import ProductCard from "./ProductCard"
+import { motion } from "framer-motion";
+import ProductCard from "./ProductCard";
 
 const glasses = [
   {
@@ -32,10 +33,18 @@ export default function PopularGlasses() {
         <h2 className="text-2xl sm:text-5xl font-light text-gray-900 text-center mb-12 text-gray-900">Best-Selling Frames</h2>
 
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-5 lg:gap-6">
-          {glasses.map((item) => (
-            <div key={item.id} className="text-center">
+          {glasses.map((item, index) => (
+            <motion.div
+              initial={{ opacity: 0, x: -45 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{
+                duration: 0.5,
+                delay: 0.1 * index,
+                ease: "easeOut"
+              }}
+              key={item.id} className="text-center">
               <ProductCard />
-            </div>
+            </motion.div>
           ))}
         </div>
       </section>

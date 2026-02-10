@@ -77,13 +77,16 @@ export default function ProductCard() {
                 </div>
 
                 {/* Add to Cart Button */}
-                <Link
-                    href={`/shop/${`5345`}`}
-                    disabled={!product.inStock}
-                    className="pBg text-white font-light px-6 py-3 rounded transition flex items-center justify-center gap-2"
+                <div
                 >
-                    Explore <ArrowRight size={18} />
-                </Link>
+                    <Link
+                        href={`/shop/${`5345`}`}
+                        disabled={!product.inStock}
+                        className="pBg text-white font-light px-6 py-3 rounded transition flex items-center justify-center gap-2"
+                    >
+                        Explore <ArrowRight className="" size={18} />
+                    </Link>
+                </div>
             </div>
         </div>
     );
