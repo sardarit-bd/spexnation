@@ -9,8 +9,8 @@ import CircularProgress from "./CircularProgress";
 
 const options = [
     {
-        id: "no-transition",
-        title: "No Transition",
+        id: "clear",
+        title: "Clear",
         description: "",
         price: "£00",
     },
@@ -23,14 +23,14 @@ const options = [
     },
     {
         id: "transitionxtraactive",
-        title: "Transition Xtra Active",
+        title: "Transition XtraActive",
         description:
             "ODAK Clean&CleAR 1.6 lens with anti-reflective, scratch-resistant, water repellent coating, extra durability, Anti-UV, and greater contrast.",
         price: "£99",
     },
     {
-        id: "standard photocromic",
-        title: "Standard Photocromic",
+        id: "tint",
+        title: "Tint",
         description: "ODAK Clean&CleAR 1.6 lens with anti-reflective, scratch-resistant, water repellent coating, extra durability, Anti-UV, and greater contrast.",
         price: "£49",
     }
@@ -51,7 +51,7 @@ export default function Transition() {
         setisLoading(true);
         setTimeout(() => {
             setisLoading(false);
-            setStep(6);
+            setStep(7);
         }, 700);
     }
 

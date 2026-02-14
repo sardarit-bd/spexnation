@@ -9,38 +9,31 @@ import CircularProgress from "./CircularProgress";
 
 const options = [
     {
-        id: "no-coating",
-        title: "No Coating",
+        id: "atni-glare",
+        title: "Anti Glare",
         description: "",
         price: "£00",
     },
     {
-        id: "anti-glare-surface",
-        title: "Anti Glare Surface",
+        id: "hydrophobic-anti-glare",
+        title: "Hydrophobic Anti-Glare",
         description:
             "ODAK Clean&CleAR 1.6 lens with anti-reflective, scratch-resistant, water repellent coating, extra durability, Anti-UV, and greater contrast.",
         price: "£39",
     },
     {
-        id: "Blue-Light-Filter",
+        id: "blue-light-filter",
         title: "Blue Light Filter",
         description:
             "ODAK Clean&CleAR 1.6 lens with anti-reflective, scratch-resistant, water repellent coating, extra durability, Anti-UV, and greater contrast.",
         price: "£99",
     },
     {
-        id: "tinted-lens",
-        title: "Tinted Lens",
+        id: "clear-uv-protective-coating",
+        title: "Clear UV Protective Coating",
         description: "ODAK Clean&CleAR 1.6 lens with anti-reflective, scratch-resistant, water repellent coating, extra durability, Anti-UV, and greater contrast.",
         price: "£29",
-    },
-
-    {
-        id: "Oleophobic Anti Reflective",
-        title: "Oleophobic Anti Reflective",
-        description: "ODAK Clean&CleAR 1.6 lens with anti-reflective, scratch-resistant, water repellent coating, extra durability, Anti-UV, and greater contrast.",
-        price: "£39",
-    },
+    }
 ];
 
 
@@ -49,6 +42,7 @@ export default function Lenspackage() {
     const [selected, setSelected] = useState(null);
     const { step, setStep } = useStepStore();
     const [isLoading, setisLoading] = useState(false);
+    const [seemore, setseemore] = useState(false);
 
 
 
@@ -58,7 +52,7 @@ export default function Lenspackage() {
         setisLoading(true);
         setTimeout(() => {
             setisLoading(false);
-            setStep(5);
+            setStep(6);
         }, 700);
     }
 
@@ -83,7 +77,7 @@ export default function Lenspackage() {
             <h2 className="text-2xl font-semibold mb-4">Protective Coatings</h2>
 
             {/* Options */}
-            <div className="space-y-4">
+            <div className="space-y-4 max-h-[50vh] overflow-y-scroll">
                 {options.map((opt, index) => (
                     <button
                         key={opt.id}
@@ -99,6 +93,9 @@ export default function Lenspackage() {
                             <h2 className="text-xl font-bold">{opt.price}</h2>
                         </div>
                         <p className="text-sm text-gray-600 mt-1">{opt.description}</p>
+
+                        {/* <button className="text-xs font-semibold text-gray-600 mt-1 bg-green-100 border border-green-300 py-1 px-2 rounded-md">{seemore ? "See More" : "See Less"}</button> */}
+
                     </button>
                 ))}
             </div>

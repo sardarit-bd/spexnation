@@ -1,6 +1,7 @@
 'use client'
 
 import { motion } from "framer-motion";
+import Image from 'next/image';
 import { useEffect, useState } from "react";
 import disableAndRecommandedLogic from "../../lib/disableAndRecommandedLogic";
 import useLenseStore from "../../store/useLenseStore";
@@ -48,7 +49,7 @@ export default function LensCategory() {
 
         setTimeout(() => {
             setisLoading(false);
-            setStep(4);
+            setStep(5);
         }, 700);
     }
 
@@ -87,22 +88,32 @@ export default function LensCategory() {
                         key={opt.id}
                         disabled={disAndRecommanded?.disables?.includes(opt.id)}
                         onClick={() => { setLens({ ...lens, LenseThickness: opt.id }) }}
-                        className={`relative group w-full bg-gray-100 text-left p-4 rounded-md border transition-all disabled:cursor-not-allowed disabled:bg-gray-300 disabled:text-gray-600
+                        className={`relative group w-full bg-gray-100 text-left p-2 rounded-md border transition-all disabled:cursor-not-allowed disabled:bg-gray-300 disabled:text-gray-600
                             ${lens?.LenseThickness === opt.id
                                 ? "border-yellow-500 bg-yellow-50"
                                 : `border-gray-200 ${!disAndRecommanded?.disables?.includes(opt.id)
                                 && "hover:border-yellow-500/80"}`
                             }`}
                     >
-                        <div className="flex items-center gap-1 justify-between">
-                            <h3 className="text-xl font-semibold text-gray-900">{opt.title}</h3>
-                            <div>
-                                {
-                                    opt?.id == disAndRecommanded?.recommanded && <RecommandedBox />
-                                }
+                        <div className="flex items-center gap-3">
+
+                            <div className="w-fit">
+                                <Image className="w-[105px] h-[80px] rounded-sm border border-gray-200 object-cover object-center" src={'/lensethinkness.webp'} alt="check" width={30} height={30} />
+                            </div>
+
+                            <div className="w-full">
+                                <div className="flex items-center gap-1 justify-between">
+                                    <h3 className="text-xl font-semibold text-gray-900">{opt.title}</h3>
+                                    <div>
+                                        {
+                                            opt?.id == disAndRecommanded?.recommanded && <RecommandedBox />
+                                        }
+                                    </div>
+                                </div>
+                                <p className="text-sm text-gray-600 mt-1">{opt.description}</p>
                             </div>
                         </div>
-                        <p className="text-sm text-gray-600 mt-1">{opt.description}</p>
+
 
                         {
                             disAndRecommanded?.disables?.includes(opt.id) && <NotavailableToolTip />

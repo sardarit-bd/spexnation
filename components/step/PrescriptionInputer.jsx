@@ -1,11 +1,14 @@
 import { motion } from "framer-motion";
+import Image from "next/image";
 import { useState } from "react";
 import { toast, Toaster } from "react-hot-toast";
+import { TiTick } from "react-icons/ti";
 import ADDNumberOPtions from "../../Data/ADDNumberOPtions";
 import AxisNumberOPtion from "../../Data/AxisNumberOPtion";
 import CyLNumberOPtions from "../../Data/CyLNumberOPtions";
-import PDNumberOption from "../../Data/PDNumberOption";
+import PrismNumberOption from "../../Data/PrismNumberOPtion";
 import SpaNumberOptions from "../../Data/SpaNumberOptions";
+import fileToBase64 from "../../lib/fileToBase64";
 import useLenseStore from "../../store/useLenseStore";
 import useStepStore from "../../store/useStepStore";
 import Loading from "../Loading";
@@ -21,6 +24,7 @@ export default function EnterPrescription() {
     const { lens, setLens } = useLenseStore();
     const [confirm, setconfirm] = useState(false);
     const [isLoading, setisLoading] = useState(false);
+    const [img, setimg] = useState('');
 
 
 
@@ -31,7 +35,7 @@ export default function EnterPrescription() {
             setisLoading(true);
             setTimeout(() => {
                 setisLoading(false);
-                setStep(3);
+                setStep(2);
             }, 700);
         } else {
             toast.error("Please select all option and Confirm");
@@ -76,6 +80,105 @@ export default function EnterPrescription() {
 
 
 
+    // handle prism vertical function is here
+    function handleVertical(e, eye) {
+
+        e.preventDefault();
+
+        eye == "od" ? setLens({ ...lens, rightPrism: { ...lens.rightPrism, vertical: e.target.value } }) : setLens({ ...lens, leftPrism: { ...lens.leftPrism, vertical: e.target.value } })
+
+    }
+
+
+
+    // handle Vertical direction function is here
+    function handleVerticalDirection(e, eye) {
+
+        e.preventDefault();
+
+        eye == "od" ? setLens({ ...lens, rightPrism: { ...lens.rightPrism, vBaseDirection: e.target.value } }) : setLens({ ...lens, leftPrism: { ...lens.leftPrism, vBaseDirection: e.target.value } })
+
+
+    }
+
+
+
+
+    // handle handleherical function is here
+    function handleHorizontal(e, eye) {
+
+        e.preventDefault();
+
+        eye == "od" ? setLens({ ...lens, rightPrism: { ...lens.rightPrism, horizontal: e.target.value } }) : setLens({ ...lens, leftPrism: { ...lens.leftPrism, horizontal: e.target.value } })
+
+    }
+
+
+    // handle horizontal direction function is here
+    function handleHorizontalDirection(e, eye) {
+
+        e.preventDefault();
+
+        eye == "od" ? setLens({ ...lens, rightPrism: { ...lens.rightPrism, hBaseDirection: e.target.value } }) : setLens({ ...lens, leftPrism: { ...lens.leftPrism, hBaseDirection: e.target.value } })
+
+
+    }
+
+
+    // handle prescription file changes is here
+    async function handleFileChanges(e) {
+
+        const file = e.target.files[0];
+        const base64 = await fileToBase64(file);
+        setimg(base64);
+
+    }
+
+
+
+    // handle remove function is here
+    function handleRemoved(e) {
+        e.preventDefault();
+
+
+        setimg('');
+    }
+
+
+
+
+    // handle checked and deChecked function is here
+    const handleCheckedandDeChecked = (e) => {
+        e.preventDefault();
+
+
+        if (lens.addPrism) {
+            setLens({
+                ...lens,
+                addPrism: false,
+                leftPrism: {
+                    vertical: "",
+                    vBaseDirection: "",
+                    horizontal: "",
+                    hBaseDirection: "",
+                },
+                rightPrism: {
+                    vertical: "",
+                    vBaseDirection: "",
+                    horizontal: "",
+                    hBaseDirection: "",
+                },
+            })
+        } else {
+            setLens({ ...lens, addPrism: true })
+        }
+
+    }
+
+
+
+
+
     // handle add function is here
     function handleAdd(e, eye) {
 
@@ -83,6 +186,7 @@ export default function EnterPrescription() {
 
         eye == "od" ? setLens({ ...lens, add: { ...lens.add, rightAdd: e.target.value } }) : setLens({ ...lens, add: { ...lens.add, leftAdd: e.target.value } })
     }
+
 
 
     return (
@@ -105,25 +209,29 @@ export default function EnterPrescription() {
             <h2 className="text-2xl font-semibold mb-3">Enter your prescription</h2>
 
             {/* Basic Info */}
-            {/* <div className="mt-6 flex gap-3 items-center">
-                <div className="">
-                    <label className="text-md text-gray-600/80">Prescription name</label>
-                    <input
-                        value={form.name}
-                        onChange={(e) => setForm({ ...form, name: e.target.value })}
-                        className="w-full border p-2 rounded-md focus:outline-yellow-500/60 text-gray-700/80"
-                    />
+            <div className="mt-6 flex gap-3 items-center">
+                <div className="w-full">
+                    <label className="text-md text-gray-600/80">Upload your Prescription</label>
+                    <div className="flex items-center gap-2 mt-2 h-full">
+                        <input
+                            type="file"
+                            onChange={(e) => { handleFileChanges(e) }}
+                            className="w-full border p-2 rounded-md focus:outline-yellow-500/60 text-gray-700/80 cursor-pointer"
+                        />
+                        {
+                            img && (
+                                <div className="relative w-auto h-full border border-gray-200 text-gray-500/40 bg-gray-200 rounded-md">
+                                    <Image src={img} width={50} height={50} alt="prescription" />
+
+                                    <div onClick={(e) => { handleRemoved(e) }} className="absolute top-0 right-0 w-4 h-4 bg-red-900 text-white translate-x-1/2 -translate-y-1/2 rounded-full flex items-center justify-center cursor-pointer">
+                                        x
+                                    </div>
+                                </div>
+                            )
+                        }
+                    </div>
                 </div>
-                <div className="">
-                    <label className="text-md text-gray-600/80">Date of prescription *</label>
-                    <input
-                        type="date"
-                        value={form.date}
-                        onChange={(e) => setForm({ ...form, date: e.target.value })}
-                        className="w-full border p-2 rounded-md focus:outline-yellow-500/60 text-gray-700/80"
-                    />
-                </div>
-            </div> */}
+            </div>
 
             {/* Table */}
             <div className="mt-8 overflow-x-auto">
@@ -217,55 +325,132 @@ export default function EnterPrescription() {
                 </table>
             </div>
 
-            {/* PD */}
-            <div className="mt-6">
-                <div className="flex flex-col items-start gap-2">
-                    <h2 className="font-semibold text-lg text-gray-600">PD Type: </h2>
-                    <div className="flex gap-3 items-center">
-                        <button onClick={() => { setLens({ ...lens, pdType: 'spd' }) }} className={` px-2 py-1 ${lens?.pdType === 'spd' ? 'sBg text-white' : 'bg-gray-300 text-gray-600'}`}>Single PD</button>
-                        <button onClick={() => { setLens({ ...lens, pdType: 'dpd' }) }} className={` px-2 py-1 ${lens?.pdType === 'dpd' ? 'sBg text-white' : 'bg-gray-300 text-gray-600'}`}>Dual PD</button>
+
+
+            <div>
+                <div className="mt-6 flex items-center gap-2 border-t pt-4" >
+                    <div onClick={(e) => { handleCheckedandDeChecked(e) }} className={`flex items-center justify-center text-white cursor-pointer w-6 h-6 ${lens?.addPrism ? "bg-yellow-600" : "bg-transparent border border-gray-300"}`}>
+                        {
+                            lens?.addPrism && <TiTick className="text-2xl" />
+                        }
                     </div>
+                    <p className="font-medium text-md text-gray-600/70">
+                        Add Prism £15
+                    </p>
                 </div>
-                <div className="flex items-center gap-6">
-                    <div className="flex flex-col items-start gap-1 mt-5">
-                        <h2 className="font-semibold text-sm text-gray-600">{lens?.pdType === 'spd' ? `Single PD (MM)` : `Right PD (MM)`} </h2>
-                        <div>
-                            <select
-                                // value={field}
-                                className="border p-2 rounded-md focus:outline-yellow-500/60"
-                            >
-                                {PDNumberOption?.map((n) => (
-                                    <option className="text-md text-gray-600 font-medium" key={n} value={n}>{n}</option>
-                                ))}
-                            </select>
-                        </div>
-                    </div>
+                <motion.div
+
+                    initial={{ opacity: 0, y: -50 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{
+                        duration: .7,
+                        delay: 0,
+                        ease: "easeOut"
+                    }}
+
+                    className={`${lens?.addPrism ? "flex" : "hidden"} mt-6 flex items-center gap-2`}>
+                    <table className="w-full border text-center">
+                        <thead className="bg-gray-200">
+                            <tr>
+                                <th className="text-left pl-2">Eyes</th>
+                                <th>Vertical</th>
+                                <th>Base Direction</th>
+                                <th>Horizontal</th>
+                                <th>Base Direction</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {["od", "os"].map((eye) => (
+                                <tr key={eye} className="border-t">
+                                    <td className="p-2 font-semibold text-left">
+                                        {eye === "od" ? "OD" : "OS"}
+                                        <div className="text-xs text-gray-500">
+                                            {eye === "od" ? "right eye" : "left eye"}
+                                        </div>
+                                    </td>
 
 
-                    {
-                        lens?.pdType === 'dpd' && (
-                            <div className="flex flex-col items-start gap-1 mt-5">
-                                <h2 className="font-semibold text-sm text-gray-600">{`Left PD (MM)`} </h2>
-                                <td className="">
-                                    <select
-                                        // value={field}
-                                        className="border p-2 rounded-md focus:outline-yellow-500/60"
-                                    >
-                                        {PDNumberOption?.map((n) => (
-                                            <option className="text-md text-gray-600 font-medium" key={n} value={n}>{n}</option>
-                                        ))}
-                                    </select>
-                                </td>
-                            </div>
-                        )
-                    }
+                                    {/* vertical select */}
+                                    <td className="p-2">
+                                        <select
+                                            onChange={(e) => { handleVertical(e, eye) }}
+                                            value={eye == "od" ? lens.rightPrism.vertical : lens.leftPrism.vertical}
+                                            className="border p-2 rounded-md focus:outline-yellow-500/60 cursor-pointer"
+                                        >
+                                            <option value={""} className="text-md text-gray-600 font-medium">N/A</option>
+                                            {PrismNumberOption?.map((n) => (
+                                                <option className="text-md text-gray-600 font-medium" key={n} value={n}>{n}</option>
+                                            ))}
+                                        </select>
+                                    </td>
+
+
+                                    {/* Base Direction for Vertical */}
+                                    <td className="p-2">
+                                        <select
+
+                                            disabled={eye == "od" ? lens.rightPrism.vertical == "" : lens.leftPrism.vertical == ""}
+
+                                            onChange={(e) => { handleVerticalDirection(e, eye) }}
+
+                                            value={eye == "od" ? lens.rightPrism.vBaseDirection : lens.leftPrism.vBaseDirection}
+
+                                            className="border p-2 rounded-md focus:outline-yellow-500/60 cursor-pointer disabled:cursor-not-allowed disabled:bg-gray-300 disabled:text-gray-600"
+                                        >
+                                            <option value={""} className="text-md text-gray-600 font-medium">N/A</option>
+                                            {["Up", "Down"].map((n) => (
+                                                <option className="text-md text-gray-600 font-medium" key={n} value={n}>{n}</option>
+                                            ))}
+                                        </select>
+                                    </td>
+
+
+                                    {/* horizontal select */}
+                                    <td className="p-2">
+                                        <select
+
+                                            onChange={(e) => { handleHorizontal(e, eye) }}
+
+                                            value={eye == "od" ? lens.rightPrism.horizontal : lens.leftPrism.horizontal}
+
+                                            className="border p-2 rounded-md focus:outline-yellow-500/60 cursor-pointer"
+                                        >
+                                            <option value={""} className="text-md text-gray-600 font-medium">N/A</option>
+                                            {PrismNumberOption.map((n) => (
+                                                <option className="text-md text-gray-600 font-medium" key={n} value={n}>{n}</option>
+                                            ))}
+                                        </select>
+                                    </td>
+
+
+                                    {/* Base Direction for horizontal */}
+                                    <td className="p-2">
+                                        <select
+
+                                            disabled={eye == "od" ? lens.rightPrism.horizontal == "" : lens.leftPrism.horizontal == ""}
+
+                                            onChange={(e) => { handleHorizontalDirection(e, eye) }}
+
+                                            value={eye == "od" ? lens.rightPrism.hBaseDirection : lens.leftPrism.hBaseDirection}
+
+                                            className="border p-2 rounded-md focus:outline-yellow-500/60 cursor-pointer  disabled:cursor-not-allowed disabled:bg-gray-300 disabled:text-gray-600"
+                                        >
+                                            <option value={""} className="text-md text-gray-600 font-medium">N/A</option>
+                                            {["In", "Out"].map((n) => (
+                                                <option className="text-md text-gray-600 font-medium" key={n} value={n}>{n}</option>
+                                            ))}
+                                        </select>
+                                    </td>
+
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </motion.div>
+            </div>
 
 
 
-
-
-                </div>
-            </div >
 
             {/* Footer */}
             <div className="mt-8 flex items-center justify-between border-t pt-4" >
@@ -279,12 +464,15 @@ export default function EnterPrescription() {
 
             {/* Agreement */}
             <div className="mt-6 flex items-start gap-2 border-t pt-4" >
-                <input
-                    className="mt-1.5 w-6 h-6"
-                    type="checkbox"
-                    checked={confirm}
-                    onChange={(e) => setconfirm(!confirm)}
-                />
+
+                <div className="w-fit">
+                    <div onClick={(e) => { setconfirm(!confirm) }} className={`mt-1.5 flex items-center justify-center text-white cursor-pointer w-6 h-6 ${confirm ? "bg-yellow-600" : "bg-transparent border border-gray-300"}`}>
+                        {
+                            confirm && <TiTick className="text-2xl" />
+                        }
+                    </div>
+                </div>
+
                 <p className="font-medium text-lg text-gray-600/70">
                     I confirm that I’ve read and agree to the <span className="underline">Terms and Conditions</span> and that the prescription is valid.
                 </p>
@@ -297,7 +485,7 @@ export default function EnterPrescription() {
                     className="w-full px-6 py-3 pBg text-white font-bold rounded-md disabled:opacity-50 flex items-center justify-center"
                 >
                     {
-                        isLoading ? <Loading /> : "SAVE & CONTINUE"
+                        isLoading ? <Loading /> : "Next"
                     }
                 </button>
             </div>

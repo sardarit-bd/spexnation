@@ -5,6 +5,7 @@ import ProductGallery from "../../components/ProductGallery";
 import useStepStore from "../../store/useStepStore";
 import LensCategory from "./LensCategory";
 import Lenspackage from "./Lenspackage";
+import PDType from "./PDType";
 import PrescriptionInputer from "./PrescriptionInputer";
 import Review from "./Review";
 import Transition from "./Transition";
@@ -22,7 +23,7 @@ const ProductMainFeature = () => {
 
             {/* Details */}
             {
-                step === 1 ? <VisionType /> : step === 2 ? <PrescriptionInputer /> : step === 3 ? <LensCategory /> : step === 4 ? <Lenspackage /> : step === 5 ? <Transition /> : step === 6 ? <Review /> : <ProductDetails />
+                step === 1 ? <PrescriptionInputer /> : step === 2 ? <PDType /> : step === 3 ? <VisionType /> : step === 4 ? <LensCategory /> : step === 5 ? <Lenspackage /> : step === 6 ? <Transition /> : step === 7 ? <Review /> : <ProductDetails />
             }
 
         </div>

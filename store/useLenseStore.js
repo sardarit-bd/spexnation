@@ -9,6 +9,7 @@ const useLenseStore = create((set) => ({
         Transition: "",
         Subtotal: 0,
         Total: 0,
+        addPrism: false,
         pdType: "spd",
         singlePD: "",
         dualPD: {
@@ -30,7 +31,20 @@ const useLenseStore = create((set) => ({
         add: {
             leftAdd: "",
             rightAdd: "",
-        }
+        },
+
+        leftPrism: {
+            vertical: "",
+            vBaseDirection: "",
+            horizontal: "",
+            hBaseDirection: "",
+        },
+        rightPrism: {
+            vertical: "",
+            vBaseDirection: "",
+            horizontal: "",
+            hBaseDirection: "",
+        },
     },
 
     setLens: (newLens) => set({ lens: newLens }),

@@ -1,6 +1,7 @@
 'use client'
 
 import { motion } from "framer-motion";
+import Image from 'next/image';
 import { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import useLenseStore from "../../store/useLenseStore";
@@ -14,19 +15,29 @@ const options = [
         id: "distance",
         title: "Distance",
         description:
-            "You mostly need glasses to see things in the distance, e.g. whilst driving.",
+            "Best for Everyday, General Use",
+        img: '/distance.png'
     },
     {
         id: "reading",
         title: "Reading",
         description:
-            "You mostly need glasses to see things up close, e.g. papers, documents, etc.",
+            "Optimize for seeing close-Up",
+        img: '/reading.png'
     },
     {
         id: "computerorintermediate",
-        title: "Computer or Intermediate",
+        title: "Computer/Intermediate",
         description:
-            "You need glasses to see things up close and in the distance.",
+            "Perfect for workding at arm's length",
+        img: '/cumputer.png'
+    },
+    {
+        id: "noprescription",
+        title: "No Prescription",
+        description:
+            "Clear lenses with no vision correction",
+        img: '/noprescription.png'
     }
 ];
 
@@ -51,7 +62,7 @@ export default function VisionType() {
             setisLoading(true);
             setTimeout(() => {
                 setisLoading(false);
-                setStep(2);
+                setStep(4);
             }, 700);
         } else {
             toast.error("Please select an option");
@@ -81,22 +92,29 @@ export default function VisionType() {
                 <CircularProgress initialValue={15} />
             </div>
 
-            <h2 className="text-2xl font-semibold mb-4">How will you use these glasses?</h2>
+            <h2 className="text-2xl font-semibold mb-4">Select glasses use case?</h2>
 
             {/* Options */}
-            <div className="space-y-4">
+            <div className="w-full space-y-4">
                 {options.map((opt, index) => (
                     <button
                         key={opt.id}
                         onClick={(e) => { setLens({ ...lens, LenseUseCase: opt?.id }) }}
-                        className={`w-full bg-gray-100 text-left p-4 rounded-md border transition-all
+                        className={`w-full h-full bg-gray-100 text-left p-2 rounded-md border transition-all
               ${lens?.LenseUseCase === opt.id
                                 ? "border-yellow-500 bg-yellow-50"
                                 : "border-gray-200 hover:border-yellow-500/80"
                             }`}
                     >
-                        <h3 className="text-lg font-semibold text-gray-900/90">{opt.title}</h3>
-                        <p className="text-md text-gray-600 mt-1">{opt.description}</p>
+                        <div className="flex gap-3">
+                            <div>
+                                <Image className="w-[80px] h-[80px] rounded-sm object-cover object-center" src={opt.img} alt="check" width={30} height={30} />
+                            </div>
+                            <div>
+                                <h3 className="text-lg font-semibold text-gray-900/90">{opt.title}</h3>
+                                <p className="text-md text-gray-600 mt-1">{opt.description}</p>
+                            </div>
+                        </div>
                     </button>
                 ))}
             </div>
