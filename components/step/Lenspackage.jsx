@@ -94,7 +94,24 @@ export default function Lenspackage() {
                         </div>
                         <p className="text-sm text-gray-600 mt-1">{opt.description}</p>
 
-                        {/* <button className="text-xs font-semibold text-gray-600 mt-1 bg-green-100 border border-green-300 py-1 px-2 rounded-md">{seemore ? "See More" : "See Less"}</button> */}
+
+                        {
+                            seemore && (
+                                <div className="mt-6">
+                                    <h3>Benefits</h3>
+                                    <ul className="list-disc ml-4 mb-3 text-sm">
+                                        <li>Reduces reflections and glare from screens & headlights</li>
+                                        <li>Makes lenses easier to clean</li>
+                                        <li>mproves night driving visibility</li>
+                                        <li>Enhances visual clarity & contrast</li>
+                                    </ul>
+                                </div>
+                            )
+
+                        }
+
+
+                        <button onClick={() => { setseemore(!seemore) }} className="text-xs font-semibold text-gray-600 mt-1 bg-green-100 border border-green-300 py-1 px-2 rounded-md">{seemore ? "See More" : "See Less"}</button>
 
                     </button>
                 ))}

@@ -14,6 +14,7 @@ import useStepStore from "../../store/useStepStore";
 import Loading from "../Loading";
 import BackBtn from "./BackBtn";
 import CircularProgress from "./CircularProgress";
+import Warn from "./Warn";
 
 
 
@@ -25,6 +26,8 @@ export default function EnterPrescription() {
     const [confirm, setconfirm] = useState(false);
     const [isLoading, setisLoading] = useState(false);
     const [img, setimg] = useState('');
+    const [alert, setalert] = useState(false);
+    const [alertMessage, setalertMessage] = useState('');
 
 
 
@@ -55,11 +58,15 @@ export default function EnterPrescription() {
     }
 
 
-
     // handle cyl function is here
     function handleCYL(e, eye) {
 
         e.preventDefault();
+
+        if (Number(e.target.value) > "+2.00" || Number(e.target.value) < "-2.00") {
+            setalert(true);
+            setalertMessage('High cylinder prescriptions require additional surfacing: +£15');
+        }
 
         eye == "od" ? setLens({ ...lens, cyl: { ...lens.cyl, rightCyl: e.target.value } }) : setLens({ ...lens, cyl: { ...lens.cyl, leftCyl: e.target.value } })
 
@@ -100,7 +107,6 @@ export default function EnterPrescription() {
 
 
     }
-
 
 
 
@@ -170,11 +176,13 @@ export default function EnterPrescription() {
                 },
             })
         } else {
-            setLens({ ...lens, addPrism: true })
+            setLens({ ...lens, addPrism: true });
+
+            setalert(true);
+            setalertMessage('Adding Prism require additional surfacing: +£15');
         }
 
     }
-
 
 
 
@@ -235,6 +243,13 @@ export default function EnterPrescription() {
 
             {/* Table */}
             <div className="mt-8 overflow-x-auto">
+
+
+                <Warn alert={alert} setalert={setalert}>
+                    {alertMessage}
+                </Warn>
+
+
                 <table className="w-full border text-center">
                     <thead className="bg-gray-200">
                         <tr>
