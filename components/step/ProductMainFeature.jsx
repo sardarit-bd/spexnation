@@ -3,10 +3,10 @@
 import ProductDetails from "../../components/ProductDetails";
 import ProductGallery from "../../components/ProductGallery";
 import useStepStore from "../../store/useStepStore";
-import LensCategory from "./LensCategory";
-import Lenspackage from "./Lenspackage";
+import LensThicknes from "./LensThicknes";
 import PDType from "./PDType";
 import PrescriptionInputer from "./PrescriptionInputer";
+import ProtectiveCoatings from "./ProtectiveCoatings";
 import Review from "./Review";
 import Transition from "./Transition";
 import VisionType from "./VissionType";
@@ -23,7 +23,7 @@ const ProductMainFeature = () => {
 
             {/* Details */}
             {
-                step === 1 ? <PrescriptionInputer /> : step === 2 ? <PDType /> : step === 3 ? <VisionType /> : step === 4 ? <LensCategory /> : step === 5 ? <Lenspackage /> : step === 6 ? <Transition /> : step === 7 ? <Review /> : <ProductDetails />
+                step === 1 ? <VisionType /> : step === 2 ? <PrescriptionInputer /> : step === 3 ? <PDType /> : step === 4 ? <LensThicknes /> : step === 5 ? <ProtectiveCoatings /> : step === 6 ? <Transition /> : step === 7 ? <Review /> : <ProductDetails />
             }
 
         </div>

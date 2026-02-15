@@ -1,13 +1,15 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { toast, Toaster } from "react-hot-toast";
+import { RxCross2 } from "react-icons/rx";
 import { TiTick } from "react-icons/ti";
 import ADDNumberOPtions from "../../Data/ADDNumberOPtions";
 import AxisNumberOPtion from "../../Data/AxisNumberOPtion";
 import CyLNumberOPtions from "../../Data/CyLNumberOPtions";
 import PrismNumberOption from "../../Data/PrismNumberOPtion";
 import SpaNumberOptions from "../../Data/SpaNumberOptions";
+import clearFileInput from "../../lib/clearFileInput";
 import fileToBase64 from "../../lib/fileToBase64";
 import useLenseStore from "../../store/useLenseStore";
 import useStepStore from "../../store/useStepStore";
@@ -23,6 +25,7 @@ export default function EnterPrescription() {
 
     const { step, setStep } = useStepStore();
     const { lens, setLens } = useLenseStore();
+    const fileInputRef = useRef(null);
     const [confirm, setconfirm] = useState(false);
     const [isLoading, setisLoading] = useState(false);
     const [img, setimg] = useState('');
@@ -32,13 +35,16 @@ export default function EnterPrescription() {
 
 
     //handle next function is here
-    const handleNext = () => {
+    const handleNext = (e) => {
+
+
+        e.preventDefault();
 
         if (confirm) {
             setisLoading(true);
             setTimeout(() => {
                 setisLoading(false);
-                setStep(2);
+                setStep(3);
             }, 700);
         } else {
             toast.error("Please select all option and Confirm");
@@ -145,9 +151,8 @@ export default function EnterPrescription() {
     // handle remove function is here
     function handleRemoved(e) {
         e.preventDefault();
-
-
-        setimg('');
+        clearFileInput(fileInputRef);
+        setimg(null);
     }
 
 
@@ -186,7 +191,6 @@ export default function EnterPrescription() {
 
 
 
-
     // handle add function is here
     function handleAdd(e, eye) {
 
@@ -222,7 +226,9 @@ export default function EnterPrescription() {
                     <label className="text-md text-gray-600/80">Upload your Prescription</label>
                     <div className="flex items-center gap-2 mt-2 h-full">
                         <input
+                            ref={fileInputRef}
                             type="file"
+                            accept="image/png, image/jpeg"
                             onChange={(e) => { handleFileChanges(e) }}
                             className="w-full border p-2 rounded-md focus:outline-yellow-500/60 text-gray-700/80 cursor-pointer"
                         />
@@ -231,8 +237,8 @@ export default function EnterPrescription() {
                                 <div className="relative w-auto h-full border border-gray-200 text-gray-500/40 bg-gray-200 rounded-md">
                                     <Image src={img} width={50} height={50} alt="prescription" />
 
-                                    <div onClick={(e) => { handleRemoved(e) }} className="absolute top-0 right-0 w-4 h-4 bg-red-900 text-white translate-x-1/2 -translate-y-1/2 rounded-full flex items-center justify-center cursor-pointer">
-                                        x
+                                    <div onClick={(e) => { handleRemoved(e) }} className="absolute top-0 right-0 w-4 h-4 bg-yellow-600 text-white translate-x-1/2 -translate-y-1/2 rounded-full flex items-center justify-center cursor-pointer">
+                                        <RxCross2 />
                                     </div>
                                 </div>
                             )
@@ -278,7 +284,7 @@ export default function EnterPrescription() {
                                         value={eye == "od" ? lens.sph.rightSph : lens.sph.leftSph}
                                         className="border p-2 rounded-md focus:outline-yellow-500/60 cursor-pointer"
                                     >
-                                        <option value={""} className="text-md text-gray-600 font-medium">SPH</option>
+                                        <option value={"0"} className="text-md text-gray-600 font-medium">SPH</option>
                                         {SpaNumberOptions?.map((n) => (
                                             <option className="text-md text-gray-600 font-medium" key={n} value={n}>{n}</option>
                                         ))}
@@ -293,9 +299,9 @@ export default function EnterPrescription() {
                                         value={eye == "od" ? lens.cyl.rightCyl : lens.cyl.leftCyl}
                                         className="border p-2 rounded-md focus:outline-yellow-500/60 cursor-pointer"
                                     >
-                                        <option value={""} className="text-md text-gray-600 font-medium">CYL</option>
+                                        <option value={"0"} className="text-md text-gray-600/90 font-medium">CYL</option>
                                         {CyLNumberOPtions.map((n) => (
-                                            <option className="text-md text-gray-600 font-medium" key={n} value={n}>{n}</option>
+                                            <option className="text-md text-gray-600/90 font-medium" key={n} value={n}>{n}</option>
                                         ))}
                                     </select>
                                 </td>
@@ -305,13 +311,17 @@ export default function EnterPrescription() {
                                 <td className="p-2">
                                     <select
 
+
+                                        disabled={eye == "od" ? lens.cyl.rightCyl == "" : lens.cyl.leftCyl == ""}
+
+
                                         onChange={(e) => { handleAxis(e, eye) }}
 
                                         value={eye == "od" ? lens.axis.rightAxis : lens.axis.leftAxis}
 
-                                        className="border p-2 rounded-md focus:outline-yellow-500/60 cursor-pointer"
+                                        className="border p-2 rounded-md focus:outline-yellow-500/60 cursor-pointer disabled:cursor-not-allowed disabled:bg-gray-300 disabled:text-gray-600"
                                     >
-                                        <option value={""} className="text-md text-gray-600 font-medium">Axis</option>
+                                        <option value={"0"} className="text-md text-gray-600 font-medium">Axis</option>
                                         {AxisNumberOPtion.map((n) => (
                                             <option className="text-md text-gray-600 font-medium" key={n} value={n}>{n}</option>
                                         ))}
@@ -327,7 +337,7 @@ export default function EnterPrescription() {
                                         value={eye == "od" ? lens.add.rightAdd : lens.add.leftAdd}
                                         className="border p-2 rounded-md focus:outline-yellow-500/60 cursor-pointer  disabled:cursor-not-allowed disabled:bg-gray-300 disabled:text-gray-600"
                                     >
-                                        <option value={""} className="text-md text-gray-600 font-medium">ADD</option>
+                                        <option value={"0"} className="text-md text-gray-600 font-medium">ADD</option>
                                         {ADDNumberOPtions.map((n) => (
                                             <option className="text-md text-gray-600 font-medium" key={n} value={n}>{n}</option>
                                         ))}
@@ -496,7 +506,7 @@ export default function EnterPrescription() {
             {/* Footer */}
             <div className="mt-8 flex items-center justify-between" >
                 <button
-                    onClick={handleNext}
+                    onClick={(e) => { handleNext(e) }}
                     className="w-full px-6 py-3 pBg text-white font-bold rounded-md disabled:opacity-50 flex items-center justify-center"
                 >
                     {

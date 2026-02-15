@@ -33,7 +33,7 @@ const options = [
 ];
 
 
-export default function LensCategory() {
+export default function LensThicknes() {
 
     const [selected, setSelected] = useState(null);
     const { step, setStep } = useStepStore();
@@ -42,9 +42,15 @@ export default function LensCategory() {
     const [disAndRecommanded, setdisAndRecommanded] = useState({});
 
 
+    console.log(lens);
+
+
 
     //handle next function is here
-    const handleNext = () => {
+    const handleNext = (e) => {
+
+        e.preventDefault();
+
         setisLoading(true);
 
         setTimeout(() => {
@@ -76,7 +82,7 @@ export default function LensCategory() {
             {/* Header */}
             <div className="flex items-center justify-between">
                 <BackBtn step={step} setStep={setStep} />
-                <CircularProgress initialValue={45} />
+                <CircularProgress initialValue={60} />
             </div>
 
             <h2 className="text-2xl font-semibold mb-4">Lens Thickness</h2>
@@ -136,7 +142,7 @@ export default function LensCategory() {
             <div className="space-y-3 mt-6">
                 <button
 
-                    onClick={() => { handleNext() }} className="w-full pBg text-white font-bold py-4 rounded-lg transition flex items-center justify-center gap-2">
+                    onClick={(e) => { handleNext(e) }} className="w-full pBg text-white font-bold py-4 rounded-lg transition flex items-center justify-center gap-2">
                     {
                         isLoading ? <Loading /> : "Next"
                     }

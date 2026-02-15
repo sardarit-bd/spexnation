@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useState } from "react";
+import useLenseStore from "../../store/useLenseStore";
 import useStepStore from "../../store/useStepStore";
 import Loading from "../Loading";
 import BackBtn from "./BackBtn";
@@ -39,21 +40,38 @@ const options = [
 
 export default function Transition() {
 
-    const [selected, setSelected] = useState(null);
     const { step, setStep } = useStepStore();
     const [isLoading, setisLoading] = useState(false);
+    const { lens, setLens } = useLenseStore();
+
+
+    console.log(lens);
+
+
+    // handle transition btn click function is here
+    const handleTransitionClick = (e, opt) => {
+
+        e.preventDefault();
+
+        setLens({ ...lens, Transition: opt.id })
+    }
 
 
 
 
     //handle next function is here
-    const handleNext = () => {
+    const handleNext = (e) => {
+
+        e.preventDefault();
+
         setisLoading(true);
         setTimeout(() => {
             setisLoading(false);
             setStep(7);
         }, 700);
     }
+
+
 
 
 
@@ -70,7 +88,7 @@ export default function Transition() {
             {/* Header */}
             <div className="flex items-center justify-between">
                 <BackBtn step={step} setStep={setStep} />
-                <CircularProgress initialValue={80} />
+                <CircularProgress initialValue={95} />
             </div>
 
             <h2 className="text-2xl font-semibold mb-4">Transition and Final Touches</h2>
@@ -84,9 +102,9 @@ export default function Transition() {
                 {options.map((opt, index) => (
                     <button
                         key={opt.id}
-                        onClick={() => setSelected(opt.id)}
+                        onClick={(e) => { handleTransitionClick(e, opt) }}
                         className={`w-full bg-gray-100 text-left p-4 rounded-md border transition-all
-              ${selected === opt.id
+              ${lens?.Transition === opt.id
                                 ? "border-yellow-500 bg-yellow-50"
                                 : "border-gray-200 hover:border-yellow-500/80"
                             }`}
@@ -115,7 +133,7 @@ export default function Transition() {
             <div className="space-y-3 mt-6">
                 <button
 
-                    onClick={() => { handleNext() }} className="w-full pBg text-white font-bold py-4 rounded-lg transition flex items-center justify-center gap-2">
+                    onClick={(e) => { handleNext(e) }} className="w-full pBg text-white font-bold py-4 rounded-lg transition flex items-center justify-center gap-2">
                     {
                         isLoading ? <Loading /> : "Next"
                     }

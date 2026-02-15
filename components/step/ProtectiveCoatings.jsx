@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useState } from "react";
+import useLenseStore from "../../store/useLenseStore";
 import useStepStore from "../../store/useStepStore";
 import Loading from "../Loading";
 import BackBtn from "./BackBtn";
@@ -11,7 +12,7 @@ const options = [
     {
         id: "atni-glare",
         title: "Anti Glare",
-        description: "",
+        description: "Anti Glare is used as a protective coating",
         price: "£00",
     },
     {
@@ -33,22 +34,35 @@ const options = [
         title: "Clear UV Protective Coating",
         description: "ODAK Clean&CleAR 1.6 lens with anti-reflective, scratch-resistant, water repellent coating, extra durability, Anti-UV, and greater contrast.",
         price: "£29",
-    }
+    },
+    {
+        id: "no-coating",
+        title: "No Protective Coating",
+        description: "No Protective Coating is used",
+        price: "£00",
+    },
 ];
 
 
-export default function Lenspackage() {
+export default function ProtectiveCoatings() {
 
-    const [selected, setSelected] = useState(null);
+
     const { step, setStep } = useStepStore();
     const [isLoading, setisLoading] = useState(false);
     const [seemore, setseemore] = useState(false);
+    const { lens, setLens } = useLenseStore();
 
+
+
+    console.log(lens);
 
 
 
     //handle next function is here
-    const handleNext = () => {
+    const handleNext = (e) => {
+
+        e.preventDefault();
+
         setisLoading(true);
         setTimeout(() => {
             setisLoading(false);
@@ -71,7 +85,7 @@ export default function Lenspackage() {
             {/* Header */}
             <div className="flex items-center justify-between">
                 <BackBtn step={step} setStep={setStep} />
-                <CircularProgress initialValue={65} />
+                <CircularProgress initialValue={75} />
             </div>
 
             <h2 className="text-2xl font-semibold mb-4">Protective Coatings</h2>
@@ -81,9 +95,9 @@ export default function Lenspackage() {
                 {options.map((opt, index) => (
                     <button
                         key={opt.id}
-                        onClick={() => setSelected(opt.id)}
+                        onClick={() => { setLens({ ...lens, ProtectiveCoatings: opt.id }) }}
                         className={`w-full bg-gray-100 text-left p-4 rounded-md border transition-all
-              ${selected === opt.id
+              ${lens?.ProtectiveCoatings === opt.id
                                 ? "border-yellow-500 bg-yellow-50"
                                 : "border-gray-200 hover:border-yellow-500/80"
                             }`}
@@ -111,7 +125,7 @@ export default function Lenspackage() {
                         }
 
 
-                        <button onClick={() => { setseemore(!seemore) }} className="text-xs font-semibold text-gray-600 mt-1 bg-green-100 border border-green-300 py-1 px-2 rounded-md">{seemore ? "See More" : "See Less"}</button>
+                        {/* <button onClick={() => { setseemore(!seemore) }} className="text-xs font-semibold text-gray-600 mt-1 bg-green-100 border border-green-300 py-1 px-2 rounded-md">{seemore ? "See More" : "See Less"}</button> */}
 
                     </button>
                 ))}
@@ -135,7 +149,7 @@ export default function Lenspackage() {
             <div className="space-y-3 mt-6">
                 <button
 
-                    onClick={() => { handleNext() }} className="w-full pBg text-white font-bold py-4 rounded-lg transition flex items-center justify-center gap-2">
+                    onClick={(e) => { handleNext(e) }} className="w-full pBg text-white font-bold py-4 rounded-lg transition flex items-center justify-center gap-2">
                     {
                         isLoading ? <Loading /> : "Next"
                     }

@@ -52,17 +52,22 @@ export default function VisionType() {
 
 
 
+    console.log(lens);
+
 
 
     //handle next function is here
-    const handleNext = () => {
+    const handleNext = (e) => {
+
+
+        e.preventDefault();
 
 
         if (lens?.LenseUseCase) {
             setisLoading(true);
             setTimeout(() => {
                 setisLoading(false);
-                setStep(4);
+                setStep(2);
             }, 700);
         } else {
             toast.error("Please select an option");
@@ -133,7 +138,7 @@ export default function VisionType() {
             <div className="space-y-3 mt-6">
                 <button
 
-                    onClick={() => { handleNext() }} className="w-full pBg text-white font-bold py-4 rounded-lg transition flex items-center justify-center gap-2">
+                    onClick={(e) => { handleNext(e) }} className="w-full pBg text-white font-bold py-4 rounded-lg transition flex items-center justify-center gap-2">
                     {
                         isLoading ? <Loading /> : "Next"
                     }

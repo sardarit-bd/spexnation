@@ -19,10 +19,40 @@ export default function PDType() {
     const [isLoading, setisLoading] = useState(false);
 
 
+    console.log(lens);
+
+
+
+    // handle single PD function is here
+    const hanldeSinglePD = (e) => {
+        setLens({
+            ...lens,
+            pdType: 'spd',
+            dualPD: {
+                leftPD: "",
+                rightPD: "",
+            }
+        })
+    }
+
+
+
+    // handle dual PD function is here
+    const handleDualPD = (e) => {
+        setLens({
+            ...lens,
+            pdType: 'dpd',
+            singlePD: "",
+        })
+    }
+
 
 
     //handle next function is here
-    const handleNext = () => {
+    const handleNext = (e) => {
+
+
+        e.preventDefault();
 
 
         if (lens?.pdType) {
@@ -32,7 +62,7 @@ export default function PDType() {
                     setisLoading(true);
                     setTimeout(() => {
                         setisLoading(false);
-                        setStep(3);
+                        setStep(4);
                     }, 700);
                 } else {
                     toast.error("Please select Single PD option");
@@ -43,7 +73,7 @@ export default function PDType() {
                     setisLoading(true);
                     setTimeout(() => {
                         setisLoading(false);
-                        setStep(3);
+                        setStep(4);
                     }, 700);
                 } else {
                     toast.error("Please select Dual PD option, Right and Left Both");
@@ -64,7 +94,6 @@ export default function PDType() {
 
 
 
-
     return (
         <motion.div
             initial={{ opacity: 0, x: -50 }}
@@ -78,7 +107,7 @@ export default function PDType() {
             {/* Header */}
             <div className="flex items-center justify-between">
                 <BackBtn step={step} setStep={setStep} />
-                <CircularProgress initialValue={15} />
+                <CircularProgress initialValue={45} />
             </div>
 
             <h2 className="text-2xl font-semibold mb-4">Select PD Type</h2>
@@ -89,8 +118,8 @@ export default function PDType() {
                 <div className="flex flex-col items-start gap-2">
                     <h2 className="font-semibold text-lg text-gray-600">PD Type: </h2>
                     <div className="flex gap-3 items-center">
-                        <button onClick={() => { setLens({ ...lens, pdType: 'spd' }) }} className={` px-2 py-1 ${lens?.pdType === 'spd' ? 'sBg text-white' : 'bg-gray-300 text-gray-600'}`}>Single PD</button>
-                        <button onClick={() => { setLens({ ...lens, pdType: 'dpd' }) }} className={` px-2 py-1 ${lens?.pdType === 'dpd' ? 'sBg text-white' : 'bg-gray-300 text-gray-600'}`}>Dual PD</button>
+                        <button onClick={(e) => { hanldeSinglePD(e) }} className={` px-2 py-1 ${lens?.pdType === 'spd' ? 'sBg text-white' : 'bg-gray-300 text-gray-600'}`}>Single PD</button>
+                        <button onClick={(e) => { handleDualPD(e) }} className={` px-2 py-1 ${lens?.pdType === 'dpd' ? 'sBg text-white' : 'bg-gray-300 text-gray-600'}`}>Dual PD</button>
                     </div>
                 </div>
                 <div className="flex items-center gap-6">
@@ -101,7 +130,7 @@ export default function PDType() {
                             <>
 
                                 <div className="flex flex-col items-start gap-1 mt-5 w-full">
-                                    <h2 className="font-semibold text-sm text-gray-600">{lens?.pdType === 'spd' ? `Single PD (MM)` : `Right PD (MM)`} </h2>
+                                    <h2 className="font-semibold text-sm text-gray-600">{`Right PD (MM)`} </h2>
                                     <div className="w-full">
                                         <select
                                             value={lens?.dualPD.rightPD}
@@ -140,7 +169,7 @@ export default function PDType() {
                         ) : (
 
                             <div className="flex flex-col items-start gap-1 mt-5 w-full">
-                                <h2 className="font-semibold text-sm text-gray-600">{lens?.pdType === 'spd' ? `Single PD (MM)` : `Right PD (MM)`} </h2>
+                                <h2 className="font-semibold text-sm text-gray-600">{`Single PD (MM)`} </h2>
                                 <div className="w-full">
                                     <select
                                         value={lens?.singlePD}
@@ -168,7 +197,7 @@ export default function PDType() {
             <div className="space-y-3 mt-6">
                 <button
 
-                    onClick={() => { handleNext() }} className="w-full pBg text-white font-bold py-4 rounded-lg transition flex items-center justify-center gap-2">
+                    onClick={(e) => { handleNext(e) }} className="w-full pBg text-white font-bold py-4 rounded-lg transition flex items-center justify-center gap-2">
                     {
                         isLoading ? <Loading /> : "Next"
                     }
