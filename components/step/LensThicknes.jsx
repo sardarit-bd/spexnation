@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import Image from 'next/image';
 import { useEffect, useState } from "react";
+import toast, { Toaster } from 'react-hot-toast';
 import disableAndRecommandedLogic from "../../lib/disableAndRecommandedLogic";
 import useLenseStore from "../../store/useLenseStore";
 import useStepStore from "../../store/useStepStore";
@@ -42,14 +43,18 @@ export default function LensThicknes() {
     const [disAndRecommanded, setdisAndRecommanded] = useState({});
 
 
-    console.log(lens);
-
-
-
     //handle next function is here
     const handleNext = (e) => {
 
         e.preventDefault();
+
+
+        if (!lens?.LenseThickness) {
+            toast.error("Must be select Lens Thickness");
+            return;
+        }
+
+
 
         setisLoading(true);
 
@@ -122,7 +127,7 @@ export default function LensThicknes() {
 
 
                         {
-                            disAndRecommanded?.disables?.includes(opt.id) && <NotavailableToolTip />
+                            disAndRecommanded?.disables?.includes(opt.id) && <NotavailableToolTip text="Not available in your prescription" />
                         }
                     </button>
                 ))}
@@ -148,8 +153,7 @@ export default function LensThicknes() {
                     }
                 </button>
             </div>
-
-
+            <Toaster position="bottom-center" />
         </motion.div>
     );
 }

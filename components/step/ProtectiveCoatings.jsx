@@ -1,7 +1,9 @@
 'use client'
 
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
+import NotavailableToolTip from "../../components/step/NotavailableToolTip";
 import useLenseStore from "../../store/useLenseStore";
 import useStepStore from "../../store/useStepStore";
 import Loading from "../Loading";
@@ -13,34 +15,34 @@ const options = [
         id: "atni-glare",
         title: "Anti Glare",
         description: "Anti Glare is used as a protective coating",
-        price: "£00",
+        price: "25",
     },
     {
         id: "hydrophobic-anti-glare",
         title: "Hydrophobic Anti-Glare",
         description:
             "ODAK Clean&CleAR 1.6 lens with anti-reflective, scratch-resistant, water repellent coating, extra durability, Anti-UV, and greater contrast.",
-        price: "£39",
+        price: "35",
     },
     {
         id: "blue-light-filter",
         title: "Blue Light Filter",
         description:
             "ODAK Clean&CleAR 1.6 lens with anti-reflective, scratch-resistant, water repellent coating, extra durability, Anti-UV, and greater contrast.",
-        price: "£99",
+        price: "29",
     },
     {
         id: "clear-uv-protective-coating",
         title: "Clear UV Protective Coating",
         description: "ODAK Clean&CleAR 1.6 lens with anti-reflective, scratch-resistant, water repellent coating, extra durability, Anti-UV, and greater contrast.",
-        price: "£29",
+        price: "15",
     },
-    {
-        id: "no-coating",
-        title: "No Protective Coating",
-        description: "No Protective Coating is used",
-        price: "£00",
-    },
+    // {
+    //     id: "no-coating",
+    //     title: "No Protective Coating",
+    //     description: "No Protective Coating is used",
+    //     price: "0",
+    // },
 ];
 
 
@@ -51,10 +53,36 @@ export default function ProtectiveCoatings() {
     const [isLoading, setisLoading] = useState(false);
     const [seemore, setseemore] = useState(false);
     const { lens, setLens } = useLenseStore();
-
+    const [seemoreIndex, setseemoreIndex] = useState(null);
+    const [disableingState, setdisableingState] = useState([]);
 
 
     console.log(lens);
+
+    console.log(lens?.ProtectiveCoatings?.length);
+
+
+    // protective coating automaticely selected is here
+    const automaticallySelected = (() => {
+
+        if (lens?.LenseThickness == "1.60" || lens?.LenseThickness == "1.67") {
+
+            setLens({
+                ...lens,
+                ProtectiveCoatings: ["hydrophobic-anti-glare"]
+            });
+            setdisableingState(["hydrophobic-anti-glare"]);
+        }
+        return;
+    })
+
+
+
+    useEffect(() => {
+
+        automaticallySelected();
+
+    }, []);
 
 
 
@@ -63,12 +91,49 @@ export default function ProtectiveCoatings() {
 
         e.preventDefault();
 
+
+        if (lens?.ProtectiveCoatings?.length < 1) {
+            toast.error("Must be select Protective Coating Option");
+            return;
+        }
+
         setisLoading(true);
         setTimeout(() => {
             setisLoading(false);
             setStep(6);
         }, 700);
     }
+
+
+
+    // hanlde protective coating click
+    const handleProtectiveCoatingClick = (e, opt) => {
+        e.preventDefault();
+
+
+        if (lens.ProtectiveCoatings.includes(opt.id)) {
+            setLens({
+                ...lens,
+                ProtectiveCoatings: lens.ProtectiveCoatings.filter((id) => id !== opt.id)
+            });
+            return;
+        }
+
+        setLens({
+            ...lens,
+            ProtectiveCoatings: [...lens.ProtectiveCoatings, opt.id]
+        });
+
+    }
+
+
+
+    // handle see more function is here
+    const handleSeeMore = (index) => {
+        setseemore(!seemore);
+        setseemoreIndex(index);
+    }
+
 
 
 
@@ -95,22 +160,23 @@ export default function ProtectiveCoatings() {
                 {options.map((opt, index) => (
                     <button
                         key={opt.id}
-                        onClick={() => { setLens({ ...lens, ProtectiveCoatings: opt.id }) }}
-                        className={`w-full bg-gray-100 text-left p-4 rounded-md border transition-all
-              ${lens?.ProtectiveCoatings === opt.id
+                        disabled={disableingState?.includes(opt.id)}
+                        onClick={(e) => { handleProtectiveCoatingClick(e, opt) }}
+                        className={`relative group w-full bg-gray-100 text-left p-4 rounded-md border transition-all disabled:cursor-not-allowed disabled:bg-gray-300 disabled:text-gray-600 disabled:border-gray-200
+              ${lens?.ProtectiveCoatings?.includes(opt.id)
                                 ? "border-yellow-500 bg-yellow-50"
                                 : "border-gray-200 hover:border-yellow-500/80"
                             }`}
                     >
                         <div className="flex items-center justify-between">
                             <h3 className="font-semibold text-gray-900">{opt.title}</h3>
-                            <h2 className="text-xl font-bold">{opt.price}</h2>
+                            <h2 className="text-xl font-bold">£{opt.price}</h2>
                         </div>
                         <p className="text-sm text-gray-600 mt-1">{opt.description}</p>
 
 
                         {
-                            seemore && (
+                            seemore && seemoreIndex === index && (
                                 <div className="mt-6">
                                     <h3>Benefits</h3>
                                     <ul className="list-disc ml-4 mb-3 text-sm">
@@ -125,7 +191,24 @@ export default function ProtectiveCoatings() {
                         }
 
 
-                        {/* <button onClick={() => { setseemore(!seemore) }} className="text-xs font-semibold text-gray-600 mt-1 bg-green-100 border border-green-300 py-1 px-2 rounded-md">{seemore ? "See More" : "See Less"}</button> */}
+                        {/* <button onClick={() => { handleSeeMore(index) }} className="text-xs font-semibold text-gray-600 mt-1 bg-green-100 border border-green-300 py-1 px-2 rounded-md flex items-center gap-1">
+                            <span>
+                                {seemore && seemoreIndex === index ? "See Less" : "See More"}
+                            </span>
+                            <span>
+                                {seemore && seemoreIndex === index ? <FaArrowUp /> : <FaArrowDown />}
+                            </span>
+                        </button> */}
+
+
+
+
+
+
+                        {
+                            disableingState?.includes(opt.id) && <NotavailableToolTip text="Already included with your selected lenses" />
+                        }
+
 
                     </button>
                 ))}
@@ -156,7 +239,7 @@ export default function ProtectiveCoatings() {
                 </button>
             </div>
 
-
+            <Toaster position="bottom-center" />
         </motion.div>
     );
 }

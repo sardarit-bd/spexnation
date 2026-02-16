@@ -2,38 +2,41 @@
 
 import { motion } from "framer-motion";
 import { useState } from "react";
+import toast, { Toaster } from 'react-hot-toast';
 import useLenseStore from "../../store/useLenseStore";
 import useStepStore from "../../store/useStepStore";
 import Loading from "../Loading";
 import BackBtn from "./BackBtn";
 import CircularProgress from "./CircularProgress";
+import ColorAndDarkness from "./ColorAndDarkness";
+
 
 const options = [
     {
         id: "clear",
         title: "Clear",
-        description: "",
-        price: "£00",
+        description: "No Transitions or Final touches",
+        price: "0",
     },
     {
         id: "transitions",
         title: "Transitions",
         description:
             "ODAK Clean&CleAR 1.6 lens with anti-reflective, scratch-resistant, water repellent coating, extra durability, Anti-UV, and greater contrast.",
-        price: "£69",
+        price: "79",
     },
     {
         id: "transitionxtraactive",
         title: "Transition XtraActive",
         description:
             "ODAK Clean&CleAR 1.6 lens with anti-reflective, scratch-resistant, water repellent coating, extra durability, Anti-UV, and greater contrast.",
-        price: "£99",
+        price: "99",
     },
     {
         id: "tint",
         title: "Tint",
         description: "ODAK Clean&CleAR 1.6 lens with anti-reflective, scratch-resistant, water repellent coating, extra durability, Anti-UV, and greater contrast.",
-        price: "£49",
+        price: "12",
     }
 ];
 
@@ -64,13 +67,19 @@ export default function Transition() {
 
         e.preventDefault();
 
+
+        if (!lens?.Transition) {
+            toast.error("Must be select Transition and Final Touches option");
+            return;
+        }
+
+
         setisLoading(true);
         setTimeout(() => {
             setisLoading(false);
             setStep(7);
         }, 700);
     }
-
 
 
 
@@ -111,9 +120,19 @@ export default function Transition() {
                     >
                         <div className="flex items-center justify-between">
                             <h3 className="font-semibold text-gray-900">{opt.title}</h3>
-                            <h2 className="text-xl font-bold">{opt.price}</h2>
+                            <h2 className="text-xl font-bold">£{opt.price}</h2>
                         </div>
                         <p className="text-sm text-gray-600 mt-1">{opt.description}</p>
+
+
+                        {
+                            lens?.Transition === opt.id && (
+                                <ColorAndDarkness />
+                            )
+                        }
+
+
+
                     </button>
                 ))}
             </div>
@@ -140,7 +159,7 @@ export default function Transition() {
                 </button>
             </div>
 
-
+            <Toaster position="bottom-center" />
         </motion.div>
     );
 }

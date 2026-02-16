@@ -19,8 +19,6 @@ export default function PDType() {
     const [isLoading, setisLoading] = useState(false);
 
 
-    console.log(lens);
-
 
 
     // handle single PD function is here

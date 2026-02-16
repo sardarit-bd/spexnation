@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import Image from 'next/image';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import useLenseStore from "../../store/useLenseStore";
 import useStepStore from "../../store/useStepStore";
@@ -51,8 +51,44 @@ export default function VisionType() {
 
 
 
+    useEffect(() => {
 
-    console.log(lens);
+        setLens({
+            ...lens,
+            sph: {
+                leftSph: "0",
+                rightSph: "0",
+            },
+            cyl: {
+                leftCyl: "0",
+                rightCyl: "0",
+            },
+            axis: {
+                leftAxis: "0",
+                rightAxis: "0",
+            },
+            add: {
+                leftAdd: "0",
+                rightAdd: "0",
+            },
+
+            addPrism: false,
+            leftPrism: {
+                vertical: "0",
+                vBaseDirection: "N/A",
+                horizontal: "0",
+                hBaseDirection: "N/A",
+            },
+            rightPrism: {
+                vertical: "0",
+                vBaseDirection: "N/A",
+                horizontal: "0",
+                hBaseDirection: "N/A",
+            },
+        })
+
+    }, [])
+
 
 
 
@@ -70,13 +106,12 @@ export default function VisionType() {
                 setStep(2);
             }, 700);
         } else {
-            toast.error("Please select an option");
+            toast.error("Must be select Glasses Use Case");
             return;
         }
 
 
     }
-
 
 
 

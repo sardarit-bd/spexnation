@@ -28,7 +28,6 @@ export default function EnterPrescription() {
     const fileInputRef = useRef(null);
     const [confirm, setconfirm] = useState(false);
     const [isLoading, setisLoading] = useState(false);
-    const [img, setimg] = useState('');
     const [alert, setalert] = useState(false);
     const [alertMessage, setalertMessage] = useState('');
 
@@ -37,21 +36,132 @@ export default function EnterPrescription() {
     //handle next function is here
     const handleNext = (e) => {
 
-
         e.preventDefault();
 
-        if (confirm) {
-            setisLoading(true);
-            setTimeout(() => {
-                setisLoading(false);
-                setStep(3);
-            }, 700);
-        } else {
-            toast.error("Please select all option and Confirm");
+        if (!lens?.prescriptionImage) {
+            toast.error("Please. Upload Prescription");
             return;
         }
-    }
 
+
+        // od or os validation is here
+        if (lens?.sph.rightSph == '0' && lens?.sph.leftSph == '0') {
+            toast.error("Must be select OD or OS Sphere");
+            return;
+        } else {
+
+
+
+            // if put value in od
+            if (lens?.sph.leftSph == "0") {
+
+                // check spare value of right/od
+                if (lens?.sph.rightSph != "0") {
+
+                    // check cylinder value of right/od
+                    if (lens.cyl.rightCyl == '0') {
+                        toast.error("Please. Enter Right Cylinder");
+                        return;
+                    } else {
+
+                        // check axis value of right/od
+                        if (lens?.axis.rightAxis == '0') {
+                            toast.error("Please. Enter Right Axis");
+                            return;
+                        }
+                    }
+
+                } else {
+                    toast.error("Please. Enter Right Sphere");
+                    return;
+                }
+            } else {
+
+                // check spare value of left/os
+                if (lens?.sph.leftSph != "0") {
+
+                    // check cylinder value of left/os
+                    if (lens.cyl.leftCyl == '0') {
+                        toast.error("Please. Enter Left Cylinder");
+                        return;
+                    } else {
+
+                        // check axis value of left/os
+                        if (lens?.axis.leftAxis == '0') {
+                            toast.error("Please. Enter Left Axis");
+                            return;
+                        }
+                    }
+
+                } else {
+                    toast.error("Please. Enter Left Sphere");
+                    return;
+                }
+
+            }
+
+        }
+
+
+
+
+
+        // prism validation is here
+        if (lens?.addPrism) {
+
+
+            // od check
+            if (lens.rightPrism?.vertical == "0") {
+                toast.error("Please. Enter Right Prism Vertical");
+                return;
+            } else if (lens.rightPrism?.vBaseDirection == "N/A") {
+                toast.error("Please. Select Right Prism Vertical Base Direction");
+                return;
+            } else if (lens.rightPrism?.horizontal == "0") {
+                toast.error("Please. Enter Right Prism Horizontal");
+                return;
+            } else if (lens.rightPrism?.hBaseDirection == "N/A") {
+                toast.error("Please. Select Right Prism Horizontal Base Direction");
+                return;
+            }
+
+
+            // os check
+            if (lens.leftPrism?.vertical == "0") {
+                toast.error("Please. Enter Left Prism Vertical");
+                return;
+            } else if (lens.leftPrism?.vBaseDirection == "N/A") {
+                toast.error("Please. Select Left Prism Vertical Base Direction");
+                return;
+            } else if (lens.leftPrism?.horizontal == "0") {
+                toast.error("Please. Enter Left Prism Horizontal");
+                return;
+            } else if (lens.leftPrism?.hBaseDirection == "N/A") {
+                toast.error("Please. Select Left Prism Horizontal Base Direction");
+                return;
+            }
+
+        }
+
+
+
+
+
+
+
+        // final comfirm validation
+        if (!confirm) {
+            toast.error("Please. Confirm the prescription is valid");
+            return;
+        }
+
+        setisLoading(true);
+        setTimeout(() => {
+            setisLoading(false);
+            setStep(3);
+        }, 700);
+
+    }
 
 
     // handleSHP function is here
@@ -68,6 +178,36 @@ export default function EnterPrescription() {
     function handleCYL(e, eye) {
 
         e.preventDefault();
+
+
+        // remove depanded value
+        if (e.target.value == "0") {
+            eye == "od" ? setLens({
+                ...lens,
+                cyl: {
+                    ...lens.cyl,
+                    rightCyl: e.target.value,
+                },
+                axis: {
+                    ...lens.axis,
+                    rightAxis: "0",
+                }
+            }) : setLens({
+                ...lens,
+                cyl: {
+                    ...lens.cyl,
+                    leftCyl: e.target.value,
+                },
+                axis: {
+                    ...lens.axis,
+                    leftAxis: "0",
+                }
+            })
+
+
+            return;
+        }
+
 
         if (Number(e.target.value) > "+2.00" || Number(e.target.value) < "-2.00") {
             setalert(true);
@@ -98,6 +238,30 @@ export default function EnterPrescription() {
 
         e.preventDefault();
 
+
+        // remove depanded value
+        if (e.target.value == "0") {
+            eye == "od" ? setLens({
+                ...lens,
+                rightPrism: {
+                    ...lens.rightPrism,
+                    vertical: e.target.value,
+                    vBaseDirection: "N/A",
+                }
+            }) : setLens({
+                ...lens,
+                leftPrism: {
+                    ...lens.leftPrism,
+                    vertical: e.target.value,
+                    vBaseDirection: "N/A",
+
+                }
+            })
+            return;
+        }
+
+
+
         eye == "od" ? setLens({ ...lens, rightPrism: { ...lens.rightPrism, vertical: e.target.value } }) : setLens({ ...lens, leftPrism: { ...lens.leftPrism, vertical: e.target.value } })
 
     }
@@ -121,6 +285,31 @@ export default function EnterPrescription() {
 
         e.preventDefault();
 
+
+
+        // remove depanded value
+        if (e.target.value == "0") {
+            eye == "od" ? setLens({
+                ...lens,
+                rightPrism: {
+                    ...lens.rightPrism,
+                    horizontal: e.target.value,
+                    hBaseDirection: "N/A",
+                }
+            }) : setLens({
+                ...lens,
+                leftPrism: {
+                    ...lens.leftPrism,
+                    horizontal: e.target.value,
+                    hBaseDirection: "N/A",
+
+                }
+            })
+            return;
+        }
+
+
+
         eye == "od" ? setLens({ ...lens, rightPrism: { ...lens.rightPrism, horizontal: e.target.value } }) : setLens({ ...lens, leftPrism: { ...lens.leftPrism, horizontal: e.target.value } })
 
     }
@@ -142,7 +331,7 @@ export default function EnterPrescription() {
 
         const file = e.target.files[0];
         const base64 = await fileToBase64(file);
-        setimg(base64);
+        setLens({ ...lens, prescriptionImage: base64 });
 
     }
 
@@ -152,7 +341,7 @@ export default function EnterPrescription() {
     function handleRemoved(e) {
         e.preventDefault();
         clearFileInput(fileInputRef);
-        setimg(null);
+        setLens({ ...lens, prescriptionImage: "" });
     }
 
 
@@ -233,9 +422,9 @@ export default function EnterPrescription() {
                             className="w-full border p-2 rounded-md focus:outline-yellow-500/60 text-gray-700/80 cursor-pointer"
                         />
                         {
-                            img && (
+                            lens?.prescriptionImage && (
                                 <div className="relative w-auto h-full border border-gray-200 text-gray-500/40 bg-gray-200 rounded-md">
-                                    <Image src={img} width={50} height={50} alt="prescription" />
+                                    <Image src={lens?.prescriptionImage} width={50} height={50} alt="prescription" />
 
                                     <div onClick={(e) => { handleRemoved(e) }} className="absolute top-0 right-0 w-4 h-4 bg-yellow-600 text-white translate-x-1/2 -translate-y-1/2 rounded-full flex items-center justify-center cursor-pointer">
                                         <RxCross2 />
@@ -312,7 +501,7 @@ export default function EnterPrescription() {
                                     <select
 
 
-                                        disabled={eye == "od" ? lens.cyl.rightCyl == "" : lens.cyl.leftCyl == ""}
+                                        disabled={eye == "od" ? lens.cyl.rightCyl == "0" : lens.cyl.leftCyl == "0"}
 
 
                                         onChange={(e) => { handleAxis(e, eye) }}
@@ -402,7 +591,7 @@ export default function EnterPrescription() {
                                             value={eye == "od" ? lens.rightPrism.vertical : lens.leftPrism.vertical}
                                             className="border p-2 rounded-md focus:outline-yellow-500/60 cursor-pointer"
                                         >
-                                            <option value={""} className="text-md text-gray-600 font-medium">N/A</option>
+                                            <option value={"0"} className="text-md text-gray-600 font-medium">N/A</option>
                                             {PrismNumberOption?.map((n) => (
                                                 <option className="text-md text-gray-600 font-medium" key={n} value={n}>{n}</option>
                                             ))}
@@ -414,7 +603,7 @@ export default function EnterPrescription() {
                                     <td className="p-2">
                                         <select
 
-                                            disabled={eye == "od" ? lens.rightPrism.vertical == "" : lens.leftPrism.vertical == ""}
+                                            disabled={eye == "od" ? lens.rightPrism.vertical == "0" : lens.leftPrism.vertical == "0"}
 
                                             onChange={(e) => { handleVerticalDirection(e, eye) }}
 
@@ -422,7 +611,7 @@ export default function EnterPrescription() {
 
                                             className="border p-2 rounded-md focus:outline-yellow-500/60 cursor-pointer disabled:cursor-not-allowed disabled:bg-gray-300 disabled:text-gray-600"
                                         >
-                                            <option value={""} className="text-md text-gray-600 font-medium">N/A</option>
+                                            <option value={"N/A"} className="text-md text-gray-600 font-medium">N/A</option>
                                             {["Up", "Down"].map((n) => (
                                                 <option className="text-md text-gray-600 font-medium" key={n} value={n}>{n}</option>
                                             ))}
@@ -440,7 +629,7 @@ export default function EnterPrescription() {
 
                                             className="border p-2 rounded-md focus:outline-yellow-500/60 cursor-pointer"
                                         >
-                                            <option value={""} className="text-md text-gray-600 font-medium">N/A</option>
+                                            <option value={"0"} className="text-md text-gray-600 font-medium">N/A</option>
                                             {PrismNumberOption.map((n) => (
                                                 <option className="text-md text-gray-600 font-medium" key={n} value={n}>{n}</option>
                                             ))}
@@ -452,7 +641,7 @@ export default function EnterPrescription() {
                                     <td className="p-2">
                                         <select
 
-                                            disabled={eye == "od" ? lens.rightPrism.horizontal == "" : lens.leftPrism.horizontal == ""}
+                                            disabled={eye == "od" ? lens.rightPrism.horizontal == "0" : lens.leftPrism.horizontal == "0"}
 
                                             onChange={(e) => { handleHorizontalDirection(e, eye) }}
 
@@ -460,7 +649,7 @@ export default function EnterPrescription() {
 
                                             className="border p-2 rounded-md focus:outline-yellow-500/60 cursor-pointer  disabled:cursor-not-allowed disabled:bg-gray-300 disabled:text-gray-600"
                                         >
-                                            <option value={""} className="text-md text-gray-600 font-medium">N/A</option>
+                                            <option value={"N/A"} className="text-md text-gray-600 font-medium">N/A</option>
                                             {["In", "Out"].map((n) => (
                                                 <option className="text-md text-gray-600 font-medium" key={n} value={n}>{n}</option>
                                             ))}
