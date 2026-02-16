@@ -10,7 +10,7 @@ export default function Header() {
   return (
     <>
       {/* Top Banner */}
-      <div className="sBg text-white text-center py-2 text-xs md:text-sm">
+      <div className="sBg text-white text-center py-1 text-xs md:text-sm">
         <span>EXCLUSIVE OFFER | UP TO 60% OFF | LUXURY FRAMES</span>
         <Link href="/shop" className="ml-2 underline">→ SHOP NOW</Link>
       </div>

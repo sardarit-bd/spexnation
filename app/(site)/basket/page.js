@@ -123,7 +123,7 @@ export default function CartPage() {
                         </div>
                     </div>
 
-                    <button className="w-full mt-6 bg-teal-600 hover:bg-teal-700 text-lg text-white py-3 rounded-lg font-light transition">
+                    <button className="w-full mt-6 bg-yellow-700 hover:bg-teal-700 text-lg text-white py-3 rounded-lg font-light transition">
                         Proceed to checkout
                     </button>
                 </div>

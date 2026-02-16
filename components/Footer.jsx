@@ -8,11 +8,12 @@ export default function Footer() {
     <footer className="bg-black text-white">
       {/* Newsletter */}
       <div className="bg-gray-900 py-6 border-b border-yellow-900/70">
-        <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row gap-4 items-center justify-between">
-          <p className="text-lg">
+        <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row gap-4 items-center justify-center">
+          <p className="text-lg text-center">
             Be the first to hear about exclusive offers and new collections from Spex Nation.
           </p>
-          <div className="flex gap-2 w-full sm:w-auto">
+
+          {/* <div className="flex gap-2 w-full sm:w-auto">
             <input
               type="email"
               placeholder="Your email"
@@ -21,7 +22,8 @@ export default function Footer() {
             <button className="pBg text-white px-4 py-2 rounded font-bold transition text-sm">
               SUBSCRIBE
             </button>
-          </div>
+          </div> */}
+
         </div>
       </div>
 
