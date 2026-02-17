@@ -59,10 +59,7 @@ export default function EnterPrescription() {
                 if (lens?.sph.rightSph != "0") {
 
                     // check cylinder value of right/od
-                    if (lens.cyl.rightCyl == '0') {
-                        toast.error("Please. Enter Right Cylinder");
-                        return;
-                    } else {
+                    if (lens.cyl.rightCyl != '0') {
 
                         // check axis value of right/od
                         if (lens?.axis.rightAxis == '0') {
@@ -81,16 +78,14 @@ export default function EnterPrescription() {
                 if (lens?.sph.leftSph != "0") {
 
                     // check cylinder value of left/os
-                    if (lens.cyl.leftCyl == '0') {
-                        toast.error("Please. Enter Left Cylinder");
-                        return;
-                    } else {
+                    if (lens.cyl.leftCyl != '0') {
 
                         // check axis value of left/os
                         if (lens?.axis.leftAxis == '0') {
                             toast.error("Please. Enter Left Axis");
                             return;
                         }
+
                     }
 
                 } else {
