@@ -15,6 +15,7 @@ export default function PDType() {
 
 
     const { lens, setLens } = useLenseStore();
+    const [howpdshow, sethowpdshow] = useState(false);
     const { step, setStep } = useStepStore();
     const [isLoading, setisLoading] = useState(false);
 
@@ -114,7 +115,12 @@ export default function PDType() {
             {/* PD */}
             <div className="mt-6">
                 <div className="flex flex-col items-start gap-2">
-                    <h2 className="font-semibold text-lg text-gray-600">PD Type: </h2>
+                    <div className="flex items-center gap-2 w-full">
+                        <h2 className="font-semibold text-lg text-gray-600">PD Type: </h2>
+                        <div className="pCl cursor-pointer underline">
+                            <span>See How to measure PD</span>
+                        </div>
+                    </div>
                     <div className="flex gap-3 items-center">
                         <button onClick={(e) => { hanldeSinglePD(e) }} className={` px-2 py-1 ${lens?.pdType === 'spd' ? 'sBg text-white' : 'bg-gray-300 text-gray-600'}`}>Single PD</button>
                         <button onClick={(e) => { handleDualPD(e) }} className={` px-2 py-1 ${lens?.pdType === 'dpd' ? 'sBg text-white' : 'bg-gray-300 text-gray-600'}`}>Dual PD</button>

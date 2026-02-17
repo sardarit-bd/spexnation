@@ -103,7 +103,11 @@ export default function VisionType() {
             setisLoading(true);
             setTimeout(() => {
                 setisLoading(false);
-                setStep(2);
+                if (lens?.LenseUseCase != "noprescription") {
+                    setStep(2);
+                } else {
+                    setStep(5);
+                }
             }, 700);
         } else {
             toast.error("Must be select Glasses Use Case");
@@ -132,7 +136,7 @@ export default function VisionType() {
                 <CircularProgress initialValue={15} />
             </div>
 
-            <h2 className="text-2xl font-semibold mb-4">Select glasses use case?</h2>
+            <h2 className="text-2xl font-semibold mb-4">Glasses Use</h2>
 
             {/* Options */}
             <div className="w-full space-y-4">
