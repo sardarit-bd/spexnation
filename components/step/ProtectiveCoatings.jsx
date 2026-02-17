@@ -57,10 +57,6 @@ export default function ProtectiveCoatings() {
     const [disableingState, setdisableingState] = useState([]);
 
 
-    console.log(lens);
-
-    console.log(lens?.ProtectiveCoatings?.length);
-
 
     // protective coating automaticely selected is here
     const automaticallySelected = (() => {

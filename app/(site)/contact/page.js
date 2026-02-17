@@ -21,8 +21,8 @@ export default function ContactPage() {
     };
 
     return (
-        <section className="min-h-screen bg-gray-50 flex items-center justify-center px-4 py-8">
-            <div className="max-w-6xl w-full bg-white rounded-2xl shadow-lg overflow-hidden grid grid-cols-1 md:grid-cols-2">
+        <section className="h-fit bg-gray-50 flex items-center justify-center px-4 py-4 md:py-8 lg:py-14">
+            <div className="max-w-6xl w-full bg-white shadow-lg overflow-hidden grid grid-cols-1 md:grid-cols-2">
 
                 {/* Left Info Section */}
                 <div className="bg-gradient-to-br from-yellow-600 to-yellow-900 text-white p-10 flex flex-col justify-center">
@@ -33,9 +33,9 @@ export default function ContactPage() {
                     </p>
 
                     <div className="space-y-4 text-sm">
-                        <p> Dhaka, Bangladesh</p>
+                        <p> 890 Street Village, Atalanta, Italy</p>
                         <p> contact@example.com</p>
-                        <p> +880 1234-567890</p>
+                        <p> +61 089 988 8722</p>
                     </div>
                 </div>
 
@@ -56,7 +56,7 @@ export default function ContactPage() {
                                 value={formData.name}
                                 onChange={handleChange}
                                 required
-                                className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-600"
                                 placeholder="John Doe"
                             />
                         </div>
@@ -71,7 +71,7 @@ export default function ContactPage() {
                                 value={formData.email}
                                 onChange={handleChange}
                                 required
-                                className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-600"
                                 placeholder="john@example.com"
                             />
                         </div>
@@ -86,7 +86,7 @@ export default function ContactPage() {
                                 onChange={handleChange}
                                 rows="4"
                                 required
-                                className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-600"
                                 placeholder="Write your message..."
                             ></textarea>
                         </div>
