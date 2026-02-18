@@ -10,7 +10,7 @@ const ColorAndDarkness = () => {
     const [color, setcolor] = useState('gray');
     const [darkness, setdardkness] = useState('light');
 
-    const isOPen = lens?.Transition == "transitionxtraactive" || lens?.Transition == "tint";
+    const isOPen = lens?.Transition == "transitions" || lens?.Transition == "transitionxtraactive" || lens?.Transition == "sunglasses" || lens?.Transition == "photochromiclenses";
 
 
 
@@ -47,22 +47,29 @@ const ColorAndDarkness = () => {
                         </div>
                         <span>Brown</span>
                     </div>
-                    <div className="flex gap-2 items-center">
-                        <div onClick={() => setcolor("green")} className="w-fit">
-                            <div className={`flex items-center justify-center text-white cursor-pointer w-6 h-6 ${color == "green" ? "bg-green-600" : "bg-transparent border-2 border-green-600"}`}>
-                                {
-                                    color == "green" && <TiTick className="text-2xl" />
-                                }
+
+
+                    {
+                        lens?.Transition != "photochromiclenses" && (
+                            <div className="flex gap-2 items-center">
+                                <div onClick={() => setcolor("green")} className="w-fit">
+                                    <div className={`flex items-center justify-center text-white cursor-pointer w-6 h-6 ${color == "green" ? "bg-green-600" : "bg-transparent border-2 border-green-600"}`}>
+                                        {
+                                            color == "green" && <TiTick className="text-2xl" />
+                                        }
+                                    </div>
+                                </div>
+                                <span>Graphite Green</span>
                             </div>
-                        </div>
-                        <span>Graphite Green</span>
-                    </div>
+                        )
+                    }
+
                 </div>
             </div>
 
 
             {
-                lens?.Transition == "tint" && (
+                lens?.Transition == "sunglasses" && (
 
 
                     <div className="mt-6">

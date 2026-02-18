@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { Star } from 'lucide-react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Loading from "../components/Loading"
 import useLenseStore from '../store/useLenseStore'
 import useStepStore from '../store/useStepStore'
@@ -22,12 +22,69 @@ export default function ProductDetails() {
 
 
 
+
+
+  useEffect(() => {
+    setLens({
+      LenseName: "",
+      LenseUseCase: "",
+      LenseThickness: "",
+      pdType: "1",
+      singlePD: "0",
+      dualPD: {
+        leftPD: "0",
+        rightPD: "0",
+      },
+      sph: {
+        leftSph: "0",
+        rightSph: "0",
+      },
+      cyl: {
+        leftCyl: "0",
+        rightCyl: "0",
+      },
+      axis: {
+        leftAxis: "0",
+        rightAxis: "0",
+      },
+      add: {
+        leftAdd: "0",
+        rightAdd: "0",
+      },
+
+      addPrism: false,
+      leftPrism: {
+        vertical: "0",
+        vBaseDirection: "N/A",
+        horizontal: "0",
+        hBaseDirection: "N/A",
+      },
+      rightPrism: {
+        vertical: "0",
+        vBaseDirection: "N/A",
+        horizontal: "0",
+        hBaseDirection: "N/A",
+      },
+
+      ProtectiveCoatings: [],
+      Transition: "",
+      color: "gray",
+      darkness: "light",
+      prescriptionImage: '',
+      total: []
+    });
+  }, [])
+
+
+
+
+
   // handle wishlist
   const hanldleSelete = (e) => {
     e.preventDefault();
     setisLoading(true);
 
-    setLens({ ...lens, LenseName: "Elegance TF2249" })
+    setLens({ ...lens, LenseName: "Elegance TF2249", total: [...lens.total, { target: "Frame", id: "Elegance TF2249", name: "Elegance TF2249", price: 449 }] })
 
     setTimeout(() => {
       setisLoading(false);

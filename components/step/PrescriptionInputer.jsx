@@ -1,9 +1,12 @@
+'use client'
+
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { useRef, useState } from "react";
 import { toast, Toaster } from "react-hot-toast";
 import { RxCross2 } from "react-icons/rx";
 import { TiTick } from "react-icons/ti";
+import SubTotal from "../../components/step/SubTotal";
 import ADDNumberOPtions from "../../Data/ADDNumberOPtions";
 import AxisNumberOPtion from "../../Data/AxisNumberOPtion";
 import CyLNumberOPtions from "../../Data/CyLNumberOPtions";
@@ -17,6 +20,7 @@ import Loading from "../Loading";
 import BackBtn from "./BackBtn";
 import CircularProgress from "./CircularProgress";
 import Warn from "./Warn";
+
 
 
 
@@ -207,6 +211,7 @@ export default function EnterPrescription() {
         if (Number(e.target.value) > "+2.00" || Number(e.target.value) < "-2.00") {
             setalert(true);
             setalertMessage('High cylinder prescriptions require additional surfacing: +£15');
+            setLens({ ...lens, total: [...lens.total, { target: "High Cylinder", id: "High Cylinder", name: "High cylinder prescriptions", price: 15 }] });
         }
 
         eye == "od" ? setLens({ ...lens, cyl: { ...lens.cyl, rightCyl: e.target.value } }) : setLens({ ...lens, cyl: { ...lens.cyl, leftCyl: e.target.value } })
@@ -365,7 +370,8 @@ export default function EnterPrescription() {
                 },
             })
         } else {
-            setLens({ ...lens, addPrism: true });
+
+            setLens({ ...lens, addPrism: true, total: [...lens.total, { target: "Prism", id: "Adding Prism", name: "Adding Prism", price: 15 }] });
 
             setalert(true);
             setalertMessage('Adding Prism require additional surfacing: +£15');
@@ -663,11 +669,7 @@ export default function EnterPrescription() {
 
             {/* Footer */}
             <div className="mt-8 flex items-center justify-between border-t pt-4" >
-                <p
-                    className="text-lg font-semibold text-gray-900/90">SUBTOTAL:</p>
-                <span className="text-md text-gray-600 mt-1">
-                    £124
-                </span>
+                <SubTotal />
             </div>
 
 

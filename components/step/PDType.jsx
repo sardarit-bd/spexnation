@@ -3,12 +3,14 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
+import SubTotal from "../../components/step/SubTotal";
 import { PDNumberOptionForDual, PDNumberOptionForSingle } from "../../Data/PDNumberOption";
 import useLenseStore from "../../store/useLenseStore";
 import useStepStore from "../../store/useStepStore";
 import Loading from "../Loading";
 import BackBtn from "./BackBtn";
 import CircularProgress from "./CircularProgress";
+import HowPdMesure from "./HowPDMesure";
 
 
 export default function PDType() {
@@ -26,10 +28,10 @@ export default function PDType() {
     const hanldeSinglePD = (e) => {
         setLens({
             ...lens,
-            pdType: 'spd',
+            pdType: '1',
             dualPD: {
-                leftPD: "",
-                rightPD: "",
+                leftPD: "0",
+                rightPD: "0",
             }
         })
     }
@@ -40,8 +42,8 @@ export default function PDType() {
     const handleDualPD = (e) => {
         setLens({
             ...lens,
-            pdType: 'dpd',
-            singlePD: "",
+            pdType: '2',
+            singlePD: "0",
         })
     }
 
@@ -56,8 +58,8 @@ export default function PDType() {
 
         if (lens?.pdType) {
 
-            if (lens?.pdType === 'spd') {
-                if (lens?.singlePD) {
+            if (lens?.pdType === '1') {
+                if (lens?.singlePD != "0") {
                     setisLoading(true);
                     setTimeout(() => {
                         setisLoading(false);
@@ -68,7 +70,7 @@ export default function PDType() {
                     return;
                 }
             } else {
-                if (lens?.dualPD.leftPD && lens?.dualPD.rightPD) {
+                if (lens?.dualPD.leftPD != "0" && lens?.dualPD.rightPD != "0") {
                     setisLoading(true);
                     setTimeout(() => {
                         setisLoading(false);
@@ -102,7 +104,7 @@ export default function PDType() {
                 delay: 0,
                 ease: "easeOut"
             }}
-            className="w-full max-w-2xl mx-auto p-6 bg-white border border-gray-200">
+            className="w-full p-6 bg-white border border-gray-200 z-30">
             {/* Header */}
             <div className="flex items-center justify-between">
                 <BackBtn step={step} setStep={setStep} />
@@ -117,20 +119,25 @@ export default function PDType() {
                 <div className="flex flex-col items-start gap-2">
                     <div className="flex items-center gap-2 w-full">
                         <h2 className="font-semibold text-lg text-gray-600">PD Type: </h2>
-                        <div className="pCl cursor-pointer underline">
+                        <div className="pCl cursor-pointer underline group relative">
                             <span>See How to measure PD</span>
+
+                            <div className="hidden group-hover:block group-focus:block absolute top-5 right-[-90%] md:right-5">
+                                <HowPdMesure />
+                            </div>
+
                         </div>
                     </div>
                     <div className="flex gap-3 items-center">
-                        <button onClick={(e) => { hanldeSinglePD(e) }} className={` px-2 py-1 ${lens?.pdType === 'spd' ? 'sBg text-white' : 'bg-gray-300 text-gray-600'}`}>Single PD</button>
-                        <button onClick={(e) => { handleDualPD(e) }} className={` px-2 py-1 ${lens?.pdType === 'dpd' ? 'sBg text-white' : 'bg-gray-300 text-gray-600'}`}>Dual PD</button>
+                        <button onClick={(e) => { hanldeSinglePD(e) }} className={` px-2 py-1 ${lens?.pdType === '1' ? 'sBg text-white' : 'bg-gray-300 text-gray-600'}`}>Single PD</button>
+                        <button onClick={(e) => { handleDualPD(e) }} className={` px-2 py-1 ${lens?.pdType === '2' ? 'sBg text-white' : 'bg-gray-300 text-gray-600'}`}>Dual PD</button>
                     </div>
                 </div>
                 <div className="flex items-center gap-6">
 
 
                     {
-                        lens?.pdType === 'dpd' ? (
+                        lens?.pdType === '2' ? (
                             <>
 
                                 <div className="flex flex-col items-start gap-1 mt-5 w-full">
@@ -141,7 +148,7 @@ export default function PDType() {
                                             onChange={(e) => { setLens({ ...lens, dualPD: { ...lens.dualPD, rightPD: e.target.value } }) }}
                                             className="w-full border p-2 rounded-md focus:outline-yellow-500/60"
                                         >
-                                            <option className="text-md text-gray-600 font-medium" value={''}>Select Right PD</option>
+                                            <option className="text-md text-gray-600 font-medium" value={'0'}>Select Right PD</option>
 
                                             {PDNumberOptionForDual?.map((n) => (
                                                 <option className="text-md text-gray-600 font-medium" key={n} value={n}>{n}</option>
@@ -159,7 +166,7 @@ export default function PDType() {
                                             onChange={(e) => { setLens({ ...lens, dualPD: { ...lens.dualPD, leftPD: e.target.value } }) }}
                                             className="w-full border p-2 rounded-md focus:outline-yellow-500/60"
                                         >
-                                            <option className="text-md text-gray-600 font-medium" value={''}>Select Left PD</option>
+                                            <option className="text-md text-gray-600 font-medium" value={'0'}>Select Left PD</option>
 
                                             {PDNumberOptionForDual?.map((n) => (
                                                 <option className="text-md text-gray-600 font-medium" key={n} value={n}>{n}</option>
@@ -180,7 +187,7 @@ export default function PDType() {
                                         onChange={(e) => { setLens({ ...lens, singlePD: e.target.value }) }}
                                         className="w-full border p-2 rounded-md focus:outline-yellow-500/60"
                                     >
-                                        <option className="text-md text-gray-600 font-medium" value={''}>Select Single PD</option>
+                                        <option className="text-md text-gray-600 font-medium" value={'0'}>Select Single PD</option>
 
                                         {PDNumberOptionForSingle?.map((n) => (
                                             <option className="text-md text-gray-600 font-medium" key={n} value={n}>{n}</option>
@@ -194,6 +201,12 @@ export default function PDType() {
                     }
                 </div>
             </div >
+
+            <div className="pt-5">
+
+                <SubTotal />
+
+            </div>
 
 
 

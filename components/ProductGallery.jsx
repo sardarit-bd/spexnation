@@ -23,7 +23,7 @@ export default function ProductGallery() {
   ]
 
   return (
-    <div className="flex flex-col justify-between h-full gap-0 border border-gray-200 bg-white">
+    <div className="flex flex-col justify-between h-full gap-0 border border-gray-200 bg-white w-full">
       {/* Main Image */}
       <motion.div
         initial={{ opacity: 0, x: -45 }}

@@ -1,6 +1,20 @@
+'use client'
+
 import { FaDownload } from "react-icons/fa";
+import generateOrderReport from "../../../../lib/generateOrderReport";
 
 const OrderPage = () => {
+
+
+
+
+
+
+    const handleFileGenarate = () => {
+        generateOrderReport();
+    }
+
+
     return (
         <div className=" bg-white py-5 px-5  border border-gray-200">
             <h1 className="text-xl font-medium text-gray-600">Orders</h1>
@@ -40,7 +54,7 @@ const OrderPage = () => {
                                 <td className="p-2 border">Dalivary Status</td>
 
                                 <td className="p-2 border flex justify-center">
-                                    <button className="px-3 py-2 bg-yellow-700 text-white rounded-md">
+                                    <button onClick={handleFileGenarate} className="px-3 py-2 bg-yellow-700 text-white rounded-md">
                                         <FaDownload />
                                     </button>
                                 </td>

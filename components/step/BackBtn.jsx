@@ -1,9 +1,21 @@
+'use client'
+
 import { ArrowLeft } from 'lucide-react';
+import useLenseStore from '../../store/useLenseStore';
 
 const BackBtn = ({ step, setStep }) => {
 
+    const { lens, setLens } = useLenseStore();
+
     const handleBack = (e) => {
         e.preventDefault();
+
+
+        if (lens?.LenseUseCase == "noprescription" && step == 5) {
+            setStep(1);
+            return;
+        }
+
         setStep(step - 1);
     }
 
