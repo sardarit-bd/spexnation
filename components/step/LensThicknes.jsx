@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import Image from 'next/image';
 import { useEffect, useState } from "react";
 import toast, { Toaster } from 'react-hot-toast';
+import SubTotal from "../../components/step/SubTotal";
 import disableAndRecommandedLogic from "../../lib/disableAndRecommandedLogic";
 import useLenseStore from "../../store/useLenseStore";
 import useStepStore from "../../store/useStepStore";
@@ -17,19 +18,19 @@ const options = [
     {
         id: "standard",
         title: "Standard",
-        description: "Standard 1.5 lens with anti-reflective, scratch-resistant coating.",
+        description: "Ideal for lower prescriptions, providing clear everyday vision.",
     },
     {
         id: "1.60",
         title: "1.60",
         description:
-            "Thin 1.6 lens with anti-reflective, scratch-resistant, and Anti-UV coating.",
+            "Up to 25% thinner than standard for a slimmer, lighter feel.",
     },
     {
         id: "1.67",
         title: "1.67",
         description:
-            "ODAK Clean&CleAR 1.6 lens with anti-reflective, scratch-resistant, water repellent coating, extra durability, Anti-UV, and greater contrast.",
+            "Up to 40% thinner than standard, perfect for higher prescriptions.",
     }
 ];
 
@@ -83,7 +84,7 @@ export default function LensThicknes() {
                 delay: 0,
                 ease: "easeOut"
             }}
-            className="max-w-2xl mx-auto p-6 bg-white border border-gray-200">
+            className="p-6 bg-white border border-gray-200">
             {/* Header */}
             <div className="flex items-center justify-between">
                 <BackBtn step={step} setStep={setStep} />
@@ -135,11 +136,7 @@ export default function LensThicknes() {
 
             {/* Footer */}
             <div className="mt-8 flex items-center justify-between border-t pt-4">
-                <p
-                    className="text-lg font-semibold text-gray-900/90">SUBTOTAL:</p>
-                <span className="text-md text-gray-600 mt-1">
-                    £124
-                </span>
+                <SubTotal />
             </div>
 
 

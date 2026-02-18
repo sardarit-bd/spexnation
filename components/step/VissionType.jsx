@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import Image from 'next/image';
 import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
+import SubTotal from "../../components/step/SubTotal";
 import useLenseStore from "../../store/useLenseStore";
 import useStepStore from "../../store/useStepStore";
 import Loading from "../Loading";
@@ -120,6 +121,63 @@ export default function VisionType() {
 
 
 
+    // handle selete type function is here
+    const handleSeleteType = (e, opt) => {
+        e.preventDefault();
+
+
+        if (opt?.id == "noprescription") {
+            setLens({
+                ...lens,
+                LenseUseCase: opt?.id,
+                LenseThickness: "",
+                pdType: "spd",
+                singlePD: "0",
+                dualPD: {
+                    leftPD: "0",
+                    rightPD: "0",
+                },
+                sph: {
+                    leftSph: "0",
+                    rightSph: "0",
+                },
+                cyl: {
+                    leftCyl: "0",
+                    rightCyl: "0",
+                },
+                axis: {
+                    leftAxis: "0",
+                    rightAxis: "0",
+                },
+                add: {
+                    leftAdd: "0",
+                    rightAdd: "0",
+                },
+
+                addPrism: false,
+                leftPrism: {
+                    vertical: "0",
+                    vBaseDirection: "N/A",
+                    horizontal: "0",
+                    hBaseDirection: "N/A",
+                },
+                rightPrism: {
+                    vertical: "0",
+                    vBaseDirection: "N/A",
+                    horizontal: "0",
+                    hBaseDirection: "N/A",
+                },
+                ProtectiveCoatings: [],
+            });
+            return;
+        }
+
+
+        setLens({ ...lens, LenseUseCase: opt?.id });
+    }
+
+
+
     return (
         <motion.div
             initial={{ opacity: 0, x: -50 }}
@@ -129,7 +187,7 @@ export default function VisionType() {
                 delay: 0,
                 ease: "easeOut"
             }}
-            className="max-w-2xl mx-auto p-6 bg-white border border-gray-200">
+            className="p-6 bg-white border border-gray-200">
             {/* Header */}
             <div className="flex items-center justify-between">
                 <BackBtn step={step} setStep={setStep} />
@@ -143,7 +201,7 @@ export default function VisionType() {
                 {options.map((opt, index) => (
                     <button
                         key={opt.id}
-                        onClick={(e) => { setLens({ ...lens, LenseUseCase: opt?.id }) }}
+                        onClick={(e) => { handleSeleteType(e, opt) }}
                         className={`w-full h-full bg-gray-100 text-left p-2 rounded-md border transition-all
               ${lens?.LenseUseCase === opt.id
                                 ? "border-yellow-500 bg-yellow-50"
@@ -165,11 +223,7 @@ export default function VisionType() {
 
             {/* Footer */}
             <div className="mt-8 flex items-center justify-between border-t pt-4">
-                <p
-                    className="text-md font-semibold text-gray-900">SUBTOTAL:</p>
-                <span className="text-md font-semibold">
-                    £124
-                </span>
+                <SubTotal />
             </div>
 
 

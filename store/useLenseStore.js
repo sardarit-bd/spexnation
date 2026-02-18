@@ -5,7 +5,7 @@ const useLenseStore = create((set) => ({
         LenseName: "",
         LenseUseCase: "",
         LenseThickness: "",
-        pdType: "spd",
+        pdType: "1",
         singlePD: "0",
         dualPD: {
             leftPD: "0",
@@ -47,8 +47,7 @@ const useLenseStore = create((set) => ({
         color: "gray",
         darkness: "light",
         prescriptionImage: '',
-        Subtotal: 0,
-        Total: 0,
+        total: []
     },
 
     setLens: (newLens) => set({ lens: newLens }),

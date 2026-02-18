@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
 import toast, { Toaster } from 'react-hot-toast';
+import SubTotal from "../../components/step/SubTotal";
 import useLenseStore from "../../store/useLenseStore";
 import useStepStore from "../../store/useStepStore";
 import Loading from "../Loading";
@@ -22,20 +23,29 @@ const options = [
         id: "transitions",
         title: "Transitions",
         description:
-            "ODAK Clean&CleAR 1.6 lens with anti-reflective, scratch-resistant, water repellent coating, extra durability, Anti-UV, and greater contrast.",
+            "Premium light-reactive lenses that darken outdoors and return clear indoors.",
         price: "79",
     },
     {
         id: "transitionxtraactive",
         title: "Transition XtraActive",
         description:
-            "ODAK Clean&CleAR 1.6 lens with anti-reflective, scratch-resistant, water repellent coating, extra durability, Anti-UV, and greater contrast.",
+            "Extra-dark photochromic lenses with stronger activation, even behind car windscreens.",
         price: "99",
     },
+
     {
-        id: "tint",
-        title: "Tint",
-        description: "ODAK Clean&CleAR 1.6 lens with anti-reflective, scratch-resistant, water repellent coating, extra durability, Anti-UV, and greater contrast.",
+        id: "photochromiclenses",
+        title: "Photochromic Lenses",
+        description:
+            "Standard light-reactive lenses that darken in sunlight and clear indoors.",
+        price: "49",
+    },
+
+    {
+        id: "sunglasses",
+        title: "Sunglasses",
+        description: "Fixed-colour tinted lenses for a stylish, sun-ready look.",
         price: "12",
     }
 ];
@@ -56,9 +66,12 @@ export default function Transition() {
 
         e.preventDefault();
 
-        setLens({ ...lens, Transition: opt.id })
-    }
 
+        // just for remove previous tints from total those is alredy in total
+        const calTotal = lens.total.filter((id) => id.target !== "Tints");
+
+        setLens({ ...lens, Transition: opt.id, total: [...calTotal, { target: "Tints", id: opt.id, name: opt.title, price: opt.price }] })
+    }
 
 
 
@@ -68,19 +81,21 @@ export default function Transition() {
         e.preventDefault();
 
 
+        console.log(lens);
+
+
         if (!lens?.Transition) {
             toast.error("Must be select Transition and Final Touches option");
             return;
         }
-
 
         setisLoading(true);
         setTimeout(() => {
             setisLoading(false);
             setStep(7);
         }, 700);
-    }
 
+    }
 
 
 
@@ -93,14 +108,14 @@ export default function Transition() {
                 delay: 0,
                 ease: "easeOut"
             }}
-            className="max-w-2xl mx-auto p-6 bg-white border border-gray-200">
+            className="p-6 bg-white border border-gray-200">
             {/* Header */}
             <div className="flex items-center justify-between">
                 <BackBtn step={step} setStep={setStep} />
                 <CircularProgress initialValue={95} />
             </div>
 
-            <h2 className="text-2xl font-semibold mb-4">Transition and Final Touches</h2>
+            <h2 className="text-2xl font-semibold mb-4">Tints</h2>
 
             <p className="pb-6 font-medium text-lg text-gray-600/70">
                 Add photochromic technology to your lenses for enhanced clarity and contrast.
@@ -140,11 +155,7 @@ export default function Transition() {
 
             {/* Footer */}
             <div className="mt-8 flex items-center justify-between border-t pt-4">
-                <p
-                    className="text-lg font-semibold text-gray-900/90">SUBTOTAL:</p>
-                <span className="text-md text-gray-600 mt-1">
-                    £124
-                </span>
+                <SubTotal />
             </div>
 
 

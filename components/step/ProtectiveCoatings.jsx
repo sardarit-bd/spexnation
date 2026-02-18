@@ -4,38 +4,44 @@ import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import NotavailableToolTip from "../../components/step/NotavailableToolTip";
+import SubTotal from "../../components/step/SubTotal";
 import useLenseStore from "../../store/useLenseStore";
 import useStepStore from "../../store/useStepStore";
 import Loading from "../Loading";
 import BackBtn from "./BackBtn";
 import CircularProgress from "./CircularProgress";
+import ProtectiveImageShow from "./protectiveImageShow";
 
 const options = [
     {
         id: "atni-glare",
         title: "Anti Glare",
-        description: "Anti Glare is used as a protective coating",
+        description: " Reduces reflections and glare for clearer, more comfortable vision.",
         price: "25",
+        img: '/anti-glair.png'
     },
     {
         id: "hydrophobic-anti-glare",
         title: "Hydrophobic Anti-Glare",
         description:
-            "ODAK Clean&CleAR 1.6 lens with anti-reflective, scratch-resistant, water repellent coating, extra durability, Anti-UV, and greater contrast.",
+            "Premium antiglare with a water- and oil-repellent layer for easier cleaning and fewer smudges.",
         price: "35",
+        img: '/hydro-anti-glair.png'
     },
     {
         id: "blue-light-filter",
         title: "Blue Light Filter",
         description:
-            "ODAK Clean&CleAR 1.6 lens with anti-reflective, scratch-resistant, water repellent coating, extra durability, Anti-UV, and greater contrast.",
+            "Helps reduce blue light from screens to improve visual comfort during digital use.",
         price: "29",
+        img: '/blue-screen.png'
     },
     {
         id: "clear-uv-protective-coating",
         title: "Clear UV Protective Coating",
-        description: "ODAK Clean&CleAR 1.6 lens with anti-reflective, scratch-resistant, water repellent coating, extra durability, Anti-UV, and greater contrast.",
+        description: "Adds extra protection by blocking harmful ultraviolet (UV) rays.",
         price: "15",
+        img: '/un-sun-protecting.png'
     },
     // {
     //     id: "no-coating",
@@ -51,9 +57,7 @@ export default function ProtectiveCoatings() {
 
     const { step, setStep } = useStepStore();
     const [isLoading, setisLoading] = useState(false);
-    const [seemore, setseemore] = useState(false);
     const { lens, setLens } = useLenseStore();
-    const [seemoreIndex, setseemoreIndex] = useState(null);
     const [disableingState, setdisableingState] = useState([]);
 
 
@@ -65,9 +69,10 @@ export default function ProtectiveCoatings() {
 
             setLens({
                 ...lens,
-                ProtectiveCoatings: ["hydrophobic-anti-glare"]
+                ProtectiveCoatings: ["atni-glare"],
+                total: [...lens.total, { target: "Anti Glare", id: "atni-glare", name: "Anti Glare", price: 25 }]
             });
-            setdisableingState(["hydrophobic-anti-glare"]);
+            setdisableingState(["atni-glare"]);
         }
         return;
     })
@@ -110,27 +115,19 @@ export default function ProtectiveCoatings() {
         if (lens.ProtectiveCoatings.includes(opt.id)) {
             setLens({
                 ...lens,
-                ProtectiveCoatings: lens.ProtectiveCoatings.filter((id) => id !== opt.id)
+                ProtectiveCoatings: lens.ProtectiveCoatings.filter((id) => id !== opt.id),
+                total: lens.total.filter((id) => id.name !== opt.title)
             });
             return;
         }
 
         setLens({
             ...lens,
-            ProtectiveCoatings: [...lens.ProtectiveCoatings, opt.id]
+            ProtectiveCoatings: [...lens.ProtectiveCoatings, opt.id],
+            total: [...lens.total, { target: "Protective", id: opt.id, name: opt.title, price: opt.price }]
         });
 
     }
-
-
-
-    // handle see more function is here
-    const handleSeeMore = (index) => {
-        setseemore(!seemore);
-        setseemoreIndex(index);
-    }
-
-
 
 
     return (
@@ -142,7 +139,7 @@ export default function ProtectiveCoatings() {
                 delay: 0,
                 ease: "easeOut"
             }}
-            className="max-w-2xl mx-auto p-6 bg-white border border-gray-200">
+            className="p-6 bg-white border border-gray-200 z-40">
             {/* Header */}
             <div className="flex items-center justify-between">
                 <BackBtn step={step} setStep={setStep} />
@@ -152,7 +149,7 @@ export default function ProtectiveCoatings() {
             <h2 className="text-2xl font-semibold mb-4">Protective Coatings</h2>
 
             {/* Options */}
-            <div className="space-y-4 max-h-[50vh] overflow-y-scroll">
+            <div className="space-y-4 ">
                 {options.map((opt, index) => (
                     <button
                         key={opt.id}
@@ -171,34 +168,9 @@ export default function ProtectiveCoatings() {
                         <p className="text-sm text-gray-600 mt-1">{opt.description}</p>
 
 
-                        {
-                            seemore && seemoreIndex === index && (
-                                <div className="mt-6">
-                                    <h3>Benefits</h3>
-                                    <ul className="list-disc ml-4 mb-3 text-sm">
-                                        <li>Reduces reflections and glare from screens & headlights</li>
-                                        <li>Makes lenses easier to clean</li>
-                                        <li>mproves night driving visibility</li>
-                                        <li>Enhances visual clarity & contrast</li>
-                                    </ul>
-                                </div>
-                            )
-
-                        }
-
-
-                        {/* <button onClick={() => { handleSeeMore(index) }} className="text-xs font-semibold text-gray-600 mt-1 bg-green-100 border border-green-300 py-1 px-2 rounded-md flex items-center gap-1">
-                            <span>
-                                {seemore && seemoreIndex === index ? "See Less" : "See More"}
-                            </span>
-                            <span>
-                                {seemore && seemoreIndex === index ? <FaArrowUp /> : <FaArrowDown />}
-                            </span>
-                        </button> */}
-
-
-
-
+                        <div className="hidden group-hover:block absolute top-0 left-0 translate-x-[-110%]">
+                            <ProtectiveImageShow opt={opt} />
+                        </div>
 
 
                         {
@@ -216,11 +188,7 @@ export default function ProtectiveCoatings() {
 
             {/* Footer */}
             <div className="mt-8 flex items-center justify-between border-t pt-4">
-                <p
-                    className="text-lg font-semibold text-gray-900/90">SUBTOTAL:</p>
-                <span className="text-md text-gray-600 mt-1">
-                    £124
-                </span>
+                <SubTotal />
             </div>
 
 
