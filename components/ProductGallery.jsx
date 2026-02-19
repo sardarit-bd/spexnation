@@ -4,8 +4,9 @@ import { motion } from 'framer-motion'
 import { ChevronRight } from 'lucide-react'
 import Image from 'next/image'
 import { useState } from 'react'
+import defaultImage from "../public/defaultImage.png"
 
-export default function ProductGallery() {
+export default function ProductGallery({ product }) {
   const [selectedImage, setSelectedImage] = useState(0)
 
   const images = [
@@ -22,6 +23,13 @@ export default function ProductGallery() {
     '/api/placeholder/80/80',
   ]
 
+
+
+  console.log(product);
+
+
+
+
   return (
     <div className="flex flex-col justify-between h-full gap-0 border border-gray-200 bg-white w-full">
       {/* Main Image */}
@@ -37,7 +45,7 @@ export default function ProductGallery() {
         <Image
           width={1000}
           height={1000}
-          src={'https://spexnation.co.uk/wp-content/uploads/2026/01/V4671-C60.jpg'}
+          src={product?.product_thamnail ? product?.product_thamnail : defaultImage}
           alt="Product"
           className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500"
         />
@@ -57,14 +65,14 @@ export default function ProductGallery() {
           softness: "Soft"
         }}
         className="flex gap-3 overflow-x-auto p-4 bg-white">
-        {thumbnails.map((thumb, idx) => (
+        {product?.product_Images?.map((thumb, idx) => (
           <button
             key={idx}
             onClick={() => setSelectedImage(idx)}
             className={`flex-shrink-0 w-20 h-20 bg-white rounded-lg overflow-hidden transition ${selectedImage === idx ? 'border-4 border-yellow-500' : 'border-2 border-gray-10'
               }`}
           >
-            <Image src={"https://spexnation.co.uk/wp-content/uploads/2026/01/V4671-C60.jpg"} width={1000} height={1000} alt={`View ${idx + 1}`} className="w-full h-full object-contain rounded-lg" />
+            <Image src={thumb ? thumb : defaultImage} width={1000} height={1000} alt={`View ${idx + 1}`} className="w-full h-full object-contain rounded-lg" />
           </button>
         ))}
       </motion.div>

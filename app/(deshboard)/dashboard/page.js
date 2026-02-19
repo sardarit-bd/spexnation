@@ -1,27 +1,5 @@
 const DashboardPage = () => {
     return (
-        // <div>
-        //     <div className="grid grid-cols-1 lg:grid-cols-3 mb-4 gap-4">
-        //         <div className="bg-white p-2  border border-gray-200 h-[170px]">
-        //             fasdf
-        //         </div>
-        //         <div className="bg-white p-2  border border-gray-200">
-        //             fasdf
-        //         </div>
-        //         <div className="bg-white p-2  border border-gray-200">
-        //             fasdf
-        //         </div>
-        //     </div>
-        //     <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        //         <div className="bg-white p-2  border border-gray-200 h-[350px]">
-        //             <h1>Dashboard</h1>
-        //         </div>
-        //         <div className="bg-white p-2  border border-gray-200 h-[350px]">
-        //             <h1>Dashboard</h1>
-        //         </div>
-        //     </div>
-        // </div>
-
         <div>
             {/* Top Stats */}
             <div className="grid grid-cols-1 lg:grid-cols-3 mb-4 gap-4">
