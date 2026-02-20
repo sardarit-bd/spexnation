@@ -27,7 +27,7 @@ export default function PopularGlasses() {
       const res = await response.json();
       setAllProducts(res?.data);
       setTimeout(() => {
-        setLoading(true);
+        setLoading(false);
       }, 1000);
     } catch (error) {
       console.error('Error fetching products:', error);
@@ -62,7 +62,7 @@ export default function PopularGlasses() {
                     delay: 0.1 * index,
                     ease: "easeOut"
                   }}
-                  key={item.id} className="text-center">
+                  key={index} className="text-center">
                   <ProductCard item={item} />
                 </motion.div>
               ))}

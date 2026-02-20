@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { useEffect, useState } from "react";
 import { FaMinus } from "react-icons/fa6";
 import { FiPlus } from "react-icons/fi";
 import { RxCross2 } from "react-icons/rx";
@@ -8,9 +9,29 @@ import { RxCross2 } from "react-icons/rx";
 export default function CartPage() {
 
 
-    const hasData = JSON.parse(localStorage.getItem("lensData"));
+
+    const [hasData, sethasData] = useState([]);
+
+
+
+    useEffect(() => {
+        sethasData(JSON.parse(localStorage.getItem("lensData")));
+    }, []);
+
 
     console.log(hasData);
+
+
+
+
+
+
+
+
+
+
+
+
 
     // handle remove function is here
     function handleRemoveItem(e) {
@@ -19,7 +40,7 @@ export default function CartPage() {
 
         const id = e.target.id;
 
-        const filteredData = hasData.filter((item) => item.id !== id);
+        const filteredData = hasData?.filter((item) => item.id !== id);
         localStorage.setItem("lensData", JSON.stringify(filteredData));
         window.location.reload();
 
@@ -33,10 +54,10 @@ export default function CartPage() {
                 {/* CART ITEMS */}
                 <div className="lg:col-span-2 space-y-5">
                     <h1 className="text-2xl font-light text-gray-800 bg-white border p-3">
-                        Your Basket ({hasData.length})
+                        Your Basket ({hasData?.length})
                     </h1>
 
-                    {hasData.map((item, index) => (
+                    {hasData?.map((item, index) => (
                         <div
                             key={index}
                             className="bg-white border p-6 flex gap-6"
@@ -107,7 +128,7 @@ export default function CartPage() {
                             <div className="space-y-3 text-sm">
                                 <div className="flex justify-between">
                                     <span>Items:</span>
-                                    <span>{hasData.length}</span>
+                                    <span>{hasData?.length}</span>
                                 </div>
                                 <div className="flex justify-between">
                                     <span>Subtotal</span>

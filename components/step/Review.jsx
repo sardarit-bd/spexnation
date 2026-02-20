@@ -28,7 +28,10 @@ export default function Review() {
 
         const hasData = JSON.parse(localStorage.getItem("lensData"));
 
-        if (hasData.length === 0) {
+        if (hasData === null) {
+            const finalData = [lens];
+            localStorage.setItem("lensData", JSON.stringify(finalData));
+        } else if (hasData.length === 0) {
             const finalData = [lens];
             localStorage.setItem("lensData", JSON.stringify(finalData));
         } else {
