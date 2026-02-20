@@ -1,7 +1,6 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { ChevronRight } from 'lucide-react'
 import Image from 'next/image'
 import { useState } from 'react'
 import defaultImage from "../public/defaultImage.png"
@@ -9,25 +8,8 @@ import defaultImage from "../public/defaultImage.png"
 export default function ProductGallery({ product }) {
   const [selectedImage, setSelectedImage] = useState(0)
 
-  const images = [
-    '/api/placeholder/500/600',
-    '/api/placeholder/500/600',
-    '/api/placeholder/500/600',
-    '/api/placeholder/500/600',
-  ]
-
-  const thumbnails = [
-    '/api/placeholder/80/80',
-    '/api/placeholder/80/80',
-    '/api/placeholder/80/80',
-    '/api/placeholder/80/80',
-  ]
-
-
 
   console.log(product);
-
-
 
 
   return (
@@ -41,7 +23,7 @@ export default function ProductGallery({ product }) {
           delay: 0,
           ease: "easeOut"
         }}
-        className="bg-white rounded-lg flex items-center justify-center relative overflow-hidden group h-fit">
+        className="bg-white rounded-lg flex items-center justify-center relative overflow-hidden group h-full">
         <Image
           width={1000}
           height={1000}
@@ -49,9 +31,6 @@ export default function ProductGallery({ product }) {
           alt="Product"
           className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500"
         />
-        <button className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition opacity-0 group-hover:opacity-100">
-          <ChevronRight size={24} />
-        </button>
       </motion.div>
 
       {/* Thumbnails */}
@@ -64,7 +43,7 @@ export default function ProductGallery({ product }) {
           ease: "easeOut",
           softness: "Soft"
         }}
-        className="flex gap-3 overflow-x-auto p-4 bg-white">
+        className="flex gap-3 overflow-x-auto pb-8 pl-3 bg-white h-fit overflow-y-hidden">
         {product?.product_Images?.map((thumb, idx) => (
           <button
             key={idx}

@@ -2,12 +2,16 @@
 
 import { ArrowRight, Star } from 'lucide-react';
 import Image from 'next/image';
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import Loading from "./Loading";
 
 export default function ProductCard({ item }) {
+
     const [isFavorite, setIsFavorite] = useState(false);
+    const [isLoading, setisLoading] = useState(false);
     const [selectedSize, setSelectedSize] = useState('M');
+    const router = useRouter();
 
     const product = {
         name: 'Premium Wireless Headphones',
@@ -20,7 +24,27 @@ export default function ProductCard({ item }) {
         inStock: true,
     };
 
-    console.log(item);
+
+
+
+
+    // handle view function is here
+    const handleView = (e, item) => {
+
+        e.preventDefault();
+
+        setisLoading(true);
+        setTimeout(() => {
+            setisLoading(false);
+            router?.push(`/shop/${item?._id}`);
+        }, 700);
+    }
+
+
+
+
+
+
 
     return (
         <div className="w-full bg-white rounded-lg border border-gray-200 overflow-hidden hover:shadow-md transition-all duration-300 group">
@@ -77,13 +101,23 @@ export default function ProductCard({ item }) {
                 {/* Add to Cart Button */}
                 <div
                 >
-                    <Link
-                        href={`/shop/${item?._id}`}
+                    <button
+                        onClick={(e) => { handleView(e, item) }}
                         disabled={!product.inStock}
-                        className="pBg text-white font-light px-6 py-3 rounded transition flex items-center justify-center gap-2"
+                        className="pBg text-white font-light px-6 py-3 transition flex items-center justify-center gap-2 w-full"
                     >
-                        Explore <ArrowRight className="" size={18} />
-                    </Link>
+
+
+                        {
+                            isLoading ? (
+                                <Loading />
+                            ) : (
+                                <>
+                                    Explore < ArrowRight className="" size={18} />
+                                </>
+                            )
+                        }
+                    </button>
                 </div>
             </div>
         </div>

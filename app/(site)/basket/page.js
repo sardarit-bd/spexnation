@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { FaMinus } from "react-icons/fa6";
 import { FiPlus } from "react-icons/fi";
 import { RxCross2 } from "react-icons/rx";
+import defaultImage from "../../../public/defaultImage.png";
 
 export default function CartPage() {
 
@@ -16,6 +17,7 @@ export default function CartPage() {
 
     useEffect(() => {
         sethasData(JSON.parse(localStorage.getItem("lensData")));
+        window.scrollTo(0, 0);
     }, []);
 
 
@@ -65,7 +67,7 @@ export default function CartPage() {
                             {/* IMAGE */}
                             <div className="w-40 shrink-0">
                                 <Image
-                                    src={item.prescriptionImage}
+                                    src={item.prescriptionImage ? item.prescriptionImage : defaultImage}
                                     alt={item.LenseName}
                                     width={160}
                                     height={100}

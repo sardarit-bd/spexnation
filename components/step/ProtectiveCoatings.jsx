@@ -36,13 +36,13 @@ const options = [
         price: "29",
         img: '/blue-screen.png'
     },
-    {
-        id: "clear-uv-protective-coating",
-        title: "Clear UV Protective Coating",
-        description: "Adds extra protection by blocking harmful ultraviolet (UV) rays.",
-        price: "15",
-        img: '/un-sun-protecting.png'
-    },
+    // {
+    //     id: "clear-uv-protective-coating",
+    //     title: "Clear UV Protective Coating",
+    //     description: "Adds extra protection by blocking harmful ultraviolet (UV) rays.",
+    //     price: "15",
+    //     img: '/un-sun-protecting.png'
+    // },
     // {
     //     id: "no-coating",
     //     title: "No Protective Coating",
@@ -102,6 +102,7 @@ export default function ProtectiveCoatings() {
         setTimeout(() => {
             setisLoading(false);
             setStep(6);
+            window.scrollTo(0, 0);
         }, 700);
     }
 

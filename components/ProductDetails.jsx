@@ -89,6 +89,7 @@ export default function ProductDetails({ product }) {
     setTimeout(() => {
       setisLoading(false);
       setStep(1);
+      window.scrollTo(0, 0);
     }, 700);
   }
 

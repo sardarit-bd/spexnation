@@ -26,7 +26,7 @@ const ColorAndDarkness = () => {
         <div className={`${isOPen ? "block" : "hidden"}`}>
             <div className="mt-6">
                 <h3>Color</h3>
-                <div className="flex gap-4 mt-2">
+                <div className="flex flex-wrap gap-4 mt-2">
                     <div className="flex gap-2 items-center">
                         <div className="w-fit">
                             <div onClick={() => setcolor("gray")} className={`flex items-center justify-center text-white cursor-pointer w-6 h-6 ${color == "gray" ? "bg-[#808080]" : "bg-transparent border-2 border-[#808080]"}`}>
@@ -63,6 +63,95 @@ const ColorAndDarkness = () => {
                             </div>
                         )
                     }
+
+
+
+
+
+
+
+
+
+
+
+                    {/* this color only for transition */}
+                    {
+                        lens?.Transition == "transitions" && (
+                            <>
+
+                                <div className="flex gap-2 items-center">
+                                    <div className="w-fit">
+                                        <div onClick={() => setcolor("emerald")} className={`flex items-center justify-center text-white cursor-pointer w-6 h-6 ${color == "emerald" ? "bg-[#808080]" : "bg-transparent border-2 border-[#808080]"}`}>
+                                            {
+                                                color == "emerald" && <TiTick className="text-2xl" />
+                                            }
+                                        </div>
+                                    </div>
+                                    <span>Emerald</span>
+                                </div>
+                                <div className="flex gap-2 items-center">
+                                    <div onClick={() => setcolor("amethyst")} className="w-fit">
+                                        <div className={`flex items-center justify-center text-white cursor-pointer w-6 h-6 ${color == "amethyst" ? "bg-[#964B00]" : "bg-transparent border-2 border-[#964B00]"}`}>
+                                            {
+                                                color == "amethyst" && <TiTick className="text-2xl" />
+                                            }
+                                        </div>
+                                    </div>
+                                    <span>Amethyst</span>
+                                </div>
+                                <div className="flex gap-2 items-center">
+                                    <div className="w-fit">
+                                        <div onClick={() => setcolor("ruby")} className={`flex items-center justify-center text-white cursor-pointer w-6 h-6 ${color == "ruby" ? "bg-[#808080]" : "bg-transparent border-2 border-[#808080]"}`}>
+                                            {
+                                                color == "ruby" && <TiTick className="text-2xl" />
+                                            }
+                                        </div>
+                                    </div>
+                                    <span>Ruby</span>
+                                </div>
+                                <div className="flex gap-2 items-center">
+                                    <div onClick={() => setcolor("amber")} className="w-fit">
+                                        <div className={`flex items-center justify-center text-white cursor-pointer w-6 h-6 ${color == "amber" ? "bg-[#964B00]" : "bg-transparent border-2 border-[#964B00]"}`}>
+                                            {
+                                                color == "amber" && <TiTick className="text-2xl" />
+                                            }
+                                        </div>
+                                    </div>
+                                    <span>Amber</span>
+                                </div>
+                                <div className="flex gap-2 items-center">
+                                    <div className="w-fit">
+                                        <div onClick={() => setcolor("sapplire")} className={`flex items-center justify-center text-white cursor-pointer w-6 h-6 ${color == "sapplire" ? "bg-[#808080]" : "bg-transparent border-2 border-[#808080]"}`}>
+                                            {
+                                                color == "sapplire" && <TiTick className="text-2xl" />
+                                            }
+                                        </div>
+                                    </div>
+                                    <span>Sapplire</span>
+                                </div>
+                            </>
+                        )
+                    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                 </div>
             </div>

@@ -106,8 +106,10 @@ export default function VisionType() {
                 setisLoading(false);
                 if (lens?.LenseUseCase != "noprescription") {
                     setStep(2);
+                    window.scrollTo(0, 0);
                 } else {
                     setStep(5);
+                    window.scrollTo(0, 0);
                 }
             }, 700);
         } else {

@@ -64,6 +64,7 @@ export default function PDType() {
                     setTimeout(() => {
                         setisLoading(false);
                         setStep(4);
+                        window.scrollTo(0, 0);
                     }, 700);
                 } else {
                     toast.error("Please select Single PD option");
@@ -75,6 +76,7 @@ export default function PDType() {
                     setTimeout(() => {
                         setisLoading(false);
                         setStep(4);
+                        window.scrollTo(0, 0);
                     }, 700);
                 } else {
                     toast.error("Please select Dual PD option, Right and Left Both");
