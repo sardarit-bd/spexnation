@@ -26,6 +26,7 @@ export default function Review() {
         setisLoading(true);
 
 
+
         const hasData = JSON.parse(localStorage.getItem("lensData"));
 
         if (hasData === null) {

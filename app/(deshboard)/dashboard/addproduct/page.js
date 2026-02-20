@@ -27,6 +27,8 @@ const AddproductPage = () => {
     const [style, setstyle] = useState('');
     const [thumbnail, setthumbnail] = useState('');
     const [gellary, setgellery] = useState([]);
+    const [collection, setcollection] = useState('');
+    const [shortdes, setshortdes] = useState('');
 
 
 
@@ -37,7 +39,7 @@ const AddproductPage = () => {
 
 
 
-        if (!title || !price || !discount || !description || !color || !quentity || !size || !weight || !meterial || !shape || !style || !thumbnail || !gellary) {
+        if (!title || !price || !discount || !description || !color || !quentity || !size || !weight || !meterial || !shape || !style || !thumbnail || !gellary || !collection || !shortdes) {
 
             toast.error('Please fill in all the required fields.');
             return;
@@ -60,6 +62,8 @@ const AddproductPage = () => {
             style: style,
             product_thamnail: thumbnail,
             product_Images: gellary,
+            collection: collection,
+            shortdes: shortdes
         }
 
 
@@ -88,6 +92,8 @@ const AddproductPage = () => {
             setshape('');
             setstyle('');
             setthumbnail('');
+            setcollection('');
+            setshortdes('');
             setgellery([]);
             router.push('/dashboard/allproducts');
         } else {
@@ -132,7 +138,7 @@ const AddproductPage = () => {
 
 
     return (
-        <div className=" bg-white py-4 px-5  border border-gray-200">
+        <div className="bg-white py-4 px-5  border border-gray-200">
             <h1 className="text-xl font-medium text-gray-600">Add Product</h1>
 
 
@@ -142,6 +148,13 @@ const AddproductPage = () => {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 
                         <input value={title} onChange={(e) => settitle(e.target.value)} type="text" placeholder="Product Title" className="w-full border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-600" />
+
+
+                        <input value={collection} onChange={(e) => setcollection(e.target.value)} type="text" placeholder="Collection" className="w-full border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-600" />
+
+
+                        <input value={shortdes} onChange={(e) => setshortdes(e.target.value)} type="text" placeholder="Short Description" className="w-full border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-600" />
+
 
                         <input value={price} onChange={(e) => setprice(e.target.value)} type="number" placeholder="Product Price" className="w-full border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-600" />
 
@@ -166,7 +179,7 @@ const AddproductPage = () => {
                     </div>
 
                     <div className="mt-4  grid grid-cols-1">
-                        <textarea value={description} onChange={(e) => setdescription(e.target.value)} placeholder="Enter Product Discription" className="w-full h-[200px] border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-600"></textarea>
+                        <textarea value={description} onChange={(e) => setdescription(e.target.value)} placeholder="Discription" className="w-full h-[200px] border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-600"></textarea>
                     </div>
 
                 </div>
@@ -240,7 +253,7 @@ const AddproductPage = () => {
 
 
             <div className="flex justify-end">
-                <button onClick={(e) => { handleAddProduct(e) }} className="mt-4 bg-yellow-700 flex items-center  justify-center text-white px-4 py-2 hover:bg-yellow-800">
+                <button disabled={isLoading} onClick={(e) => { handleAddProduct(e) }} className="mt-4 bg-yellow-700 flex items-center  justify-center text-white px-4 py-2 hover:bg-yellow-800">
                     {
                         isLoading ? <Loading /> : 'Add Product'
                     }
