@@ -7,7 +7,7 @@ import Loading from "../components/Loading"
 import useLenseStore from '../store/useLenseStore'
 import useStepStore from '../store/useStepStore'
 
-export default function ProductDetails() {
+export default function ProductDetails({ product }) {
   const [selectedColor, setSelectedColor] = useState('black')
   const [isWishlisted, setIsWishlisted] = useState(false)
   const { step, setStep } = useStepStore();
@@ -106,7 +106,7 @@ export default function ProductDetails() {
       {/* Product Title */}
       <div>
         <p className="text-yellow-600 font-bold text-sm mb-1">LUXURY COLLECTION</p>
-        <h1 className="text-3xl md:text-4xl font-light text-gray-900 mb-2">Elegance TF2249</h1>
+        <h1 className="text-3xl md:text-4xl font-light text-gray-900 mb-2">{product?.ProductTitle}</h1>
         <p className="text-gray-600 font-light">Premium Black Butterfly Frames</p>
       </div>
 
@@ -129,7 +129,7 @@ export default function ProductDetails() {
       <div className="border-b border-gray-200 pb-4">
         <p className="text-gray-600 text-sm mb-2">Includes prescription lenses</p>
         <div className="flex items-baseline gap-2">
-          <span className="text-4xl font-light text-gray-900">£449</span>
+          <span className="text-4xl font-light text-gray-900">£{product?.product_price}</span>
           <span className="text-lg text-gray-500 line-through font-light">£599</span>
         </div>
         <p className="text-red-600 font-semibold text-sm mt-3">Only 12 frames left in stock</p>

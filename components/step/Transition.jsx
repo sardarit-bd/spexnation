@@ -58,9 +58,6 @@ export default function Transition() {
     const { lens, setLens } = useLenseStore();
 
 
-    console.log(lens);
-
-
     // handle transition btn click function is here
     const handleTransitionClick = (e, opt) => {
 

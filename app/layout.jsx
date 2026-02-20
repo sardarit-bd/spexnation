@@ -15,7 +15,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${arimo.className} antialiased`}>{children}</body>
+      <body className={`${arimo.className} antialiased`} suppressHydrationWarning>
+        {children}
+      </body>
     </html>
   )
 }

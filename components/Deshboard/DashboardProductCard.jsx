@@ -4,7 +4,7 @@ import { Star } from 'lucide-react';
 import Image from 'next/image';
 import { useState } from 'react';
 
-export default function DashboardProductCard() {
+export default function DashboardProductCard({ item }) {
     const [isFavorite, setIsFavorite] = useState(false);
     const [selectedSize, setSelectedSize] = useState('M');
 
@@ -20,13 +20,15 @@ export default function DashboardProductCard() {
     };
 
 
+
+
     return (
         <div className="w-full bg-white rounded-lg border border-gray-200 overflow-hidden hover:shadow-md transition-all duration-300 group">
             {/* Image Container */}
             <div className="relative overflow-hidden bg-white">
                 <Image
-                    src={product.image}
-                    alt={product.name}
+                    src={item?.product_thamnail}
+                    alt={item?.ProductTitle}
                     width={1000}
                     height={1000}
                     className="w-full h-[190px] object-contain group-hover:scale-105 transition-transform duration-500"
@@ -58,19 +60,15 @@ export default function DashboardProductCard() {
 
                 {/* Product Name */}
                 <h3 className="text-left text-xl font-light text-gray-900/80 mb-2 line-clamp-2 transition-colors cursor-pointer">
-                    {product.name}
+                    {item?.ProductTitle}
                 </h3>
 
                 {/* Price */}
                 <div className="flex items-center gap-3 mb-4">
                     <span className="text-2xl font-light text-gray-700/60">
-                        ${product.price}
+                        £{item?.product_price}
                     </span>
-                    {/* {product.originalPrice && (
-                        <span className="text-lg text-gray-500 line-through">
-                            ${product.originalPrice}
-                        </span>
-                    )} */}
+
                     {/* <span className="ml-auto text-sm font-semibold text-green-600 bg-green-50 px-2 py-1 rounded">
                         {Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)}% OFF
                     </span> */}

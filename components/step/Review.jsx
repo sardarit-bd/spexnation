@@ -20,16 +20,25 @@ export default function Review() {
 
 
 
-
-    console.log(lens);
-
-
-
-
     // handle confirm function is here
-    function handleConfirm() {
+    function handleConfirm(lens) {
 
         setisLoading(true);
+
+
+        const hasData = JSON.parse(localStorage.getItem("lensData"));
+
+        if (hasData === null) {
+            const finalData = [lens];
+            localStorage.setItem("lensData", JSON.stringify(finalData));
+        } else if (hasData.length === 0) {
+            const finalData = [lens];
+            localStorage.setItem("lensData", JSON.stringify(finalData));
+        } else {
+            const finalData = [...hasData, lens];
+            localStorage.setItem("lensData", JSON.stringify(finalData));
+        }
+
         setTimeout(() => {
             setisLoading(false);
             router.push('/basket');
@@ -144,6 +153,63 @@ export default function Review() {
                 }
 
 
+
+
+                <div className="mt-6 border border-gray-200 p-2 flex flex-col gap-4 flex-wrap">
+                    <div className="w-full flex iems-center gap-3 flex-wrap">
+                        <p className="flex items-center gap-1">
+                            <b className="font-extrabold">Frame:</b>
+                            <span>{lens?.LenseName}</span>
+                        </p>
+
+                        <p className="flex items-center gap-1">
+                            <b className="font-extrabold">Glasses Use:</b>
+                            <span>{lens?.LenseUseCase}</span>
+                        </p>
+
+                        <p className="flex items-center gap-1">
+                            <b className="font-extrabold">Lens Thickness:</b>
+                            <span>{lens?.LenseThickness}</span>
+                        </p>
+                    </div>
+                    <div className="flex items-center gap-1">
+                        <b className="font-extrabold">Protective Coatings:</b>
+                        <p className="flex gap-2 items-center flex-wrap">
+                            {lens?.ProtectiveCoatings?.map((item, index) => {
+                                return (
+                                    <span className="px-1 bg-gray-100" key={index}>{item}</span>
+                                )
+                            })}
+                        </p>
+                    </div>
+
+                    <div>
+                        <p className="flex items-center gap-1">
+                            <b className="font-extrabold">Tints:</b>
+                            <span>{lens?.Transition}</span>
+                        </p>
+                        {
+                            lens?.Transition != "clear" && (
+                                <div className="flex gap-2">
+                                    <p className="flex items-center gap-1">
+                                        <b>color:</b>
+                                        <span>{lens?.color}</span>
+                                    </p>
+                                    {
+                                        lens?.Transition == "sunglasses" && (
+                                            <p className="flex items-center gap-1">
+                                                <b>Darkness:</b>
+                                                <span>{lens?.darkness}</span>
+                                            </p>
+                                        )
+                                    }
+                                </div>
+                            )
+                        }
+                    </div>
+                </div>
+
+
             </div>
 
             {/* Product Summary */}
@@ -174,7 +240,7 @@ export default function Review() {
             </p> */}
 
             {/* CTA */}
-            <button onClick={() => { handleConfirm() }} className="mt-6 w-full pBg text-white font-semibold py-3 rounded-md transition flex items-center justify-center">
+            <button onClick={() => { handleConfirm(lens) }} className="mt-6 w-full pBg text-white font-semibold py-3 rounded-md transition flex items-center justify-center">
 
                 {
                     isLoading ? <Loading /> : "Confirm & Add to Basket"

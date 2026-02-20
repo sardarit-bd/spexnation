@@ -24,7 +24,7 @@ import Warn from "./Warn";
 
 
 
-export default function EnterPrescription() {
+function PrescriptionInputer() {
 
 
     const { step, setStep } = useStepStore();
@@ -34,6 +34,10 @@ export default function EnterPrescription() {
     const [isLoading, setisLoading] = useState(false);
     const [alert, setalert] = useState(false);
     const [alertMessage, setalertMessage] = useState('');
+
+
+
+    console.log(lens);
 
 
 
@@ -209,12 +213,111 @@ export default function EnterPrescription() {
 
 
         if (Number(e.target.value) > "+2.00" || Number(e.target.value) < "-2.00") {
+
             setalert(true);
             setalertMessage('High cylinder prescriptions require additional surfacing: +£15');
-            setLens({ ...lens, total: [...lens.total, { target: "High Cylinder", id: "High Cylinder", name: "High cylinder prescriptions", price: 15 }] });
+
+
+            const hasCylinder = lens.total.some(item => item.target === "Cylinder");
+
+            if (hasCylinder) {
+
+
+                eye == "od" ? (
+                    setLens({
+                        ...lens,
+                        cyl: {
+                            ...lens.cyl,
+                            rightCyl: e.target.value
+                        },
+                        total: [
+                            ...lens.total
+                        ]
+                    })
+                ) : (
+                    setLens({
+                        ...lens,
+                        cyl: {
+                            ...lens.cyl,
+                            leftCyl: e.target.value
+                        },
+                        total: [
+                            ...lens.total
+                        ]
+                    })
+                );
+
+
+            } else {
+
+
+                eye == "od" ? (
+                    setLens({
+                        ...lens,
+                        cyl: {
+                            ...lens.cyl,
+                            rightCyl: e.target.value
+                        },
+                        total: [
+                            ...lens.total,
+                            {
+                                target: "Cylinder", id: "high-cylinder", name: "High Cylinder", price: 15
+
+                            }
+                        ]
+                    })
+                ) : (
+                    setLens({
+                        ...lens,
+                        cyl: {
+                            ...lens.cyl,
+                            leftCyl: e.target.value
+                        },
+                        total: [
+                            ...lens.total,
+                            {
+                                target: "Cylinder", id: "high-cylinder", name: "High Cylinder", price: 15
+
+                            }
+                        ]
+                    })
+                );
+
+            }
+
+
+
+
+
+
+        } else {
+
+
+            // just for remove previous Cylinder from total those is alredy in total
+            const calTotal = lens.total.filter((id) => id.target !== "Cylinder");
+
+            eye == "od" ? (
+                setLens({
+                    ...lens,
+                    cyl: {
+                        ...lens.cyl,
+                        rightCyl: e.target.value
+                    },
+                    total: [...calTotal]
+                })
+            ) : (
+                setLens({
+                    ...lens,
+                    cyl: {
+                        ...lens.cyl,
+                        leftCyl: e.target.value
+                    },
+                    total: [...calTotal]
+                })
+            );
+
         }
 
-        eye == "od" ? setLens({ ...lens, cyl: { ...lens.cyl, rightCyl: e.target.value } }) : setLens({ ...lens, cyl: { ...lens.cyl, leftCyl: e.target.value } })
 
     }
 
@@ -353,6 +456,10 @@ export default function EnterPrescription() {
 
 
         if (lens.addPrism) {
+
+            // just for remove previous tints from total those is alredy in total
+            const calTotal = lens.total.filter((id) => id.target !== "Prism");
+
             setLens({
                 ...lens,
                 addPrism: false,
@@ -368,6 +475,7 @@ export default function EnterPrescription() {
                     horizontal: "",
                     hBaseDirection: "",
                 },
+                total: [...calTotal]
             })
         } else {
 
@@ -703,4 +811,7 @@ export default function EnterPrescription() {
             <Toaster position="bottom-center" reverseOrder={false} />
         </motion.div >
     );
+
 }
+
+export default PrescriptionInputer;

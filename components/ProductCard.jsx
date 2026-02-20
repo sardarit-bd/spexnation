@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 
-export default function ProductCard() {
+export default function ProductCard({ item }) {
     const [isFavorite, setIsFavorite] = useState(false);
     const [selectedSize, setSelectedSize] = useState('M');
 
@@ -20,13 +20,15 @@ export default function ProductCard() {
         inStock: true,
     };
 
+    console.log(item);
+
     return (
         <div className="w-full bg-white rounded-lg border border-gray-200 overflow-hidden hover:shadow-md transition-all duration-300 group">
             {/* Image Container */}
             <div className="relative overflow-hidden bg-white">
                 <Image
-                    src={product.image}
-                    alt={product.name}
+                    src={item?.product_thamnail}
+                    alt={item?.ProductTitle}
                     width={1000}
                     height={1000}
                     className="w-full h-[190px] object-contain group-hover:scale-105 transition-transform duration-500"
@@ -58,29 +60,25 @@ export default function ProductCard() {
 
                 {/* Product Name */}
                 <h3 className="text-left text-xl font-light text-gray-900/80 mb-2 line-clamp-2 transition-colors cursor-pointer">
-                    {product.name}
+                    {item?.ProductTitle}
                 </h3>
 
                 {/* Price */}
                 <div className="flex items-center gap-3 mb-4">
                     <span className="text-2xl font-light text-gray-700/60">
-                        ${product.price}
+                        ${item?.product_price}
                     </span>
-                    {/* {product.originalPrice && (
-                        <span className="text-lg text-gray-500 line-through">
-                            ${product.originalPrice}
-                        </span>
-                    )} */}
-                    {/* <span className="ml-auto text-sm font-semibold text-green-600 bg-green-50 px-2 py-1 rounded">
-                        {Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)}% OFF
-                    </span> */}
+
+                    <span className="ml-auto text-sm font-semibold text-green-600 bg-green-50 px-2 py-1 rounded">
+                        {item?.status}
+                    </span>
                 </div>
 
                 {/* Add to Cart Button */}
                 <div
                 >
                     <Link
-                        href={`/shop/${`5345`}`}
+                        href={`/shop/${item?._id}`}
                         disabled={!product.inStock}
                         className="pBg text-white font-light px-6 py-3 rounded transition flex items-center justify-center gap-2"
                     >
