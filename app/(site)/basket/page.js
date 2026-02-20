@@ -2,8 +2,6 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { FaMinus } from "react-icons/fa6";
-import { FiPlus } from "react-icons/fi";
 import { RxCross2 } from "react-icons/rx";
 import defaultImage from "../../../public/defaultImage.png";
 
@@ -36,13 +34,12 @@ export default function CartPage() {
 
 
     // handle remove function is here
-    function handleRemoveItem(e) {
+    function handleRemoveItem(e, id) {
 
         e.preventDefault();
 
-        const id = e.target.id;
 
-        const filteredData = hasData?.filter((item) => item.id !== id);
+        const filteredData = hasData?.filter((item) => item.ProductDetails?._id !== id);
         localStorage.setItem("lensData", JSON.stringify(filteredData));
         window.location.reload();
 
@@ -67,11 +64,11 @@ export default function CartPage() {
                             {/* IMAGE */}
                             <div className="w-40 shrink-0">
                                 <Image
-                                    src={item.prescriptionImage ? item.prescriptionImage : defaultImage}
+                                    src={item.ProductDetails?.product_thamnail ? item.ProductDetails?.product_thamnail : defaultImage}
                                     alt={item.LenseName}
                                     width={160}
                                     height={100}
-                                    className="object-contain"
+                                    className="object-contain border border-gray-200 h-full w-full"
                                 />
                             </div>
 
@@ -79,24 +76,26 @@ export default function CartPage() {
                             <div className="flex-1">
                                 <div className="flex justify-between">
                                     <div>
+                                        <span className="text-sm text-yellow-600">{item?.ProductDetails?.collection}</span>
                                         <h3 className="text-lg font-semibold text-gray-800">
                                             {item.LenseName} (£350)
                                         </h3>
+                                        <p className="text-sm text-gray-600">{item?.ProductDetails?.shortdes}</p>
                                     </div>
-                                    <button onClick={(e) => { handleRemoveItem(e, item) }} className="text-gray-400 hover:bg-gray-200">
+                                    <button onClick={(e) => {
+                                        handleRemoveItem(e, item?.ProductDetails?._id)
+                                    }} className="h-7 w-7 flex items-center justify-center text-gray-400 hover:bg-gray-200">
                                         <RxCross2 className="text-2xl" />
                                     </button>
                                 </div>
 
                                 <div className="mt-2 flex justify-between w-full">
                                     <div className="mt-3 space-y-1 text-sm text-gray-600">
-                                        <p>Color: {item.color}</p>
-                                        <p>
-                                            Distance <span className="text-blue-600">(Details)</span>
-                                        </p>
+                                        <p> <b>Color:</b> {item.ProductDetails?.color}</p>
+                                        <p> <b>Size:</b> {item.ProductDetails?.size}</p>
                                     </div>
 
-                                    <div className="mt-4 space-y-2 text-sm">
+                                    {/* <div className="mt-4 space-y-2 text-sm">
                                         <div className="flex items-center gap-1">
                                             <div className="w-8 h-8 bg-gray-200 flex items-center justify-center cursor-pointer">
                                                 <FaMinus />
@@ -108,7 +107,7 @@ export default function CartPage() {
                                                 <FiPlus />
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> */}
                                 </div>
 
                             </div>

@@ -1,8 +1,9 @@
 'use client'
 
-import { Menu, ShoppingBag, User } from 'lucide-react'
-import Link from 'next/link'
-import { useState } from 'react'
+import { Menu, User } from 'lucide-react';
+import Link from 'next/link';
+import { useState } from 'react';
+import HeaderCartIcon from "../components/HeaderCartIcon";
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false)
@@ -39,9 +40,7 @@ export default function Header() {
 
             {/* Icons */}
             <div className="flex items-center gap-4">
-              <Link href="/basket" className="text-gray-600 hover:text-yellow-700">
-                <ShoppingBag size={26} />
-              </Link>
+              <HeaderCartIcon />
               <button className="hidden sm:block text-gray-600 hover:text-yellow-700">
                 <User size={26} />
               </button>

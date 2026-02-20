@@ -2,6 +2,7 @@ import { create } from "zustand";
 
 const useLenseStore = create((set) => ({
     lens: {
+        ProductDetails: {},
         LenseName: "",
         LenseUseCase: "",
         LenseThickness: "",

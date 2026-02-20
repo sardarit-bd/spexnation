@@ -26,6 +26,7 @@ export default function ProductDetails({ product }) {
 
   useEffect(() => {
     setLens({
+      ProductDetails: product,
       LenseName: "",
       LenseUseCase: "",
       LenseThickness: "",
@@ -73,9 +74,7 @@ export default function ProductDetails({ product }) {
       prescriptionImage: '',
       total: []
     });
-  }, [])
-
-
+  }, [product])
 
 
 
@@ -106,9 +105,9 @@ export default function ProductDetails({ product }) {
       className="space-y-6 bg-white border border-gray-200 p-4 h-full">
       {/* Product Title */}
       <div>
-        <p className="text-yellow-600 font-bold text-sm mb-1">LUXURY COLLECTION</p>
+        <p className="text-yellow-600 font-bold text-sm mb-1 uppercase">{product?.collection}</p>
         <h1 className="text-3xl md:text-4xl font-light text-gray-900 mb-2">{product?.ProductTitle}</h1>
-        <p className="text-gray-600 font-light">Premium Black Butterfly Frames</p>
+        <p className="text-gray-600 font-light">{product?.shortdes}</p>
       </div>
 
 
@@ -133,7 +132,7 @@ export default function ProductDetails({ product }) {
           <span className="text-4xl font-light text-gray-900">£{product?.product_price}</span>
           <span className="text-lg text-gray-500 line-through font-light">£599</span>
         </div>
-        <p className="text-red-600 font-semibold text-sm mt-3">Only 12 frames left in stock</p>
+        <p className="text-red-600 font-semibold text-sm mt-3">Only {product?.quentity} frames left in stock</p>
       </div>
 
       {/* Action Buttons */}

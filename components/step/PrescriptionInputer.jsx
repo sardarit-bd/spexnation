@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { useRef, useState } from "react";
 import { toast, Toaster } from "react-hot-toast";
+import { GoPlusCircle } from "react-icons/go";
 import { RxCross2 } from "react-icons/rx";
 import { TiTick } from "react-icons/ti";
 import SubTotal from "../../components/step/SubTotal";
@@ -518,20 +519,41 @@ function PrescriptionInputer() {
 
             {/* Basic Info */}
             <div className="mt-6 flex gap-3 items-center">
-                <div className="w-full">
-                    <label className="text-md text-gray-600/80">Upload your Prescription</label>
-                    <div className="flex items-center gap-2 mt-2 h-full">
-                        <input
-                            ref={fileInputRef}
-                            type="file"
-                            accept="image/png, image/jpeg"
-                            onChange={(e) => { handleFileChanges(e) }}
-                            className="w-full border p-2 rounded-md focus:outline-yellow-500/60 text-gray-700/80 cursor-pointer"
-                        />
+                <div className="w-full flex items-center justify-between">
+
+                    <div className="">
+                        <label className="text-md text-gray-600/80 flex flex-col">
+                            <span>
+                                Upload your Prescription
+                            </span>
+                            <span className="text-[10px] bg-yellow-100  px-1">Only jpg, jpeg and png files are allowed</span>
+                        </label>
+                        <div className="flex items-center gap-2 mt-2 h-full">
+                            <input
+                                id="file2"
+                                ref={fileInputRef}
+                                type="file"
+                                accept="image/png,image/jpg, image/jpeg"
+                                onChange={(e) => { handleFileChanges(e) }}
+                                className="hidden w-full border p-2 rounded-md focus:outline-yellow-500/60 text-gray-700/80 cursor-pointer"
+                            />
+                            <label htmlFor="file2">
+                                <div className="flex items-center gap-2 justify-center flex-col cursor-pointer w-full h-full border border-gray-200 bg-gray-100 p-2">
+                                    <GoPlusCircle className="text-5xl text-gray-300" />
+                                </div>
+                            </label>
+
+
+
+
+                        </div>
+                    </div>
+
+                    <div>
                         {
                             lens?.prescriptionImage && (
-                                <div className="relative w-auto h-full border border-gray-200 text-gray-500/40 bg-gray-200 rounded-md">
-                                    <Image src={lens?.prescriptionImage} width={50} height={50} alt="prescription" />
+                                <div className="relative w-auto h-[100px] border border-gray-200 text-gray-500/40 bg-gray-200">
+                                    <Image className="w-full h-full object-cover" src={lens?.prescriptionImage} width={100} height={1000} alt="prescription" />
 
                                     <div onClick={(e) => { handleRemoved(e) }} className="absolute top-0 right-0 w-4 h-4 bg-yellow-600 text-white translate-x-1/2 -translate-y-1/2 rounded-full flex items-center justify-center cursor-pointer">
                                         <RxCross2 />
@@ -540,6 +562,7 @@ function PrescriptionInputer() {
                             )
                         }
                     </div>
+
                 </div>
             </div>
 
