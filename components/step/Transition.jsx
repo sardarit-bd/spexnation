@@ -21,14 +21,14 @@ const options = [
     },
     {
         id: "transitions",
-        title: "Transitions",
+        title: "Transitions® GEN S",
         description:
             "Premium light-reactive lenses that darken outdoors and return clear indoors.",
         price: "79",
     },
     {
         id: "transitionxtraactive",
-        title: "Transition XtraActive",
+        title: "Transitions® XTRActive®",
         description:
             "Extra-dark photochromic lenses with stronger activation, even behind car windscreens.",
         price: "99",
@@ -90,6 +90,7 @@ export default function Transition() {
         setTimeout(() => {
             setisLoading(false);
             setStep(7);
+            window.scrollTo(0, 0);
         }, 700);
 
     }

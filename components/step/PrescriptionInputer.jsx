@@ -37,9 +37,6 @@ function PrescriptionInputer() {
 
 
 
-    console.log(lens);
-
-
 
     //handle next function is here
     const handleNext = (e) => {
@@ -162,6 +159,7 @@ function PrescriptionInputer() {
         setTimeout(() => {
             setisLoading(false);
             setStep(3);
+            window.scrollTo(0, 0);
         }, 700);
 
     }

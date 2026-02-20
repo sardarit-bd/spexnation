@@ -49,6 +49,7 @@ export default function ProductPage() {
 
     useEffect(() => {
         fetchProducts(id);
+        window.scrollTo(0, 0);
     }, [id])
 
 

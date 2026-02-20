@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
+import defaultIMage from "../public/defaultImage.png";
 
 export default function ProductTabs({ product }) {
   const [activeTab, setActiveTab] = useState('frame-info')
@@ -78,7 +79,7 @@ export default function ProductTabs({ product }) {
 
             {/* Dimension Diagram */}
             <div className="bg-white p-6 rounded-lg flex flex-col items-center justify-center">
-              <Image src={product?.product_thamnail} alt="Dimension Diagram" width={1000} height={1000} />
+              <Image src={product?.product_thamnail ? product?.product_thamnail : defaultIMage} alt="Dimension Diagram" width={1000} height={1000} />
             </div>
           </div>
         )}

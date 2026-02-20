@@ -62,6 +62,7 @@ export default function LensThicknes() {
         setTimeout(() => {
             setisLoading(false);
             setStep(5);
+            window.scrollTo(0, 0);
         }, 700);
     }
 
