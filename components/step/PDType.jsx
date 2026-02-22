@@ -124,7 +124,7 @@ export default function PDType() {
                         <div className="pCl cursor-pointer underline group relative">
                             <span>See How to measure PD</span>
 
-                            <div className="hidden group-hover:block group-focus:block absolute top-5 right-[-90%] md:right-5">
+                            <div className="hidden group-hover:block group-focus:block absolute top-5 right-[-90%] md:right-5 z-50">
                                 <HowPdMesure />
                             </div>
 

@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import NotavailableToolTip from "../../components/step/NotavailableToolTip";
 import SubTotal from "../../components/step/SubTotal";
@@ -30,25 +30,19 @@ const options = [
     },
     {
         id: "blue-light-filter",
-        title: "Blue Light Filter",
+        title: "Hydrophobic Anti-glare with Blue light filter",
         description:
-            "Helps reduce blue light from screens to improve visual comfort during digital use.",
-        price: "29",
+            "Reduces blue light from digital screens and includes anti-glare and hydrophobic coatings for clearer, more comfortable vision.",
+        price: "39",
         img: '/blue-screen.png'
     },
-    // {
-    //     id: "clear-uv-protective-coating",
-    //     title: "Clear UV Protective Coating",
-    //     description: "Adds extra protection by blocking harmful ultraviolet (UV) rays.",
-    //     price: "15",
-    //     img: '/un-sun-protecting.png'
-    // },
-    // {
-    //     id: "no-coating",
-    //     title: "No Protective Coating",
-    //     description: "No Protective Coating is used",
-    //     price: "0",
-    // },
+    {
+        id: "no-coating",
+        title: "No Coating",
+        description: "Basic lenses with no added protective treatment.",
+        price: "0",
+        img: '/no-coating.png'
+    },
 ];
 
 
@@ -79,11 +73,11 @@ export default function ProtectiveCoatings() {
 
 
 
-    useEffect(() => {
+    // useEffect(() => {
 
-        automaticallySelected();
+    //     automaticallySelected();
 
-    }, []);
+    // }, []);
 
 
 
@@ -113,19 +107,15 @@ export default function ProtectiveCoatings() {
         e.preventDefault();
 
 
-        if (lens.ProtectiveCoatings.includes(opt.id)) {
-            setLens({
-                ...lens,
-                ProtectiveCoatings: lens.ProtectiveCoatings.filter((id) => id !== opt.id),
-                total: lens.total.filter((id) => id.name !== opt.title)
-            });
-            return;
-        }
+        // just for remove previous coating from total those is alredy in total
+        const calTotal = lens.total.filter((id) => id.target !== "Protective");
+
+
 
         setLens({
             ...lens,
-            ProtectiveCoatings: [...lens.ProtectiveCoatings, opt.id],
-            total: [...lens.total, { target: "Protective", id: opt.id, name: opt.title, price: opt.price }]
+            ProtectiveCoatings: [opt.id],
+            total: [...calTotal, { target: "Protective", id: opt.id, name: opt.title, price: opt.price }]
         });
 
     }
@@ -169,7 +159,7 @@ export default function ProtectiveCoatings() {
                         <p className="text-sm text-gray-600 mt-1">{opt.description}</p>
 
 
-                        <div className="hidden group-hover:block absolute top-0 left-0 translate-x-[-110%]">
+                        <div className="hidden group-hover:block absolute top-0 left-0 translate-x-[-110%] z-50">
                             <ProtectiveImageShow opt={opt} />
                         </div>
 

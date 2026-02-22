@@ -21,7 +21,7 @@ const HowPdMesure = () => {
                 <div className="my-4 w-full">
                     <Image className="h-full w-full" src="/pdMesureImage.png" alt="placeholder" width={100} height={100} />
                 </div>
-                <p className="text-gray-400 text-sm">Align the <b>0mm</b> mark <b>a millimetre ruler with the centre of your pupil.</b> Then, look straight and read the mm number lined up with the centre of <b>your right pupil.</b></p>
+                <p className="text-gray-400 text-sm">Align the <b>0mm</b> mark <b>a millimetre ruler with the centre of your left pupil.</b> Then, look straight and read the mm number lined up with the centre of <b>your right pupil.</b></p>
                 <b className="pt-4 text-md">Most adults: 54-74mm</b>
             </div>
         </motion.div>

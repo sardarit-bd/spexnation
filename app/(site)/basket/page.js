@@ -4,30 +4,81 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { RxCross2 } from "react-icons/rx";
 import defaultImage from "../../../public/defaultImage.png";
+import useLenseStore from "../../../store/useLenseStore";
+import useStepStore from "../../../store/useStepStore";
 
 export default function CartPage() {
 
 
-
+    const { setStep } = useStepStore();
+    const { setLens } = useLenseStore();
     const [hasData, sethasData] = useState([]);
 
 
 
     useEffect(() => {
+
+
+        setStep(0);
+
+
+        setLens({
+            ProductDetails: {},
+            LenseName: "",
+            LenseUseCase: "",
+            LenseThickness: "",
+            pdType: "1",
+            singlePD: "0",
+            dualPD: {
+                leftPD: "0",
+                rightPD: "0",
+            },
+            sph: {
+                leftSph: "0",
+                rightSph: "0",
+            },
+            cyl: {
+                leftCyl: "0",
+                rightCyl: "0",
+            },
+            axis: {
+                leftAxis: "0",
+                rightAxis: "0",
+            },
+            add: {
+                leftAdd: "0",
+                rightAdd: "0",
+            },
+
+            addPrism: false,
+            leftPrism: {
+                vertical: "0",
+                vBaseDirection: "N/A",
+                horizontal: "0",
+                hBaseDirection: "N/A",
+            },
+            rightPrism: {
+                vertical: "0",
+                vBaseDirection: "N/A",
+                horizontal: "0",
+                hBaseDirection: "N/A",
+            },
+
+            ProtectiveCoatings: [],
+            Transition: "",
+            color: "gray",
+            darkness: "light",
+            prescriptionImage: '',
+            total: []
+        });
+
+
+
         sethasData(JSON.parse(localStorage.getItem("lensData")));
+        // Trigger header update
+        window.dispatchEvent(new Event("lensUpdated"));
         window.scrollTo(0, 0);
     }, []);
-
-
-    console.log(hasData);
-
-
-
-
-
-
-
-
 
 
 

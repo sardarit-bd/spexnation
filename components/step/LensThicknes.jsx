@@ -19,25 +19,28 @@ const options = [
         id: "standard",
         title: "Standard",
         description: "Ideal for lower prescriptions, providing clear everyday vision.",
+        price: "0",
     },
     {
         id: "1.60",
         title: "1.60",
         description:
             "Up to 25% thinner than standard for a slimmer, lighter feel.",
+        price: "25",
     },
     {
         id: "1.67",
         title: "1.67",
         description:
             "Up to 40% thinner than standard, perfect for higher prescriptions.",
+        price: "49",
     }
 ];
 
 
 export default function LensThicknes() {
 
-    const [selected, setSelected] = useState(null);
+
     const { step, setStep } = useStepStore();
     const { lens, setLens } = useLenseStore();
     const [isLoading, setisLoading] = useState(false);
@@ -68,11 +71,35 @@ export default function LensThicknes() {
 
 
 
-
     useEffect(() => {
         const result = disableAndRecommandedLogic(lens);
         setdisAndRecommanded(result);
     }, [lens]);
+
+
+
+
+
+
+
+    // handle lens thinkness selete
+    const handleLensThinkessSelete = (e, opt) => {
+        e.preventDefault();
+
+
+        // just for remove previous lens thinkess from total those is alredy in total
+        const calTotal = lens.total.filter((id) => id.target !== "Thickness");
+
+        setLens({
+            ...lens,
+            LenseThickness: opt.id,
+            total: [...calTotal, { target: "Thickness", id: opt.id, name: opt.title, price: opt.price }]
+
+        })
+    }
+
+
+
 
 
 
@@ -100,7 +127,7 @@ export default function LensThicknes() {
                     <button
                         key={opt.id}
                         disabled={disAndRecommanded?.disables?.includes(opt.id)}
-                        onClick={() => { setLens({ ...lens, LenseThickness: opt.id }) }}
+                        onClick={(e) => { handleLensThinkessSelete(e, opt) }}
                         className={`relative group w-full bg-gray-100 text-left p-2 rounded-md border transition-all disabled:cursor-not-allowed disabled:bg-gray-300 disabled:text-gray-600
                             ${lens?.LenseThickness === opt.id
                                 ? "border-yellow-500 bg-yellow-50"
@@ -117,9 +144,12 @@ export default function LensThicknes() {
                             <div className="w-full">
                                 <div className="flex items-center gap-1 justify-between">
                                     <h3 className="text-xl font-semibold text-gray-900">{opt.title}</h3>
-                                    <div>
+                                    <div className="flex flex-row-reverse items-center gap-3">
                                         {
                                             opt?.id == disAndRecommanded?.recommanded && <RecommandedBox />
+                                        }
+                                        {
+                                            <h2 className="text-xl font-bold">£{opt.price}</h2>
                                         }
                                     </div>
                                 </div>
