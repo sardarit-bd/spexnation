@@ -1,6 +1,8 @@
 'use client'
 
+import { useEffect, useState } from "react";
 import { FaDownload } from "react-icons/fa";
+import Loading from "../../../../components/Loading";
 import generateOrderReport from "../../../../lib/generateOrderReport";
 
 const OrderPage = () => {
@@ -9,9 +11,55 @@ const OrderPage = () => {
 
 
 
+    const [loading, setLoading] = useState(false);
+    const [allOrders, setallOrders] = useState([]);
+
+
+    const fetchOrders = async () => {
+        setLoading(true);
+        try {
+            // Make API call to get all the product
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/allorders`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            });
+
+            const res = await response.json();
+            setallOrders(res?.data);
+            setLoading(false);
+        } catch (error) {
+            console.error('Error fetching orders:', error);
+            setLoading(false);
+        }
+    };
+
+
+    useEffect(() => {
+        fetchOrders();
+    }, [])
+
+
+
+    console.log(allOrders);
+
+
 
     const handleFileGenarate = () => {
         generateOrderReport();
+    }
+
+
+
+    if (loading) {
+        return (
+            <div className="h-screen flex justify-center items-center">
+                <div className="bg-yellow-700 px-5 py-2 w-fit">
+                    <Loading />
+                </div>
+            </div>
+        )
     }
 
 
@@ -34,7 +82,7 @@ const OrderPage = () => {
                     </thead>
 
                     <tbody>
-                        {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((row, index) => (
+                        {allOrders?.map((row, index) => (
                             <tr key={row} className="hover:bg-gray-50">
 
                                 <td className="p-2 border">
