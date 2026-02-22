@@ -16,28 +16,28 @@ const options = [
         id: "distance",
         title: "Distance",
         description:
-            "Best for Everyday, General Use",
+            "Best for everyday, general Use.",
         img: '/distance.png'
     },
     {
         id: "reading",
         title: "Reading",
         description:
-            "Optimize for seeing close-Up",
+            "Optimize for seeing close-Up.",
         img: '/reading.png'
     },
     {
         id: "computerorintermediate",
         title: "Computer/Intermediate",
         description:
-            "Perfect for workding at arm's length",
+            "Perfect for workding at arm's length.",
         img: '/cumputer.png'
     },
     {
         id: "noprescription",
         title: "No Prescription",
         description:
-            "Clear lenses with no vision correction",
+            "Clear lenses with no vision correction.",
         img: '/noprescription.png'
     }
 ];
@@ -86,6 +86,7 @@ export default function VisionType() {
                 horizontal: "0",
                 hBaseDirection: "N/A",
             },
+            prescriptionImage: "",
         })
 
     }, [])

@@ -8,10 +8,29 @@ const HeaderCartIcon = () => {
 
     const [hasData, sethasData] = useState([]);
 
-
+    const loadCart = () => {
+        const data = JSON.parse(localStorage.getItem("lensData")) || [];
+        sethasData(data);
+    };
 
     useEffect(() => {
-        sethasData(JSON.parse(localStorage.getItem("lensData")));
+
+        // initial load
+        loadCart();
+
+        // listen for localStorage change
+        const handleStorageChange = () => {
+            loadCart();
+        };
+
+        window.addEventListener("storage", handleStorageChange);
+        window.addEventListener("lensUpdated", handleStorageChange);
+
+        return () => {
+            window.removeEventListener("storage", handleStorageChange);
+            window.addEventListener("lensUpdated", handleStorageChange);
+        };
+
     }, []);
 
 

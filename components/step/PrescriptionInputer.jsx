@@ -15,6 +15,7 @@ import PrismNumberOption from "../../Data/PrismNumberOPtion";
 import SpaNumberOptions from "../../Data/SpaNumberOptions";
 import clearFileInput from "../../lib/clearFileInput";
 import fileToBase64 from "../../lib/fileToBase64";
+import defaultImage from "../../public/defaultImage.png";
 import useLenseStore from "../../store/useLenseStore";
 import useStepStore from "../../store/useStepStore";
 import Loading from "../Loading";
@@ -34,6 +35,8 @@ function PrescriptionInputer() {
     const [confirm, setconfirm] = useState(false);
     const [isLoading, setisLoading] = useState(false);
     const [alert, setalert] = useState(false);
+    const [filetype, setfiletype] = useState('');
+    const [fileName, setfileName] = useState('');
     const [alertMessage, setalertMessage] = useState('');
 
 
@@ -111,40 +114,55 @@ function PrescriptionInputer() {
         if (lens?.addPrism) {
 
 
-            // od check
-            if (lens.rightPrism?.vertical == "0") {
-                toast.error("Please. Enter Right Prism Vertical");
-                return;
-            } else if (lens.rightPrism?.vBaseDirection == "N/A") {
-                toast.error("Please. Select Right Prism Vertical Base Direction");
-                return;
-            } else if (lens.rightPrism?.horizontal == "0") {
-                toast.error("Please. Enter Right Prism Horizontal");
-                return;
-            } else if (lens.rightPrism?.hBaseDirection == "N/A") {
-                toast.error("Please. Select Right Prism Horizontal Base Direction");
+
+            // overall check if user select any prism value or not
+            if (lens?.rightPrism?.vertical == "0" && lens?.rightPrism?.horizontal == "0" && lens?.leftPrism?.vertical == "0" && lens?.leftPrism?.horizontal == "0") {
+
+                toast.error("Must be add Any Vertical or Horizontal Prism");
                 return;
             }
 
 
-            // os check
-            if (lens.leftPrism?.vertical == "0") {
-                toast.error("Please. Enter Left Prism Vertical");
-                return;
-            } else if (lens.leftPrism?.vBaseDirection == "N/A") {
-                toast.error("Please. Select Left Prism Vertical Base Direction");
-                return;
-            } else if (lens.leftPrism?.horizontal == "0") {
-                toast.error("Please. Enter Left Prism Horizontal");
-                return;
-            } else if (lens.leftPrism?.hBaseDirection == "N/A") {
-                toast.error("Please. Select Left Prism Horizontal Base Direction");
-                return;
+
+
+            //od check
+            if (lens?.rightPrism?.vertical != "0") {
+                if (lens?.rightPrism?.vBaseDirection == "N/A") {
+                    toast.error("Please. Select Right Prism Vertical Base Direction");
+                    return;
+                }
             }
+
+            if (lens?.rightPrism?.horizontal != "0") {
+                if (lens?.rightPrism?.hBaseDirection == "N/A") {
+                    toast.error("Please. Select Right Prism Horizontal Base Direction");
+                    return;
+                }
+            }
+
+
+            //os check
+            if (lens?.leftPrism?.vertical != "0") {
+                if (lens?.leftPrism?.vBaseDirection == "N/A") {
+                    toast.error("Please. Select Left Prism Vertical Base Direction");
+                    return;
+                }
+            }
+
+            if (lens?.leftPrism?.horizontal != "0") {
+                if (lens?.leftPrism?.hBaseDirection == "N/A") {
+                    toast.error("Please. Select Left Prism Horizontal Base Direction");
+                    return;
+                }
+            }
+
+
 
         }
 
 
+
+        console.log(lens);
 
 
 
@@ -433,6 +451,8 @@ function PrescriptionInputer() {
 
         const file = e.target.files[0];
         const base64 = await fileToBase64(file);
+        setfileName(file.name);
+        setfiletype(file.type);
         setLens({ ...lens, prescriptionImage: base64 });
 
     }
@@ -443,6 +463,8 @@ function PrescriptionInputer() {
     function handleRemoved(e) {
         e.preventDefault();
         clearFileInput(fileInputRef);
+        setfileName("");
+        setfiletype("");
         setLens({ ...lens, prescriptionImage: "" });
     }
 
@@ -463,16 +485,16 @@ function PrescriptionInputer() {
                 ...lens,
                 addPrism: false,
                 leftPrism: {
-                    vertical: "",
-                    vBaseDirection: "",
-                    horizontal: "",
-                    hBaseDirection: "",
+                    vertical: "0",
+                    vBaseDirection: "N/A",
+                    horizontal: "0",
+                    hBaseDirection: "N/A",
                 },
                 rightPrism: {
-                    vertical: "",
-                    vBaseDirection: "",
-                    horizontal: "",
-                    hBaseDirection: "",
+                    vertical: "0",
+                    vBaseDirection: "N/A",
+                    horizontal: "0",
+                    hBaseDirection: "N/A",
                 },
                 total: [...calTotal]
             })
@@ -495,6 +517,7 @@ function PrescriptionInputer() {
 
         eye == "od" ? setLens({ ...lens, add: { ...lens.add, rightAdd: e.target.value } }) : setLens({ ...lens, add: { ...lens.add, leftAdd: e.target.value } })
     }
+
 
 
 
@@ -526,22 +549,25 @@ function PrescriptionInputer() {
                             <span>
                                 Upload your Prescription
                             </span>
-                            <span className="text-[10px] bg-yellow-100  px-1">Only jpg, jpeg and png files are allowed</span>
+                            <span className="text-[10px] bg-yellow-100  px-1 w-fit">jpg, jpeg, png, pdf, doc, docx, xls, xlsx files are allowed</span>
                         </label>
                         <div className="flex items-center gap-2 mt-2 h-full">
                             <input
                                 id="file2"
                                 ref={fileInputRef}
                                 type="file"
-                                accept="image/png,image/jpg, image/jpeg"
+                                accept=".png,.jpg,.jpeg,.pdf,.doc,.docx,.xls,.xlsx"
                                 onChange={(e) => { handleFileChanges(e) }}
                                 className="hidden w-full border p-2 rounded-md focus:outline-yellow-500/60 text-gray-700/80 cursor-pointer"
                             />
-                            <label htmlFor="file2">
-                                <div className="flex items-center gap-2 justify-center flex-col cursor-pointer w-full h-full border border-gray-200 bg-gray-100 p-2">
-                                    <GoPlusCircle className="text-5xl text-gray-300" />
-                                </div>
-                            </label>
+                            <div className="flex items-center gap-2">
+                                <label htmlFor="file2">
+                                    <div className="flex items-center gap-2 justify-center flex-col cursor-pointer w-full h-full border border-gray-200 bg-gray-100 p-2">
+                                        <GoPlusCircle className="text-5xl text-gray-300" />
+                                    </div>
+                                </label>
+                                <span>{fileName}</span>
+                            </div>
 
 
 
@@ -550,17 +576,36 @@ function PrescriptionInputer() {
                     </div>
 
                     <div>
-                        {
-                            lens?.prescriptionImage && (
-                                <div className="relative w-auto h-[100px] border border-gray-200 text-gray-500/40 bg-gray-200">
-                                    <Image className="w-full h-full object-cover" src={lens?.prescriptionImage} width={100} height={1000} alt="prescription" />
 
+                        <div className="relative w-auto h-[100px] border border-gray-200 text-gray-500/40 bg-gray-200">
+
+
+                            {
+                                filetype == "image/png" || filetype == "image/jpeg" || filetype == "image/jpg" ? (
+                                    <Image className="w-full h-full object-cover" src={lens?.prescriptionImage ? lens?.prescriptionImage : defaultImage} width={100} height={1000} alt="prescription" />
+                                ) : (
+
+                                    lens?.prescriptionImage ? (
+                                        <div className="w-[90px] h-full flex items-center justify-center bg-gray-200 text-gray-800">
+                                            {filetype == "application/pdf" ? "PDF File" : filetype == "application/vnd.openxmlformats-officedocument.wordprocessingml.document" ? "Word File" : filetype == "application/vnd.ms-excel" ? "Excel File" : "Excel File"}
+                                        </div>
+                                    ) : (
+                                        <Image className="w-full h-full object-cover" src={defaultImage} width={100} height={1000} alt="prescription" />
+                                    )
+
+
+                                )
+                            }
+
+                            {
+                                lens?.prescriptionImage && (
                                     <div onClick={(e) => { handleRemoved(e) }} className="absolute top-0 right-0 w-4 h-4 bg-yellow-600 text-white translate-x-1/2 -translate-y-1/2 rounded-full flex items-center justify-center cursor-pointer">
                                         <RxCross2 />
                                     </div>
-                                </div>
-                            )
-                        }
+                                )
+                            }
+                        </div>
+
                     </div>
 
                 </div>

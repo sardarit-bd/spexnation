@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { TiTick } from "react-icons/ti";
 import useLenseStore from "../../store/useLenseStore";
@@ -28,38 +29,23 @@ const ColorAndDarkness = () => {
                 <h3>Color</h3>
                 <div className="flex flex-wrap gap-4 mt-2">
                     <div className="flex gap-2 items-center">
-                        <div className="w-fit">
-                            <div onClick={() => setcolor("gray")} className={`flex items-center justify-center text-white cursor-pointer w-6 h-6 ${color == "gray" ? "bg-[#808080]" : "bg-transparent border-2 border-[#808080]"}`}>
-                                {
-                                    color == "gray" && <TiTick className="text-2xl" />
-                                }
-                            </div>
+                        <div onClick={() => setcolor("gray")} className={`w-fit border-2 ${color == "gray" ? "border-yellow-500" : "border-gray-100"}`}>
+                            <Image src="/gray.png" alt="gray" width={1000} height={1000} className={`flex items-center justify-center text-white cursor-pointer w-20 h-20`} />
                         </div>
-                        <span>Grey</span>
                     </div>
                     <div className="flex gap-2 items-center">
-                        <div onClick={() => setcolor("brown")} className="w-fit">
-                            <div className={`flex items-center justify-center text-white cursor-pointer w-6 h-6 ${color == "brown" ? "bg-[#964B00]" : "bg-transparent border-2 border-[#964B00]"}`}>
-                                {
-                                    color == "brown" && <TiTick className="text-2xl" />
-                                }
-                            </div>
+                        <div onClick={() => setcolor("green")} className={`w-fit border-2 ${color == "green" ? "border-yellow-500" : "border-gray-100"}`}>
+                            <Image src="/green.png" alt="green" width={1000} height={1000} className={`flex items-center justify-center text-white cursor-pointer w-20 h-20`} />
                         </div>
-                        <span>Brown</span>
                     </div>
 
 
                     {
                         lens?.Transition != "photochromiclenses" && (
                             <div className="flex gap-2 items-center">
-                                <div onClick={() => setcolor("green")} className="w-fit">
-                                    <div className={`flex items-center justify-center text-white cursor-pointer w-6 h-6 ${color == "green" ? "bg-green-600" : "bg-transparent border-2 border-green-600"}`}>
-                                        {
-                                            color == "green" && <TiTick className="text-2xl" />
-                                        }
-                                    </div>
+                                <div onClick={() => setcolor("brown")} className={`w-fit border-2 ${color == "brown" ? "border-yellow-500" : "border-gray-100"}`}>
+                                    <Image src="/brown.png" alt="brown" width={1000} height={1000} className={`flex items-center justify-center text-white cursor-pointer w-20 h-20`} />
                                 </div>
-                                <span>Graphite Green</span>
                             </div>
                         )
                     }
@@ -80,54 +66,29 @@ const ColorAndDarkness = () => {
                             <>
 
                                 <div className="flex gap-2 items-center">
-                                    <div className="w-fit">
-                                        <div onClick={() => setcolor("emerald")} className={`flex items-center justify-center text-white cursor-pointer w-6 h-6 ${color == "emerald" ? "bg-[#808080]" : "bg-transparent border-2 border-[#808080]"}`}>
-                                            {
-                                                color == "emerald" && <TiTick className="text-2xl" />
-                                            }
-                                        </div>
+                                    <div onClick={() => setcolor("amethyst")} className={`w-fit border-2 ${color == "amethyst" ? "border-yellow-500" : "border-gray-100"}`}>
+                                        <Image src="/amethyst.png" alt="amethyst" width={1000} height={1000} className={`flex items-center justify-center text-white cursor-pointer w-20 h-20`} />
                                     </div>
-                                    <span>Emerald</span>
                                 </div>
                                 <div className="flex gap-2 items-center">
-                                    <div onClick={() => setcolor("amethyst")} className="w-fit">
-                                        <div className={`flex items-center justify-center text-white cursor-pointer w-6 h-6 ${color == "amethyst" ? "bg-[#964B00]" : "bg-transparent border-2 border-[#964B00]"}`}>
-                                            {
-                                                color == "amethyst" && <TiTick className="text-2xl" />
-                                            }
-                                        </div>
+                                    <div onClick={() => setcolor("emerald")} className={`w-fit border-2 ${color == "emerald" ? "border-yellow-500" : "border-gray-100"}`}>
+                                        <Image src="/emerald.png" alt="emerald" width={1000} height={1000} className={`flex items-center justify-center text-white cursor-pointer w-20 h-20`} />
                                     </div>
-                                    <span>Amethyst</span>
                                 </div>
                                 <div className="flex gap-2 items-center">
-                                    <div className="w-fit">
-                                        <div onClick={() => setcolor("ruby")} className={`flex items-center justify-center text-white cursor-pointer w-6 h-6 ${color == "ruby" ? "bg-[#808080]" : "bg-transparent border-2 border-[#808080]"}`}>
-                                            {
-                                                color == "ruby" && <TiTick className="text-2xl" />
-                                            }
-                                        </div>
+                                    <div onClick={() => setcolor("amber")} className={`w-fit border-2 ${color == "amber" ? "border-yellow-500" : "border-gray-100"}`}>
+                                        <Image src="/amber.png" alt="Amber" width={1000} height={1000} className={`flex items-center justify-center text-white cursor-pointer w-20 h-20`} />
                                     </div>
-                                    <span>Ruby</span>
                                 </div>
                                 <div className="flex gap-2 items-center">
-                                    <div onClick={() => setcolor("amber")} className="w-fit">
-                                        <div className={`flex items-center justify-center text-white cursor-pointer w-6 h-6 ${color == "amber" ? "bg-[#964B00]" : "bg-transparent border-2 border-[#964B00]"}`}>
-                                            {
-                                                color == "amber" && <TiTick className="text-2xl" />
-                                            }
-                                        </div>
+                                    <div onClick={() => setcolor("rubby")} className={`w-fit border-2 ${color == "rubby" ? "border-yellow-500" : "border-gray-100"}`}>
+                                        <Image src="/rubby.png" alt="rubby" width={1000} height={1000} className={`flex items-center justify-center text-white cursor-pointer w-20 h-20`} />
                                     </div>
-                                    <span>Amber</span>
                                 </div>
                                 <div className="flex gap-2 items-center">
-                                    <div className="w-fit">
-                                        <div onClick={() => setcolor("sapplire")} className={`flex items-center justify-center text-white cursor-pointer w-6 h-6 ${color == "sapplire" ? "bg-[#808080]" : "bg-transparent border-2 border-[#808080]"}`}>
-                                            {
-                                                color == "sapplire" && <TiTick className="text-2xl" />
-                                            }
-                                        </div>
+                                    <div onClick={() => setcolor("sapphire")} className={`w-fit border-2 ${color == "sapphire" ? "border-yellow-500" : "border-gray-100"}`}>
+                                        <Image src="/sapphire.png" alt="sapphire" width={1000} height={1000} className={`flex items-center justify-center text-white cursor-pointer w-20 h-20`} />
                                     </div>
-                                    <span>Sapplire</span>
                                 </div>
                             </>
                         )

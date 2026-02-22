@@ -25,8 +25,6 @@ export default function Review() {
 
         setisLoading(true);
 
-
-
         const hasData = JSON.parse(localStorage.getItem("lensData"));
 
         if (hasData === null) {
@@ -69,7 +67,7 @@ export default function Review() {
                 Review Your Selections
             </h1>
             <p className="mt-2 text-center text-md text-gray-500/90">
-                All orders include <span className="font-medium">120-day free returns</span>
+                Free Delivery on glasses orders
             </p>
 
             {/* Prescription Details */}
@@ -154,63 +152,6 @@ export default function Review() {
                 }
 
 
-
-
-                <div className="mt-6 border border-gray-200 p-2 flex flex-col gap-4 flex-wrap">
-                    <div className="w-full flex iems-center gap-3 flex-wrap">
-                        <p className="flex items-center gap-1">
-                            <b className="font-extrabold">Frame:</b>
-                            <span>{lens?.LenseName}</span>
-                        </p>
-
-                        <p className="flex items-center gap-1">
-                            <b className="font-extrabold">Glasses Use:</b>
-                            <span>{lens?.LenseUseCase}</span>
-                        </p>
-
-                        <p className="flex items-center gap-1">
-                            <b className="font-extrabold">Lens Thickness:</b>
-                            <span>{lens?.LenseThickness}</span>
-                        </p>
-                    </div>
-                    <div className="flex items-center gap-1">
-                        <b className="font-extrabold">Protective Coatings:</b>
-                        <p className="flex gap-2 items-center flex-wrap">
-                            {lens?.ProtectiveCoatings?.map((item, index) => {
-                                return (
-                                    <span className="px-1 bg-gray-100" key={index}>{item}</span>
-                                )
-                            })}
-                        </p>
-                    </div>
-
-                    <div>
-                        <p className="flex items-center gap-1">
-                            <b className="font-extrabold">Tints:</b>
-                            <span>{lens?.Transition}</span>
-                        </p>
-                        {
-                            lens?.Transition != "clear" && (
-                                <div className="flex gap-2">
-                                    <p className="flex items-center gap-1">
-                                        <b>color:</b>
-                                        <span>{lens?.color}</span>
-                                    </p>
-                                    {
-                                        lens?.Transition == "sunglasses" && (
-                                            <p className="flex items-center gap-1">
-                                                <b>Darkness:</b>
-                                                <span>{lens?.darkness}</span>
-                                            </p>
-                                        )
-                                    }
-                                </div>
-                            )
-                        }
-                    </div>
-                </div>
-
-
             </div>
 
             {/* Product Summary */}
@@ -247,7 +188,7 @@ export default function Review() {
                     isLoading ? <Loading /> : "Confirm & Add to Basket"
                 }
             </button>
-        </motion.div>
+        </motion.div >
     );
 }
 

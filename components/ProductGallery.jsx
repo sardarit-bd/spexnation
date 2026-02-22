@@ -9,8 +9,6 @@ export default function ProductGallery({ product }) {
   const [selectedImage, setSelectedImage] = useState(0)
 
 
-  console.log(product);
-
 
   return (
     <div className="flex flex-col justify-between h-full gap-0 border border-gray-200 bg-white w-full">
