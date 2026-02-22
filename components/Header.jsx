@@ -2,19 +2,26 @@
 
 import { Menu, User } from 'lucide-react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 import HeaderCartIcon from "../components/HeaderCartIcon";
 
 export default function Header() {
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false);
+  const pathName = usePathname();
 
   return (
     <>
       {/* Top Banner */}
-      <div className="sBg text-white text-center py-1 text-xs md:text-sm">
-        <span>EXCLUSIVE OFFER | UP TO 60% OFF | LUXURY FRAMES</span>
-        <Link href="/shop" className="ml-2 underline">→ SHOP NOW</Link>
-      </div>
+
+      {
+        pathName === '/' && (
+          <div className="sBg text-white text-center py-1 text-xs md:text-sm">
+            <span>EXCLUSIVE OFFER | UP TO 60% OFF | LUXURY FRAMES</span>
+            <Link href="/shop" className="ml-2 underline">→ SHOP NOW</Link>
+          </div>
+        )
+      }
 
       {/* Main Header */}
       <header className="bg-white border-b border-gray-200 sticky top-0 z-50">

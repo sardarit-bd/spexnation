@@ -1,18 +1,33 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { RxCross2 } from "react-icons/rx";
+import Loading from "../../../components/Loading";
+import ProductBreadcrumb from "../../../components/ProductBreadcrumb";
+import getTotalPrice from "../../../lib/getTotalPrice";
 import defaultImage from "../../../public/defaultImage.png";
 import useLenseStore from "../../../store/useLenseStore";
 import useStepStore from "../../../store/useStepStore";
+
+
+const breadcrumbs = [
+    { label: 'Home', href: '/' },
+    { label: 'Shop', href: '/shop' },
+    { label: 'Basket ', href: '/basket' }
+]
+
 
 export default function CartPage() {
 
 
     const { setStep } = useStepStore();
     const { setLens } = useLenseStore();
+    const [isLoading, setIsLoading] = useState(false);
     const [hasData, sethasData] = useState([]);
+    const router = useRouter();
 
 
 
@@ -82,8 +97,6 @@ export default function CartPage() {
 
 
 
-
-
     // handle remove function is here
     function handleRemoveItem(e, id) {
 
@@ -97,20 +110,68 @@ export default function CartPage() {
     }
 
 
+
+
+
+
+
+
+    // hanlde procced to checkout function is here
+    function handleProccedToCheckout(e) {
+
+        e.preventDefault();
+        setIsLoading(true);
+
+        setTimeout(() => {
+            setIsLoading(false);
+            router?.push('/basket/checkout');
+        }, 700);
+
+    }
+
+
+
+
+
+
+
+
+    const TotalCalculation = () => {
+        let priceTotal = 0;
+        hasData?.forEach((item) => {
+            priceTotal += getTotalPrice(item.total);
+        });
+        return priceTotal;
+    };
+
+
+
+
+
+
+
+
+
+
     return (
-        <section className="h-fit bg-gray-50 py-10">
-            <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-3 gap-5">
+        <section className="h-fit bg-gray-50 pt-3 pb-10">
+
+            <div className="max-w-7xl mx-auto px-4">
+                <ProductBreadcrumb breadcrumbs={breadcrumbs} />
+            </div>
+
+            <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-3 gap-5 ">
 
                 {/* CART ITEMS */}
-                <div className="lg:col-span-2 space-y-5">
-                    <h1 className="text-2xl font-light text-gray-800 bg-white border p-3">
+                <div className="lg:col-span-2 space-y-5 bg-white border border-gray-200">
+                    <h1 className="text-2xl font-light text-gray-800 bg-white border-b p-3">
                         Your Basket ({hasData?.length})
                     </h1>
 
                     {hasData?.map((item, index) => (
                         <div
                             key={index}
-                            className="bg-white border p-6 flex gap-6"
+                            className="bg-gray-50 m-6 border p-6 flex gap-6"
                         >
                             {/* IMAGE */}
                             <div className="w-40 shrink-0">
@@ -119,7 +180,7 @@ export default function CartPage() {
                                     alt={item.LenseName}
                                     width={160}
                                     height={100}
-                                    className="object-contain border border-gray-200 h-full w-full"
+                                    className="object-contain border border-gray-200 h-full w-full bg-white"
                                 />
                             </div>
 
@@ -135,7 +196,7 @@ export default function CartPage() {
                                     </div>
                                     <button onClick={(e) => {
                                         handleRemoveItem(e, item?.ProductDetails?._id)
-                                    }} className="h-7 w-7 flex items-center justify-center text-gray-400 hover:bg-gray-200">
+                                    }} className="h-7 w-7 flex items-center justify-center text-gray-400 bg-white border border-gray-100 hover:scale-110 transform duration-200">
                                         <RxCross2 className="text-2xl" />
                                     </button>
                                 </div>
@@ -164,6 +225,9 @@ export default function CartPage() {
                             </div>
                         </div>
                     ))}
+                    <div className="w-full px-6 pb-6 pt-0 flex items-center justify-end">
+                        <Link href="/shop" className="text-gray-600 text-md underline">Continue Shopping</Link>
+                    </div>
                 </div>
 
                 {/* SUMMARY */}
@@ -184,7 +248,7 @@ export default function CartPage() {
                                 </div>
                                 <div className="flex justify-between">
                                     <span>Subtotal</span>
-                                    <span>£{900}</span>
+                                    <span>£{TotalCalculation()}</span>
                                 </div>
                             </div>
                         </div>
@@ -193,11 +257,19 @@ export default function CartPage() {
                             <hr />
                             <div className="flex justify-between font-semibold text-lg mt-4">
                                 <span>Order Total</span>
-                                <span>£{900}</span>
+                                <span>£{TotalCalculation()}</span>
                             </div>
 
-                            <button className="w-full mt-6 bg-yellow-700 text-lg text-white py-3 rounded-lg font-light transition">
-                                Proceed to checkout
+                            <button onClick={(e) => { handleProccedToCheckout(e) }} className="w-full mt-6 bg-yellow-700 text-white py-3 rounded-lg font-light transition flex items-center justify-center">
+                                {
+                                    isLoading ? (
+                                        <div className="py-0.5">
+                                            <Loading />
+                                        </div>
+                                    ) : (
+                                        <span className="text-lg">Proceed to checkout</span>
+                                    )
+                                }
                             </button>
 
                         </div>

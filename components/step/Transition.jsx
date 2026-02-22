@@ -78,9 +78,6 @@ export default function Transition() {
         e.preventDefault();
 
 
-        console.log(lens);
-
-
         if (!lens?.Transition) {
             toast.error("Must be select Transition and Final Touches option");
             return;
