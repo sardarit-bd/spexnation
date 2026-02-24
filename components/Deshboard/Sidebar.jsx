@@ -1,6 +1,6 @@
 'use client';
 
-import { BarChart, FileText, Home, PackageSearch, Settings, Target, Users, X } from 'lucide-react';
+import { FileText, Home, PackageSearch, Settings, Target, X } from 'lucide-react';
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from 'next/navigation';
@@ -9,11 +9,9 @@ import { usePathname } from 'next/navigation';
 const Sidebar = ({ isOpen, onClose }) => {
     const menuItems = [
         { icon: Home, label: 'Dashboard', href: '/dashboard' },
-        { icon: Users, label: 'Users', href: '/dashboard/users' },
         { icon: FileText, label: 'Orders', href: '/dashboard/orders' },
         { icon: Target, label: 'Add Product', href: '/dashboard/addproduct' },
         { icon: PackageSearch, label: 'All Products', href: '/dashboard/allproducts' },
-        { icon: BarChart, label: 'Contact', href: '/dashboard/contact' },
         { icon: Settings, label: 'Settings', href: '/dashboard/settings' },
     ];
 

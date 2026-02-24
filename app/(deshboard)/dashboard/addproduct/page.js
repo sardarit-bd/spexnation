@@ -6,8 +6,12 @@ import { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { GoPlusCircle } from "react-icons/go";
 import { RxCross2 } from "react-icons/rx";
+import ColorSelect from "../../../../components/Deshboard/ColorSelect";
 import Loading from "../../../../components/Loading";
 import fileToBase64 from "../../../../lib/fileToBase64";
+
+
+
 
 const AddproductPage = () => {
 
@@ -18,7 +22,7 @@ const AddproductPage = () => {
     const [price, setprice] = useState('');
     const [discount, setdiscount] = useState('');
     const [description, setdescription] = useState('');
-    const [color, setcolor] = useState('');
+    const [color, setcolor] = useState([]);
     const [quentity, setquantity] = useState('');
     const [size, setsize] = useState('');
     const [weight, setweight] = useState('');
@@ -105,6 +109,8 @@ const AddproductPage = () => {
 
 
 
+    console.log(color);
+
 
     // hanndle thumnail is here
     const handleThambnail = async (e) => {
@@ -162,7 +168,8 @@ const AddproductPage = () => {
 
                         <input value={quentity} onChange={(e) => setquantity(e.target.value)} type="number" placeholder="Product Quantity" className="w-full border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-600" />
 
-                        <input value={color} onChange={(e) => setcolor(e.target.value)} type="text" placeholder="Product Color" className="w-full border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-600" />
+
+                        <ColorSelect value={color} onChange={setcolor} />
 
                         <input value={size} onChange={(e) => setsize(e.target.value)} type="text" placeholder="Product Size" className="w-full border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-600" />
 

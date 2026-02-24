@@ -162,11 +162,6 @@ function PrescriptionInputer() {
 
 
 
-        console.log(lens);
-
-
-
-
 
         // final comfirm validation
         if (!confirm) {
@@ -531,7 +526,7 @@ function PrescriptionInputer() {
                 ease: "easeOut"
             }}
 
-            className="max-w-3xl mx-auto p-6 bg-white border border-gray-200">
+            className="max-w-3xl mx-auto p-4 md:p-6 bg-white border border-gray-200">
             {/* Header */}
             <div className="flex items-center justify-between">
                 <BackBtn step={step} setStep={setStep} />
@@ -542,7 +537,7 @@ function PrescriptionInputer() {
 
             {/* Basic Info */}
             <div className="mt-6 flex gap-3 items-center">
-                <div className="w-full flex items-center justify-between">
+                <div className="w-full flex items-center justify-between gap-2">
 
                     <div className="">
                         <label className="text-md text-gray-600/80 flex flex-col">
@@ -577,7 +572,7 @@ function PrescriptionInputer() {
 
                     <div>
 
-                        <div className="relative w-auto h-[100px] border border-gray-200 text-gray-500/40 bg-gray-200">
+                        <div className="relative w-auto h-[60px] md:h-[100px] border border-gray-200 text-gray-500/40 bg-gray-200">
 
 
                             {
@@ -586,14 +581,12 @@ function PrescriptionInputer() {
                                 ) : (
 
                                     lens?.prescriptionImage ? (
-                                        <div className="w-[90px] h-full flex items-center justify-center bg-gray-200 text-gray-800">
+                                        <div className="w-[60px] h-[60px] md:w-[90px] md:h-full flex items-center justify-center bg-gray-200 text-gray-800">
                                             {filetype == "application/pdf" ? "PDF File" : filetype == "application/vnd.openxmlformats-officedocument.wordprocessingml.document" ? "Word File" : filetype == "application/vnd.ms-excel" ? "Excel File" : "Excel File"}
                                         </div>
                                     ) : (
                                         <Image className="w-full h-full object-cover" src={defaultImage} width={100} height={1000} alt="prescription" />
                                     )
-
-
                                 )
                             }
 
@@ -622,7 +615,7 @@ function PrescriptionInputer() {
 
                 <table className="w-full border text-center">
                     <thead className="bg-gray-200">
-                        <tr>
+                        <tr className="text-xs sm:text-sm md:text-base">
                             <th className="text-left pl-2">Eyes</th>
                             <th>SPH</th>
                             <th>CYL</th>
@@ -632,7 +625,7 @@ function PrescriptionInputer() {
                     </thead>
                     <tbody>
                         {["od", "os"].map((eye) => (
-                            <tr key={eye} className="border-t">
+                            <tr key={eye} className="border-t text-xs sm:text-sm md:text-base">
                                 <td className="p-2 font-semibold text-left">
                                     {eye === "od" ? "OD" : "OS"}
                                     <div className="text-xs text-gray-500">
@@ -642,11 +635,11 @@ function PrescriptionInputer() {
 
 
                                 {/* SPH select */}
-                                <td className="p-2">
+                                <td className="p-1 md:p-2">
                                     <select
                                         onChange={(e) => { handleSHP(e, eye) }}
                                         value={eye == "od" ? lens.sph.rightSph : lens.sph.leftSph}
-                                        className="border p-2 rounded-md focus:outline-yellow-500/60 cursor-pointer"
+                                        className="border p-1 md:p-2 rounded-md focus:outline-yellow-500/60 cursor-pointer"
                                     >
                                         <option value={"0"} className="text-md text-gray-600 font-medium">SPH</option>
                                         {SpaNumberOptions?.map((n) => (
@@ -657,11 +650,11 @@ function PrescriptionInputer() {
 
 
                                 {/* CYL select */}
-                                <td className="p-2">
+                                <td className="p-1 md:p-2">
                                     <select
                                         onChange={(e) => { handleCYL(e, eye) }}
                                         value={eye == "od" ? lens.cyl.rightCyl : lens.cyl.leftCyl}
-                                        className="border p-2 rounded-md focus:outline-yellow-500/60 cursor-pointer"
+                                        className="border p-1 md:p-2 rounded-md focus:outline-yellow-500/60 cursor-pointer"
                                     >
                                         <option value={"0"} className="text-md text-gray-600/90 font-medium">CYL</option>
                                         {CyLNumberOPtions.map((n) => (
@@ -672,7 +665,7 @@ function PrescriptionInputer() {
 
 
                                 {/* Axis select */}
-                                <td className="p-2">
+                                <td className="p-1 md:p-2">
                                     <select
 
 
@@ -683,7 +676,7 @@ function PrescriptionInputer() {
 
                                         value={eye == "od" ? lens.axis.rightAxis : lens.axis.leftAxis}
 
-                                        className="border p-2 rounded-md focus:outline-yellow-500/60 cursor-pointer disabled:cursor-not-allowed disabled:bg-gray-300 disabled:text-gray-600"
+                                        className="border p-1 md:p-2 rounded-md focus:outline-yellow-500/60 cursor-pointer disabled:cursor-not-allowed disabled:bg-gray-300 disabled:text-gray-600"
                                     >
                                         <option value={"0"} className="text-md text-gray-600 font-medium">Axis</option>
                                         {AxisNumberOPtion.map((n) => (
@@ -694,12 +687,12 @@ function PrescriptionInputer() {
 
 
                                 {/* ADD select */}
-                                <td className="p-2">
+                                <td className="p-1 md:p-2">
                                     <select
                                         disabled={lens?.LenseUseCase === "distance"}
                                         onChange={(e) => { handleAdd(e, eye) }}
                                         value={eye == "od" ? lens.add.rightAdd : lens.add.leftAdd}
-                                        className="border p-2 rounded-md focus:outline-yellow-500/60 cursor-pointer  disabled:cursor-not-allowed disabled:bg-gray-300 disabled:text-gray-600"
+                                        className="border p-1 md:p-2 rounded-md focus:outline-yellow-500/60 cursor-pointer  disabled:cursor-not-allowed disabled:bg-gray-300 disabled:text-gray-600"
                                     >
                                         <option value={"0"} className="text-md text-gray-600 font-medium">ADD</option>
                                         {ADDNumberOPtions.map((n) => (
@@ -740,7 +733,7 @@ function PrescriptionInputer() {
                     className={`${lens?.addPrism ? "flex" : "hidden"} mt-6 flex items-center gap-2`}>
                     <table className="w-full border text-center">
                         <thead className="bg-gray-200">
-                            <tr>
+                            <tr className="text-xs sm:text-sm md:text-base">
                                 <th className="text-left pl-2">Eyes</th>
                                 <th>Vertical</th>
                                 <th>Base Direction</th>
@@ -750,7 +743,7 @@ function PrescriptionInputer() {
                         </thead>
                         <tbody>
                             {["od", "os"].map((eye) => (
-                                <tr key={eye} className="border-t">
+                                <tr key={eye} className="border-t text-xs sm:text-sm md:text-base">
                                     <td className="p-2 font-semibold text-left">
                                         {eye === "od" ? "OD" : "OS"}
                                         <div className="text-xs text-gray-500">
@@ -760,11 +753,11 @@ function PrescriptionInputer() {
 
 
                                     {/* vertical select */}
-                                    <td className="p-2">
+                                    <td className="p-1 md:p-2">
                                         <select
                                             onChange={(e) => { handleVertical(e, eye) }}
                                             value={eye == "od" ? lens.rightPrism.vertical : lens.leftPrism.vertical}
-                                            className="border p-2 rounded-md focus:outline-yellow-500/60 cursor-pointer"
+                                            className="border p-1 md:p-2 rounded-md focus:outline-yellow-500/60 cursor-pointer"
                                         >
                                             <option value={"0"} className="text-md text-gray-600 font-medium">N/A</option>
                                             {PrismNumberOption?.map((n) => (
@@ -775,7 +768,7 @@ function PrescriptionInputer() {
 
 
                                     {/* Base Direction for Vertical */}
-                                    <td className="p-2">
+                                    <td className="p-1 md:p-2">
                                         <select
 
                                             disabled={eye == "od" ? lens.rightPrism.vertical == "0" : lens.leftPrism.vertical == "0"}
@@ -784,7 +777,7 @@ function PrescriptionInputer() {
 
                                             value={eye == "od" ? lens.rightPrism.vBaseDirection : lens.leftPrism.vBaseDirection}
 
-                                            className="border p-2 rounded-md focus:outline-yellow-500/60 cursor-pointer disabled:cursor-not-allowed disabled:bg-gray-300 disabled:text-gray-600"
+                                            className="border p-1 md:p-2 rounded-md focus:outline-yellow-500/60 cursor-pointer disabled:cursor-not-allowed disabled:bg-gray-300 disabled:text-gray-600"
                                         >
                                             <option value={"N/A"} className="text-md text-gray-600 font-medium">N/A</option>
                                             {["Up", "Down"].map((n) => (
@@ -795,14 +788,14 @@ function PrescriptionInputer() {
 
 
                                     {/* horizontal select */}
-                                    <td className="p-2">
+                                    <td className="p-1 md:p-2">
                                         <select
 
                                             onChange={(e) => { handleHorizontal(e, eye) }}
 
                                             value={eye == "od" ? lens.rightPrism.horizontal : lens.leftPrism.horizontal}
 
-                                            className="border p-2 rounded-md focus:outline-yellow-500/60 cursor-pointer"
+                                            className="border p-1 md:p-2 rounded-md focus:outline-yellow-500/60 cursor-pointer"
                                         >
                                             <option value={"0"} className="text-md text-gray-600 font-medium">N/A</option>
                                             {PrismNumberOption.map((n) => (
@@ -813,7 +806,7 @@ function PrescriptionInputer() {
 
 
                                     {/* Base Direction for horizontal */}
-                                    <td className="p-2">
+                                    <td className="p-1 md:p-2">
                                         <select
 
                                             disabled={eye == "od" ? lens.rightPrism.horizontal == "0" : lens.leftPrism.horizontal == "0"}
@@ -822,7 +815,7 @@ function PrescriptionInputer() {
 
                                             value={eye == "od" ? lens.rightPrism.hBaseDirection : lens.leftPrism.hBaseDirection}
 
-                                            className="border p-2 rounded-md focus:outline-yellow-500/60 cursor-pointer  disabled:cursor-not-allowed disabled:bg-gray-300 disabled:text-gray-600"
+                                            className="border p-1 md:p-2 rounded-md focus:outline-yellow-500/60 cursor-pointer  disabled:cursor-not-allowed disabled:bg-gray-300 disabled:text-gray-600"
                                         >
                                             <option value={"N/A"} className="text-md text-gray-600 font-medium">N/A</option>
                                             {["In", "Out"].map((n) => (
