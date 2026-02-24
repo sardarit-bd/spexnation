@@ -16,21 +16,21 @@ const options = [
         id: "distance",
         title: "Distance",
         description:
-            "Best for everyday, general Use.",
+            "Best for everyday, general use.",
         img: '/distance.png'
     },
     {
         id: "reading",
         title: "Reading",
         description:
-            "Optimize for seeing close-Up.",
+            "Optimised for seeing close-up.",
         img: '/reading.png'
     },
     {
         id: "computerorintermediate",
         title: "Computer/Intermediate",
         description:
-            "Perfect for workding at arm's length.",
+            "Perfect for working at arm’s length.",
         img: '/cumputer.png'
     },
     {

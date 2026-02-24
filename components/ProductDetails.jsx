@@ -132,7 +132,6 @@ export default function ProductDetails({ product }) {
           <span className="text-4xl font-light text-gray-900">£{product?.product_price}</span>
           <span className="text-lg text-gray-500 line-through font-light">£599</span>
         </div>
-        <p className="text-red-600 font-semibold text-sm mt-3">Only {product?.quentity} frames left in stock</p>
       </div>
 
       {/* Action Buttons */}

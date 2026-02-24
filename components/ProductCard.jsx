@@ -1,6 +1,6 @@
 'use client'
 
-import { ArrowRight, Star } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
@@ -65,7 +65,7 @@ export default function ProductCard({ item }) {
             {/* Content */}
             <div className="p-4 border-t border-gray-200 bg-yellow-200/10">
                 {/* Rating */}
-                <div className="flex items-center gap-2 mb-3">
+                {/* <div className="flex items-center gap-2 mb-3">
                     <div className="flex items-center gap-1">
                         {[...Array(5)].map((_, i) => (
                             <Star
@@ -80,7 +80,7 @@ export default function ProductCard({ item }) {
                     <span className="text-sm text-gray-600">
                         {product.rating} ({product.reviews})
                     </span>
-                </div>
+                </div> */}
 
                 {/* Product Name */}
                 <h3 className="text-left text-xl font-light text-gray-900/80 mb-2 line-clamp-2 transition-colors cursor-pointer">

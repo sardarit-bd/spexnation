@@ -13,7 +13,7 @@ const HowPdMesure = () => {
                 delay: 0,
                 ease: "easeOut"
             }}
-            className="mt-6 bg-white p-4 border border-gray-200 shadow-xl w-[80vw] md:w-[440px] h-fit z-40">
+            className="mt-6 bg-white p-4 border border-gray-200 shadow-xl w-[60vw] sm:w-[70vw] md:w-[440px] h-fit z-40">
             <div className="clipPath bg-gray-300 w-6 h-6 absolute  top-0 right-[45%] md:right-5" />
             <div>
                 <h3 className="text-lg font-medium text-gray-700">{`Measure your Pupillary Distance (PD)`}</h3>

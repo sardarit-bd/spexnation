@@ -15,7 +15,7 @@ import ProtectiveImageShow from "./protectiveImageShow";
 const options = [
     {
         id: "atni-glare",
-        title: "Anti Glare",
+        title: "Anti-Glare",
         description: " Reduces reflections and glare for clearer, more comfortable vision.",
         price: "25",
         img: '/anti-glair.png'
@@ -24,13 +24,13 @@ const options = [
         id: "hydrophobic-anti-glare",
         title: "Hydrophobic Anti-Glare",
         description:
-            "Premium antiglare with a water- and oil-repellent layer for easier cleaning and fewer smudges.",
+            "Premium anti-glare with a water- and oil-repellent layer for easier cleaning and fewer smudges.",
         price: "35",
         img: '/hydro-anti-glair.png'
     },
     {
         id: "blue-light-filter",
-        title: "Hydrophobic Anti-glare with Blue light filter",
+        title: "Hydrophobic Anti-Glare with Blue light filter",
         description:
             "Reduces blue light from digital screens and includes anti-glare and hydrophobic coatings for clearer, more comfortable vision.",
         price: "39",
@@ -159,9 +159,16 @@ export default function ProtectiveCoatings() {
                         <p className="text-sm text-gray-600 mt-1">{opt.description}</p>
 
 
-                        <div className="hidden group-hover:block absolute top-0 left-0 translate-x-[-110%] z-50">
-                            <ProtectiveImageShow opt={opt} />
-                        </div>
+
+                        {
+                            opt?.id != "no-coating" && (
+                                <div className="hidden group-hover:block absolute top-[100%] left-0 md:top-0 md:left-0 md:translate-x-[-110%] z-50">
+                                    <ProtectiveImageShow opt={opt} />
+                                </div>
+                            )
+                        }
+
+
 
 
                         {
