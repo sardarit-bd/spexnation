@@ -40,19 +40,12 @@ const ColorAndDarkness = () => {
                     </div>
 
 
-                    {
-                        lens?.Transition != "photochromiclenses" && (
-                            <div className="flex gap-2 items-center">
-                                <div onClick={() => setcolor("brown")} className={`w-fit border-2 ${color == "brown" ? "border-yellow-500" : "border-gray-100"}`}>
-                                    <Image src="/brown.png" alt="brown" width={1000} height={1000} className={`flex items-center justify-center text-white cursor-pointer w-20 h-20`} />
-                                </div>
-                            </div>
-                        )
-                    }
 
-
-
-
+                    <div className="flex gap-2 items-center">
+                        <div onClick={() => setcolor("brown")} className={`w-fit border-2 ${color == "brown" ? "border-yellow-500" : "border-gray-100"}`}>
+                            <Image src="/brown.png" alt="brown" width={1000} height={1000} className={`flex items-center justify-center text-white cursor-pointer w-20 h-20`} />
+                        </div>
+                    </div>
 
 
 

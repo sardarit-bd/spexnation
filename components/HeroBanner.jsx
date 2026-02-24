@@ -6,7 +6,7 @@ import Link from 'next/link';
 
 export default function HeroBanner() {
   return (
-    <section className="text-white h-fit md:h-[60vh] heroBG">
+    <section className="text-white h-fit md:h-[60vh] md:min-h-[550px] heroBG">
       <div className="max-w-7xl mx-auto px-4 py-12 md:py-20">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
           {/* Left - Images */}
