@@ -1,6 +1,8 @@
 'use client'
 
 import { useEffect, useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
+import { FaEdit } from "react-icons/fa";
 import StatusBadge from "../../../../components/Deshboard/StatusBadge";
 import Loading from "../../../../components/Loading";
 import generateOrderReport from "../../../../lib/generateOrderReport";
@@ -14,6 +16,7 @@ const OrderPage = () => {
     const [loading, setLoading] = useState(false);
     const [allOrders, setallOrders] = useState([]);
     const [search, setsearch] = useState('');
+    const [updateStatus, setupdateStatus] = useState(false);
 
     const fetchOrders = async () => {
         setLoading(true);
@@ -52,15 +55,45 @@ const OrderPage = () => {
 
 
 
-    if (loading) {
-        return (
-            <div className="h-screen flex justify-center items-center">
-                <div className="bg-yellow-700 px-5 py-2 w-fit">
-                    <Loading />
-                </div>
-            </div>
-        )
+
+
+
+    // update status function is here
+    async function handleUpdateStatus(e, id, updateStatus) {
+
+        e.preventDefault();
+
+        if (!updateStatus) {
+            toast.error("Please select status");
+            return;
+        }
+
+
+        setLoading(true);
+
+
+        try {
+            // Make API call to get all the product
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/updateorder/${id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ id, deliveryStatus: updateStatus })
+            });
+
+            const res = await response.json();
+            fetchOrders();
+            setLoading(false);
+        } catch (error) {
+            console.error('Error fetching orders:', error);
+            setLoading(false);
+        }
+
+
     }
+
+
 
 
 
@@ -75,6 +108,53 @@ const OrderPage = () => {
             .toLowerCase()
             .includes(search.toLowerCase());
     });
+
+
+
+
+
+
+
+
+
+    if (loading) {
+        return (
+            <div className="h-screen flex justify-center items-center">
+                <div className="bg-yellow-700 px-5 py-2 w-fit">
+                    <Loading />
+                </div>
+            </div>
+        )
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -126,11 +206,31 @@ const OrderPage = () => {
                                 </td>
 
                                 <td className="p-2 border text-center text-gray-500">
-                                    <StatusBadge type="payment" value={"paid"} />
+                                    <StatusBadge type="payment" value={row?.paymentStatus} />
                                 </td>
 
                                 <td className="p-2 border text-center text-gray-500">
-                                    <StatusBadge type="delivery" value={"processing"} />
+                                    <div className="flex items-center justify-center gap-2">
+                                        <StatusBadge type="delivery" value={row?.deliveryStatus} />
+                                        <div className="text-sm text-gray-500 group relative">
+                                            <FaEdit className="cursor-pointer" />
+
+
+                                            <div className="hidden group-hover:block absolute right-0 z-50 top-3 bg-white h-fit w-[200px] border border-gray-200 shadow-md p-6">
+
+                                                <select onChange={(e) => setupdateStatus(e.target.value)} className="border border-gray-200 px-3 py-2 text-sm text-gray-400 cursor-pointer focus:outline-none w-full mb-3">
+
+                                                    <option value="">Change Status</option>
+                                                    <option value="Pending">Pending</option>
+                                                    <option value="Delivered">Delivered</option>
+                                                </select>
+
+                                                <button onClick={(e) => handleUpdateStatus(e, row?._id, updateStatus)} className="w-full bg-yellow-700 text-white py-2 mt-5">Update</button>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
                                 </td>
 
                                 <td className="p-2 border flex justify-center text-gray-500 flex-col">
@@ -148,7 +248,7 @@ const OrderPage = () => {
                     </tbody>
                 </table>
             </div>
-
+            <Toaster />
         </div >
     );
 };
