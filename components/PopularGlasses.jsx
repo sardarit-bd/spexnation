@@ -42,6 +42,10 @@ export default function PopularGlasses() {
 
 
 
+  console.log(allProducts);
+
+
+
 
   return (
     <section className="bg-gray-100">

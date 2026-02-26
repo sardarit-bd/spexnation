@@ -3,11 +3,13 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
+import Loading from "../../../../components/Loading";
 import setCookie from "../../../../lib/setcookie";
 
 export default function SignInPage() {
 
     const router = useRouter();
+    const [loading, setloading] = useState(false);
     const [formData, setFormData] = useState({
         email: "",
         password: ""
@@ -19,6 +21,9 @@ export default function SignInPage() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+
+        setloading(true);
 
 
         // Make API call to add the product
@@ -46,6 +51,7 @@ export default function SignInPage() {
             toast.error(res.message);
         }
 
+        setloading(false);
 
 
 
@@ -99,14 +105,22 @@ export default function SignInPage() {
 
                         <button
                             type="submit"
-                            className="w-full pBg text-white font-medium py-3 rounded-lg transition duration-300"
+                            className="w-full pBg text-white font-medium py-3 rounded-lg flex items-center justify-center transition duration-300"
                         >
-                            Sign In
+
+
+                            {
+                                loading ? (
+                                    <Loading />
+                                ) : (
+                                    <span>Sign In</span>
+                                )
+                            }
                         </button>
                     </form>
                 </div>
             </div>
             <Toaster />
-        </section>
+        </section >
     );
 }

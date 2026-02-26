@@ -1,8 +1,12 @@
 "use client";
 
 import { useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
+import Loading from "../../../components/Loading";
 
 export default function ContactPage() {
+
+    const [loading, setloading] = useState(false);
     const [formData, setFormData] = useState({
         name: "",
         email: "",
@@ -13,11 +17,42 @@ export default function ContactPage() {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(formData);
-        alert("Message sent successfully!");
-        setFormData({ name: "", email: "", message: "" });
+
+        setloading(true);
+
+
+        try {
+            // Make API call to add the product
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/contact`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            });
+
+            const res = await response.json();
+
+            if (res.success) {
+                toast.success(res.message);
+                setFormData({ name: "", email: "", message: "" });
+            } else {
+                toast.error(res.message);
+            }
+        } catch (error) {
+            console.error('Error adding product:', error);
+            toast.error(res.message);
+        }
+
+
+
+
+
+
+
+        setloading(false);
     };
 
     return (
@@ -93,13 +128,23 @@ export default function ContactPage() {
 
                         <button
                             type="submit"
-                            className="w-full pBg text-white font-medium py-3 rounded-lg transition duration-300"
+                            className="w-full pBg text-white font-medium py-3 rounded-lg transition duration-300 flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-yellow-600"
                         >
-                            Send Message
+
+
+
+                            {
+                                loading ? (
+                                    <Loading />
+                                ) : (
+                                    <span>Send Message</span>
+                                )
+                            }
                         </button>
                     </form>
                 </div>
             </div>
+            <Toaster />
         </section>
     );
 }
