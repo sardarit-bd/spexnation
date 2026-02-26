@@ -61,120 +61,101 @@ function PrescriptionInputer() {
 
 
 
-            // if put value in od
-            if (lens?.sph.leftSph == "0") {
-
-                // check spare value of right/od
-                if (lens?.sph.rightSph != "0") {
-
-                    // check cylinder value of right/od
-                    if (lens.cyl.rightCyl != '0') {
-
-                        // check axis value of right/od
-                        if (lens?.axis.rightAxis == '0') {
-                            toast.error("Please. Enter Right Axis");
-                            return;
-                        }
-                    }
-
-                } else {
-                    toast.error("Please. Enter Right Sphere");
+            // asix value check
+            if (lens.cyl.rightCyl != '0') {
+                // check axis value of right/od
+                if (lens?.axis.rightAxis == '0') {
+                    toast.error("Please. Enter Right Axis");
                     return;
                 }
-            } else {
+            }
 
-                // check spare value of left/os
-                if (lens?.sph.leftSph != "0") {
 
-                    // check cylinder value of left/os
-                    if (lens.cyl.leftCyl != '0') {
+            // check cylinder value of left/os
+            if (lens.cyl.leftCyl != '0') {
 
-                        // check axis value of left/os
-                        if (lens?.axis.leftAxis == '0') {
-                            toast.error("Please. Enter Left Axis");
-                            return;
-                        }
-
-                    }
-
-                } else {
-                    toast.error("Please. Enter Left Sphere");
+                // check axis value of left/os
+                if (lens?.axis.leftAxis == '0') {
+                    toast.error("Please. Enter Left Axis");
                     return;
                 }
 
             }
 
-        }
 
 
 
 
 
-        // prism validation is here
-        if (lens?.addPrism) {
+
+            // prism validation is here
+            if (lens?.addPrism) {
 
 
 
-            // overall check if user select any prism value or not
-            if (lens?.rightPrism?.vertical == "0" && lens?.rightPrism?.horizontal == "0" && lens?.leftPrism?.vertical == "0" && lens?.leftPrism?.horizontal == "0") {
+                // overall check if user select any prism value or not
+                if (lens?.rightPrism?.vertical == "0" && lens?.rightPrism?.horizontal == "0" && lens?.leftPrism?.vertical == "0" && lens?.leftPrism?.horizontal == "0") {
 
-                toast.error("Must be add Any Vertical or Horizontal Prism");
+                    toast.error("Must be add Any Vertical or Horizontal Prism");
+                    return;
+                }
+
+
+
+
+                //od check
+                if (lens?.rightPrism?.vertical != "0") {
+                    if (lens?.rightPrism?.vBaseDirection == "N/A") {
+                        toast.error("Please. Select Right Prism Vertical Base Direction");
+                        return;
+                    }
+                }
+
+                if (lens?.rightPrism?.horizontal != "0") {
+                    if (lens?.rightPrism?.hBaseDirection == "N/A") {
+                        toast.error("Please. Select Right Prism Horizontal Base Direction");
+                        return;
+                    }
+                }
+
+
+                //os check
+                if (lens?.leftPrism?.vertical != "0") {
+                    if (lens?.leftPrism?.vBaseDirection == "N/A") {
+                        toast.error("Please. Select Left Prism Vertical Base Direction");
+                        return;
+                    }
+                }
+
+                if (lens?.leftPrism?.horizontal != "0") {
+                    if (lens?.leftPrism?.hBaseDirection == "N/A") {
+                        toast.error("Please. Select Left Prism Horizontal Base Direction");
+                        return;
+                    }
+                }
+
+
+
+            }
+
+
+
+
+            // final comfirm validation
+            if (!confirm) {
+                toast.error("Please. Confirm the prescription is valid");
                 return;
             }
 
-
-
-
-            //od check
-            if (lens?.rightPrism?.vertical != "0") {
-                if (lens?.rightPrism?.vBaseDirection == "N/A") {
-                    toast.error("Please. Select Right Prism Vertical Base Direction");
-                    return;
-                }
-            }
-
-            if (lens?.rightPrism?.horizontal != "0") {
-                if (lens?.rightPrism?.hBaseDirection == "N/A") {
-                    toast.error("Please. Select Right Prism Horizontal Base Direction");
-                    return;
-                }
-            }
-
-
-            //os check
-            if (lens?.leftPrism?.vertical != "0") {
-                if (lens?.leftPrism?.vBaseDirection == "N/A") {
-                    toast.error("Please. Select Left Prism Vertical Base Direction");
-                    return;
-                }
-            }
-
-            if (lens?.leftPrism?.horizontal != "0") {
-                if (lens?.leftPrism?.hBaseDirection == "N/A") {
-                    toast.error("Please. Select Left Prism Horizontal Base Direction");
-                    return;
-                }
-            }
-
-
+            setisLoading(true);
+            setTimeout(() => {
+                setisLoading(false);
+                setStep(3);
+                window.scrollTo(0, 0);
+            }, 700);
 
         }
 
-
-
-
-        // final comfirm validation
-        if (!confirm) {
-            toast.error("Please. Confirm the prescription is valid");
-            return;
-        }
-
-        setisLoading(true);
-        setTimeout(() => {
-            setisLoading(false);
-            setStep(3);
-            window.scrollTo(0, 0);
-        }, 700);
 
     }
 
@@ -544,14 +525,14 @@ function PrescriptionInputer() {
                             <span>
                                 Upload your Prescription
                             </span>
-                            <span className="text-[10px] bg-yellow-100  px-1 w-fit">jpg, jpeg, png, pdf, doc, docx, xls, xlsx files are allowed</span>
+                            <span className="text-[10px] bg-yellow-100  px-1 w-fit">jpg, jpeg, png, pdf files are allowed</span>
                         </label>
                         <div className="flex items-center gap-2 mt-2 h-full">
                             <input
                                 id="file2"
                                 ref={fileInputRef}
                                 type="file"
-                                accept=".png,.jpg,.jpeg,.pdf,.doc,.docx,.xls,.xlsx"
+                                accept=".png,.jpg,.jpeg,.pdf,"
                                 onChange={(e) => { handleFileChanges(e) }}
                                 className="hidden w-full border p-2 rounded-md focus:outline-yellow-500/60 text-gray-700/80 cursor-pointer"
                             />

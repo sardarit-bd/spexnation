@@ -1,6 +1,5 @@
 'use client'
 
-import { Star } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
@@ -40,23 +39,6 @@ export default function DashboardProductCard({ item }) {
 
                 {/* Content */}
                 <div className="p-4 border-t border-gray-200 bg-yellow-200/10">
-                    {/* Rating */}
-                    <div className="flex items-center gap-2 mb-3">
-                        <div className="flex items-center gap-1">
-                            {[...Array(5)].map((_, i) => (
-                                <Star
-                                    key={i}
-                                    className={`w-4 h-4 ${i < Math.floor(product.rating)
-                                        ? 'fill-yellow-400 text-yellow-400'
-                                        : 'text-gray-300'
-                                        }`}
-                                />
-                            ))}
-                        </div>
-                        <span className="text-sm text-gray-600">
-                            {product.rating} ({product.reviews})
-                        </span>
-                    </div>
 
                     {/* Product Name */}
                     <h3 className="text-left text-xl font-light text-gray-900/80 mb-2 line-clamp-2 transition-colors cursor-pointer">

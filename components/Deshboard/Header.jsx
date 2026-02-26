@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { IoIosLogOut } from "react-icons/io";
 import Loading from "../../components/Loading";
+import setCookie from "../../lib/setcookie";
 
 const Header = ({ onMenuClick }) => {
 
@@ -13,15 +14,33 @@ const Header = ({ onMenuClick }) => {
     const router = useRouter();
 
 
-    const handleLogout = (e) => {
+    const handleLogout = async (e) => {
 
         e.preventDefault();
         setIsLoading(true);
 
-        setTimeout(() => {
-            setIsLoading(false);
+        // Make API call to log out
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/logout`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({}),
+        });
+
+        const res = await response.json();
+
+        if (res.success) {
+            setCookie("token", '', 1);
+            setCookie("name", '', 1);
+            setCookie("email", '', 1);
             router.push('/');
-        }, 1600);
+        } else {
+            toast.error(res.message);
+        }
+
+        setIsLoading(false);
+
     };
 
 

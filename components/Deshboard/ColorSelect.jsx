@@ -125,7 +125,7 @@ export default function ColorSelect({ value = [], onChange }) {
                             </div>
                         ))
                     ) : (
-                        <span className="text-gray-400">Product Colors</span>
+                        <span className="text-gray-400">Colour</span>
                     )
                 }
             </div>

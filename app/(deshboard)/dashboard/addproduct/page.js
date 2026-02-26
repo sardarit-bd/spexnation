@@ -23,11 +23,9 @@ const AddproductPage = () => {
     const [discount, setdiscount] = useState('');
     const [description, setdescription] = useState('');
     const [color, setcolor] = useState([]);
-    const [quentity, setquantity] = useState('');
     const [size, setsize] = useState('');
     const [weight, setweight] = useState('');
     const [meterial, setmeterial] = useState('');
-    const [shape, setshape] = useState('');
     const [style, setstyle] = useState('');
     const [thumbnail, setthumbnail] = useState('');
     const [gellary, setgellery] = useState([]);
@@ -43,7 +41,7 @@ const AddproductPage = () => {
 
 
 
-        if (!title || !price || !discount || !description || !color || !quentity || !size || !weight || !meterial || !shape || !style || !thumbnail || !gellary || !collection || !shortdes) {
+        if (!title || !price || !description || !color || !size || !weight || !meterial || !style || !thumbnail || !gellary || !collection || !shortdes) {
 
             toast.error('Please fill in all the required fields.');
             return;
@@ -58,11 +56,8 @@ const AddproductPage = () => {
             discount: discount,
             product_Discription: description,
             color: color,
-            quentity: quentity,
             size: size,
             weight: weight,
-            meterial: meterial,
-            shape: shape,
             style: style,
             product_thamnail: thumbnail,
             product_Images: gellary,
@@ -89,11 +84,9 @@ const AddproductPage = () => {
             setprice('');
             setdiscount('');
             setdescription('');
-            setquantity('');
             setsize('');
             setweight('');
             setmeterial('');
-            setshape('');
             setstyle('');
             setthumbnail('');
             setcollection('');
@@ -107,9 +100,6 @@ const AddproductPage = () => {
         setIsLoading(false);
     }
 
-
-
-    console.log(color);
 
 
     // hanndle thumnail is here
@@ -153,34 +143,29 @@ const AddproductPage = () => {
                 <div className="col-span-7 md:col-span-5">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 
-                        <input value={title} onChange={(e) => settitle(e.target.value)} type="text" placeholder="Product Title" className="w-full border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-600" />
+                        <input value={title} onChange={(e) => settitle(e.target.value)} type="text" placeholder="Title" className="w-full border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-600" />
 
 
-                        <input value={collection} onChange={(e) => setcollection(e.target.value)} type="text" placeholder="Collection" className="w-full border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-600" />
+                        <input value={collection} onChange={(e) => setcollection(e.target.value)} type="text" placeholder="Brand" className="w-full border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-600" />
 
 
                         <input value={shortdes} onChange={(e) => setshortdes(e.target.value)} type="text" placeholder="Short Description" className="w-full border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-600" />
 
 
-                        <input value={price} onChange={(e) => setprice(e.target.value)} type="number" placeholder="Product Price" className="w-full border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-600" />
+                        <input value={price} onChange={(e) => setprice(e.target.value)} type="number" placeholder="Price" className="w-full border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-600" />
 
                         <input value={discount} onChange={(e) => setdiscount(e.target.value)} type="number" placeholder="Product Discount" className="w-full border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-600" />
 
-                        <input value={quentity} onChange={(e) => setquantity(e.target.value)} type="number" placeholder="Product Quantity" className="w-full border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-600" />
-
-
                         <ColorSelect value={color} onChange={setcolor} />
 
-                        <input value={size} onChange={(e) => setsize(e.target.value)} type="text" placeholder="Product Size" className="w-full border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-600" />
+                        <input value={size} onChange={(e) => setsize(e.target.value)} type="text" placeholder="Size" className="w-full border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-600" />
 
-                        <input value={weight} onChange={(e) => setweight(e.target.value)} type="text" placeholder="Product Weight" className="w-full border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-600" />
+                        <input value={weight} onChange={(e) => setweight(e.target.value)} type="text" placeholder="Weight" className="w-full border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-600" />
 
-                        <input value={meterial} onChange={(e) => setmeterial(e.target.value)} type="text" placeholder="Product Meterial" className="w-full border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-600" />
-
-                        <input value={shape} onChange={(e) => setshape(e.target.value)} type="text" placeholder="Product Shape" className="w-full border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-600" />
+                        <input value={meterial} onChange={(e) => setmeterial(e.target.value)} type="text" placeholder="Material" className="w-full border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-600" />
 
 
-                        <input value={style} onChange={(e) => setstyle(e.target.value)} type="text" placeholder="Product Style" className="w-full border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-600" />
+                        <input value={style} onChange={(e) => setstyle(e.target.value)} type="text" placeholder="Frame Type" className="w-full border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-600" />
 
 
                     </div>
