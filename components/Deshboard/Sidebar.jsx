@@ -1,24 +1,38 @@
 'use client';
 
-import { BarChart, FileText, Home, PackageSearch, Settings, Target, Users, X } from 'lucide-react';
+import { FileText, Home, PackageSearch, Target, X } from 'lucide-react';
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from 'next/navigation';
-
+import { useEffect, useState } from "react";
+import getEmail from "../../lib/getEmail";
+import getName from "../../lib/getName";
 
 const Sidebar = ({ isOpen, onClose }) => {
     const menuItems = [
         { icon: Home, label: 'Dashboard', href: '/dashboard' },
-        { icon: Users, label: 'Users', href: '/dashboard/users' },
         { icon: FileText, label: 'Orders', href: '/dashboard/orders' },
         { icon: Target, label: 'Add Product', href: '/dashboard/addproduct' },
         { icon: PackageSearch, label: 'All Products', href: '/dashboard/allproducts' },
-        { icon: BarChart, label: 'Contact', href: '/dashboard/contact' },
-        { icon: Settings, label: 'Settings', href: '/dashboard/settings' },
+        //{ icon: Settings, label: 'Settings', href: '/dashboard/settings' },
     ];
+
+    const [email, setemail] = useState('');
+    const [name, setname] = useState('');
 
 
     const pathname = usePathname();
+
+    useEffect(() => {
+
+        const nm = getName();
+        const em = getEmail();
+
+        setemail(em);
+        setname(nm);
+
+    }, [])
+
 
     return (
         <>
@@ -80,11 +94,11 @@ const Sidebar = ({ isOpen, onClose }) => {
                     <div className="p-2 border-t border-gray-200">
                         <div className="flex items-center gap-3 px-4 py-3 text-gray-900">
                             <div className="w-10 h-10 bg-yellow-700 rounded-full flex items-center justify-center">
-                                <span className="text-sm font-bold text-white">JD</span>
+                                <span className="text-sm font-bold text-white">{name?.slice(0, 2)}</span>
                             </div>
                             <div className="flex-1 min-w-0">
-                                <p className="text-sm font-medium truncate">John Doe</p>
-                                <p className="text-xs text-yellow-600 truncate">john@example.com</p>
+                                <p className="text-sm font-medium truncate">{name}</p>
+                                <p className="text-xs text-yellow-600 truncate">{email}</p>
                             </div>
                         </div>
                     </div>

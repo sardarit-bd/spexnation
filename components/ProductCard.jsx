@@ -90,7 +90,7 @@ export default function ProductCard({ item }) {
                 {/* Price */}
                 <div className="flex items-center gap-3 mb-4">
                     <span className="text-2xl font-light text-gray-700/60">
-                        ${item?.product_price}
+                        £{item?.product_price}
                     </span>
 
                     <span className="ml-auto text-sm font-semibold text-green-600 bg-green-50 px-2 py-1 rounded">

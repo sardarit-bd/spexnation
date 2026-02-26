@@ -1,6 +1,6 @@
 'use client'
 
-import { Menu, User } from 'lucide-react';
+import { Menu } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
@@ -48,9 +48,9 @@ export default function Header() {
             {/* Icons */}
             <div className="flex items-center gap-4">
               <HeaderCartIcon />
-              <button className="hidden sm:block text-gray-600 hover:text-yellow-700">
+              {/* <button className="hidden sm:block text-gray-600 hover:text-yellow-700">
                 <User size={26} />
-              </button>
+              </button> */}
               <button
                 className="md:hidden text-gray-600"
                 onClick={() => setIsOpen(!isOpen)}

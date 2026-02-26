@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
 import { RxCross2 } from "react-icons/rx";
 import Loading from "../../../components/Loading";
 import ProductBreadcrumb from "../../../components/ProductBreadcrumb";
@@ -40,6 +41,7 @@ export default function CartPage() {
         setLens({
             ProductDetails: {},
             LenseName: "",
+            LenColor: {},
             LenseUseCase: "",
             LenseThickness: "",
             pdType: "1",
@@ -120,8 +122,20 @@ export default function CartPage() {
     function handleProccedToCheckout(e) {
 
         e.preventDefault();
-        setIsLoading(true);
 
+
+
+        if (!hasData?.length) {
+            toast.error("Please Add Product First");
+            return;
+        }
+
+        if (hasData?.length > 1) {
+            toast.error("You can Perchase Only One Product at a time");
+            return;
+        }
+
+        setIsLoading(true);
         setTimeout(() => {
             setIsLoading(false);
             router?.push('/basket/checkout');
@@ -150,6 +164,7 @@ export default function CartPage() {
 
 
 
+    console.log(hasData);
 
 
 
@@ -190,7 +205,7 @@ export default function CartPage() {
                                     <div>
                                         <span className="text-sm text-yellow-600">{item?.ProductDetails?.collection}</span>
                                         <h3 className="text-lg font-semibold text-gray-800">
-                                            {item.LenseName} (£350)
+                                            {item?.LenseName} (£350)
                                         </h3>
                                         <p className="text-sm text-gray-600">{item?.ProductDetails?.shortdes}</p>
                                     </div>
@@ -203,8 +218,9 @@ export default function CartPage() {
 
                                 <div className="mt-2 flex justify-between w-full">
                                     <div className="mt-3 space-y-1 text-sm text-gray-600">
-                                        <p> <b>Color:</b> {item.ProductDetails?.color}</p>
-                                        <p> <b>Size:</b> {item.ProductDetails?.size}</p>
+                                        <p>
+                                            <b>Color:</b>
+                                            {item?.LenColor?.name}</p>
                                     </div>
 
                                     {/* <div className="mt-4 space-y-2 text-sm">
@@ -277,6 +293,7 @@ export default function CartPage() {
 
                 </div>
             </div>
-        </section>
+            <Toaster position="top-center" />
+        </section >
     );
 }

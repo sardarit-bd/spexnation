@@ -60,6 +60,7 @@ export default function Footer() {
               <li><a href="#" className="hover:text-yellow-300 transition">Help & Contact</a></li>
               <li><a href="#" className="hover:text-yellow-300 transition">Store Locator</a></li>
               <li><a href="#" className="hover:text-yellow-300 transition">Careers</a></li>
+              <li><a href="/signin" className="hover:text-yellow-300 transition">Admin Login</a></li>
             </ul>
           </div>
 

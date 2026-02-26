@@ -4,6 +4,7 @@ const useLenseStore = create((set) => ({
     lens: {
         ProductDetails: {},
         LenseName: "",
+        LenColor: {},
         LenseUseCase: "",
         LenseThickness: "",
         pdType: "1",

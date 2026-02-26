@@ -14,20 +14,16 @@ export default function ProductDetails({ product }) {
   const { lens, setLens } = useLenseStore();
   const [isLoading, setisLoading] = useState(false);
 
-  const colors = [
-    { name: 'Black', value: 'black', hex: '#000000' },
-    { name: 'Gold', value: 'gold', hex: '#D4AF37' },
-    { name: 'Silver', value: 'silver', hex: '#C0C0C0' },
-  ]
 
 
-
+  console.log(product);
 
 
   useEffect(() => {
     setLens({
       ProductDetails: product,
       LenseName: "",
+      LenColor: product.color[0],
       LenseUseCase: "",
       LenseThickness: "",
       pdType: "1",
@@ -124,6 +120,27 @@ export default function ProductDetails({ product }) {
           />
         ))}
       </div>
+
+
+
+      {/* color */}
+      <div className="flex items-center gap-3">
+        {
+          product?.color?.map((cl, index) => {
+            return (
+              <div onClick={() => setLens({ ...lens, LenColor: cl })} className={`p-0.5 h-fit w-fit rounded-full cursor-pointer  ${lens?.LenColor?.value == cl?.value ? "border-2 border-yellow-500" : ""}`}>
+                <div style={{ backgroundColor: cl?.value }} key={index} className="w-8 h-8 rounded-full">
+
+                </div>
+              </div>
+            )
+          })
+        }
+      </div>
+
+
+
+
 
       {/* Price */}
       <div className="border-b border-gray-200 pb-4">

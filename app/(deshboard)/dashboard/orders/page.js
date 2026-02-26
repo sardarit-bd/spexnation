@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from "react";
-import { FaDownload } from "react-icons/fa";
+import StatusBadge from "../../../../components/Deshboard/StatusBadge";
 import Loading from "../../../../components/Loading";
 import generateOrderReport from "../../../../lib/generateOrderReport";
 
@@ -13,7 +13,7 @@ const OrderPage = () => {
 
     const [loading, setLoading] = useState(false);
     const [allOrders, setallOrders] = useState([]);
-
+    const [search, setsearch] = useState('');
 
     const fetchOrders = async () => {
         setLoading(true);
@@ -63,48 +63,84 @@ const OrderPage = () => {
     }
 
 
+
+    const filterData = allOrders?.filter((item) => {
+
+        if (!search) {
+            return item;
+        }
+
+        return item?.orderId
+            ?.toString()
+            .toLowerCase()
+            .includes(search.toLowerCase());
+    });
+
+
+
+
     return (
         <div className=" bg-white py-5 px-5  border border-gray-200">
-            <h1 className="text-xl font-medium text-gray-600">Orders</h1>
-
-
+            <div className="flex items-center justify-between">
+                <h1 className="text-xl font-medium text-gray-600">All Orders</h1>
+                <input onChange={(e) => setsearch(e.target.value)} placeholder="Search By Order ID" text="text" className="border border-gray-200 px-3 py-1 text-sm text-gray-400 cursor-pointer focus:outline-none" />
+            </div>
             <div className="mt-6 overflow-x-auto">
                 <table className="w-full border border-gray-200 rounded-lg overflow-hidden">
                     <thead className="bg-gray-100">
                         <tr className="text-left">
                             <th className="p-3 border">Sl</th>
+                            <th className="p-3 border">Order ID</th>
                             <th className="p-3 border">Name</th>
                             <th className="p-3 border">Email</th>
+                            <th className="p-3 border">Phone</th>
                             <th className="p-3 border">Payment Status</th>
                             <th className="p-3 border">Dalivary Status</th>
-                            <th className="p-3 border flex justify-center">Download Details</th>
+                            <th className="p-3 border flex justify-center">Download</th>
                         </tr>
                     </thead>
 
                     <tbody>
-                        {allOrders?.map((row, index) => (
-                            <tr key={row} className="hover:bg-gray-50">
+                        {filterData?.map((row, index) => (
+                            <tr key={index} className="hover:bg-gray-50">
 
-                                <td className="p-2 border">
+                                <td className="p-2 border text-center text-gray-500">
                                     {index + 1}
                                 </td>
 
-                                <td className="p-2 border">
-                                    Md Emon Hossain
+
+                                <td className="p-2 border text-center text-gray-500">
+                                    {row?.orderId}
                                 </td>
 
-                                <td className="p-2 border">
-                                    example@gmail.com
+                                <td className="p-2 border text-center text-gray-500">
+                                    {row?.fullname}
                                 </td>
 
-                                <td className="p-2 border">Payment Status</td>
+                                <td className="p-2 border text-center text-gray-500">
+                                    {row?.email}
+                                </td>
 
-                                <td className="p-2 border">Dalivary Status</td>
+                                <td className="p-2 border text-center text-gray-500">
+                                    {row?.phone}
+                                </td>
 
-                                <td className="p-2 border flex justify-center">
-                                    <button onClick={handleFileGenarate} className="px-3 py-2 bg-yellow-700 text-white rounded-md">
-                                        <FaDownload />
-                                    </button>
+                                <td className="p-2 border text-center text-gray-500">
+                                    <StatusBadge type="payment" value={"paid"} />
+                                </td>
+
+                                <td className="p-2 border text-center text-gray-500">
+                                    <StatusBadge type="delivery" value={"processing"} />
+                                </td>
+
+                                <td className="p-2 border flex justify-center text-gray-500 flex-col">
+                                    <a target="_blank" download href={row?.pdf} className="text-center underline text-blue-600">
+                                        PDF
+                                    </a>
+
+                                    <a target="_blank" download href={row?.PrescriptionImage} className="text-center underline text-blue-600">
+                                        Prescription
+                                    </a>
                                 </td>
 
                             </tr>
