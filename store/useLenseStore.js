@@ -49,6 +49,7 @@ const useLenseStore = create((set) => ({
         color: "gray",
         darkness: "light",
         prescriptionImage: '',
+        quantity: 1,
         total: []
     },
 

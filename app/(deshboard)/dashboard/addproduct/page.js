@@ -11,6 +11,51 @@ import Loading from "../../../../components/Loading";
 import fileToBase64 from "../../../../lib/fileToBase64";
 
 
+const brands = [
+    "Arden",
+    "Aspire",
+    "Ben Sherman",
+    "Burberry",
+    "Caterpillar",
+    "Champion",
+    "Coach",
+    "Dolce&Gabbana",
+    "Emporio Armani",
+    "Finelight",
+    "GD Collection",
+    "Gucci",
+    "Visage",
+    "Harrington",
+    "Harrington Sport",
+    "Hart",
+    "Hugo Boss",
+    "Jimmy Choo",
+    "Kate Spade",
+    "Levi's",
+    "Lipsy London",
+    "London Retro",
+    "Marc Jacobs",
+    "New Balance",
+    "Oakley",
+    "Perri Kiely X LR",
+    "Persol",
+    "Pink Ribbon",
+    "Polaroid",
+    "Polo Ralph Lauren",
+    "Puma",
+    "Ralph",
+    "Ray-Ban",
+    "Scout",
+    "Scout Made In Italy",
+    "Swarovski",
+    "Ted Baker",
+    "Tiffany & Co.",
+    "Tom Ford",
+    "Tommy Hilfiger",
+    "Vogue Eyewear"
+];
+
+
 
 
 const AddproductPage = () => {
@@ -18,19 +63,25 @@ const AddproductPage = () => {
     const router = useRouter();
 
     const [isLoading, setIsLoading] = useState(false);
+
+    const [brand, setbrand] = useState('');
     const [title, settitle] = useState('');
+    const [shortdes, setshortdes] = useState('');
     const [price, setprice] = useState('');
-    const [discount, setdiscount] = useState('');
+    const [gender, setgender] = useState('');
     const [description, setdescription] = useState('');
     const [color, setcolor] = useState([]);
-    const [size, setsize] = useState('');
     const [weight, setweight] = useState('');
     const [meterial, setmeterial] = useState('');
-    const [style, setstyle] = useState('');
+    const [fType, setfType] = useState('');
+    const [fShape, setfShape] = useState('');
+    const [lensWidth, setlensWidth] = useState('');
+    const [lensHeight, setlensHeight] = useState('');
+    const [BridgeWidth, setBridgeWidth] = useState('');
+    const [ArmLength, setArmLength] = useState('');
     const [thumbnail, setthumbnail] = useState('');
     const [gellary, setgellery] = useState([]);
-    const [collection, setcollection] = useState('');
-    const [shortdes, setshortdes] = useState('');
+
 
 
 
@@ -143,10 +194,20 @@ const AddproductPage = () => {
                 <div className="col-span-7 md:col-span-5">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 
+
+                        <select value={brand} onChange={(e) => setbrand(e.target.value)} className="w-full border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-600">
+                            <option className="text-gray-400 checked:text-gray-400" value="">Select Brand</option>
+
+                            {
+                                brands.map((item, i) => (
+                                    <option key={i} value={item}>{item}</option>
+                                ))
+                            }
+
+                        </select>
+
+
                         <input value={title} onChange={(e) => settitle(e.target.value)} type="text" placeholder="Title" className="w-full border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-600" />
-
-
-                        <input value={collection} onChange={(e) => setcollection(e.target.value)} type="text" placeholder="Brand" className="w-full border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-600" />
 
 
                         <input value={shortdes} onChange={(e) => setshortdes(e.target.value)} type="text" placeholder="Short Description" className="w-full border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-600" />
@@ -154,18 +215,76 @@ const AddproductPage = () => {
 
                         <input value={price} onChange={(e) => setprice(e.target.value)} type="number" placeholder="Price" className="w-full border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-600" />
 
-                        <input value={discount} onChange={(e) => setdiscount(e.target.value)} type="number" placeholder="Product Discount" className="w-full border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-600" />
+                        <select value={gender} onChange={(e) => setgender(e.target.value)} className="w-full border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-600">
+                            <option className="text-gray-400 checked:text-gray-400" value="">Select Gender</option>
+                            <option className="text-gray-400 checked:text-gray-400" value="Mens">Mens</option>
+                            <option className="text-gray-400 checked:text-gray-400" value="Womens">Womens</option>
+                            <option className="text-gray-400 checked:text-gray-400" value="Unisex">Unisex</option>
+                        </select>
+
 
                         <ColorSelect value={color} onChange={setcolor} />
 
-                        <input value={size} onChange={(e) => setsize(e.target.value)} type="text" placeholder="Size" className="w-full border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-600" />
 
                         <input value={weight} onChange={(e) => setweight(e.target.value)} type="text" placeholder="Weight" className="w-full border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-600" />
 
-                        <input value={meterial} onChange={(e) => setmeterial(e.target.value)} type="text" placeholder="Material" className="w-full border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-600" />
 
 
-                        <input value={style} onChange={(e) => setstyle(e.target.value)} type="text" placeholder="Frame Type" className="w-full border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-600" />
+
+                        <select value={meterial} onChange={(e) => setmeterial(e.target.value)} className="w-full border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-600">
+                            <option className="text-gray-400 checked:text-gray-400" value="">Select Material</option>
+                            <option className="text-gray-400 checked:text-gray-400" value="Acetate">Acetate</option>
+                            <option className="text-gray-400 checked:text-gray-400" value="Metal">Metal
+                            </option>
+                            <option className="text-gray-400 checked:text-gray-400" value="Plastic">Plastic</option>
+                            <option className="text-gray-400 checked:text-gray-400" value="Titanium">Titanium</option>
+                        </select>
+
+
+
+                        <select value={fType} onChange={(e) => setfType(e.target.value)} className="w-full border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-600">
+                            <option className="text-gray-400 checked:text-gray-400" value="">Select Frame Type</option>
+                            <option className="text-gray-400 checked:text-gray-400" value="Full Rim">Full Rim</option>
+                            <option className="text-gray-400 checked:text-gray-400" value="Semi Rimless">Semi Rimless
+                            </option>
+                            <option className="text-gray-400 checked:text-gray-400" value="Rimless">Rimless</option>
+                        </select>
+
+
+
+                        <select value={fShape} onChange={(e) => setfShape(e.target.value)} className="w-full border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-600">
+                            <option className="text-gray-400 checked:text-gray-400" value="">Select Frame Shape</option>
+                            <option className="text-gray-400 checked:text-gray-400" value="Butterfly">Butterfly</option>
+                            <option className="text-gray-400 checked:text-gray-400" value="Cat Eye">Cat Eye
+                            </option>
+                            <option className="text-gray-400 checked:text-gray-400" value="Irregular">Irregular</option>
+                            <option className="text-gray-400 checked:text-gray-400" value="Oval">Oval</option>
+                            <option className="text-gray-400 checked:text-gray-400" value="Phantos">Phantos</option>
+                            <option className="text-gray-400 checked:text-gray-400" value="Pilot">Pilot</option>
+                            <option className="text-gray-400 checked:text-gray-400" value="Pillow">Pillow</option>
+                            <option className="text-gray-400 checked:text-gray-400" value="Rectangle">Rectangle</option>
+                            <option className="text-gray-400 checked:text-gray-400" value="Round">Round</option>
+                            <option className="text-gray-400 checked:text-gray-400" value="Square">Square</option>
+                        </select>
+
+
+
+
+
+
+
+
+                        <input value={weight} onChange={(e) => setweight(e.target.value)} type="text" placeholder="Lens Width (mm)" className="w-full border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-600" />
+
+                        <input value={weight} onChange={(e) => setweight(e.target.value)} type="text" placeholder="Lens Height (mm)" className="w-full border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-600" />
+
+                        <input value={weight} onChange={(e) => setweight(e.target.value)} type="text" placeholder="Bridge Width (mm)" className="w-full border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-600" />
+
+                        <input value={weight} onChange={(e) => setweight(e.target.value)} type="text" placeholder="Arm Length (mm)" className="w-full border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-600" />
+
+
+
+
 
 
                     </div>

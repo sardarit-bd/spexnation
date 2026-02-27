@@ -16,9 +16,6 @@ export default function ProductDetails({ product }) {
 
 
 
-  console.log(product);
-
-
   useEffect(() => {
     setLens({
       ProductDetails: product,
@@ -68,6 +65,7 @@ export default function ProductDetails({ product }) {
       color: "gray",
       darkness: "light",
       prescriptionImage: '',
+      quantity: 1,
       total: []
     });
   }, [product])
@@ -79,7 +77,7 @@ export default function ProductDetails({ product }) {
     e.preventDefault();
     setisLoading(true);
 
-    setLens({ ...lens, LenseName: "Elegance TF2249", total: [...lens.total, { target: "Frame", id: "Elegance TF2249", name: "Elegance TF2249", price: 449 }] })
+    setLens({ ...lens, LenseName: "Elegance TF2249", total: [...lens.total, { target: "Frame", id: product?.ProductTitle, name: product?.ProductTitle, price: product?.product_price }] })
 
     setTimeout(() => {
       setisLoading(false);
@@ -128,7 +126,7 @@ export default function ProductDetails({ product }) {
         {
           product?.color?.map((cl, index) => {
             return (
-              <div onClick={() => setLens({ ...lens, LenColor: cl })} className={`p-0.5 h-fit w-fit rounded-full cursor-pointer  ${lens?.LenColor?.value == cl?.value ? "border-2 border-yellow-500" : ""}`}>
+              <div key={index} onClick={() => setLens({ ...lens, LenColor: cl })} className={`p-0.5 h-fit w-fit rounded-full cursor-pointer  ${lens?.LenColor?.value == cl?.value ? "border-2 border-yellow-500" : ""}`}>
                 <div style={{ backgroundColor: cl?.value }} key={index} className="w-8 h-8 rounded-full">
 
                 </div>
@@ -147,7 +145,7 @@ export default function ProductDetails({ product }) {
         <p className="text-gray-600 text-sm mb-2">Includes prescription lenses</p>
         <div className="flex items-baseline gap-2">
           <span className="text-4xl font-light text-gray-900">£{product?.product_price}</span>
-          <span className="text-lg text-gray-500 line-through font-light">£599</span>
+          {/* <span className="text-lg text-gray-500 line-through font-light">£599</span> */}
         </div>
       </div>
 

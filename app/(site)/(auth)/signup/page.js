@@ -66,10 +66,26 @@ export default function SignInPage() {
                 {/* Right Form Section */}
                 <div className="p-10">
                     <h3 className="text-2xl font-light text-gray-800 mb-6">
-                        Login
+                        Registations
                     </h3>
 
                     <form onSubmit={handleSubmit} className="space-y-5">
+
+                        <div>
+                            <label className="block text-sm font-medium text-gray-600 mb-1">
+                                Full Name
+                            </label>
+                            <input
+                                type="text"
+                                name="name"
+                                value={formData.email}
+                                onChange={handleChange}
+                                required
+                                className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-600"
+                                placeholder="john"
+                            />
+                        </div>
+
 
 
                         <div>
@@ -113,10 +129,14 @@ export default function SignInPage() {
                                 loading ? (
                                     <Loading />
                                 ) : (
-                                    <span>Sign In</span>
+                                    <span>Sign Up</span>
                                 )
                             }
                         </button>
+
+
+
+
                     </form>
                 </div>
             </div>

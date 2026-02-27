@@ -11,7 +11,7 @@ export default function ProductTabs({ product }) {
   const tabs = [
     { id: 'frame-info', label: 'Frame Info' },
     { id: 'description', label: 'Description' },
-    { id: 'lens-recommend', label: 'Lens Recommendation' },
+    // { id: 'lens-recommend', label: 'Lens Recommendation' },
   ]
 
   return (

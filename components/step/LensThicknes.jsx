@@ -88,12 +88,12 @@ export default function LensThicknes() {
 
 
         // just for remove previous lens thinkess from total those is alredy in total
-        const calTotal = lens.total.filter((id) => id.target !== "Thickness");
+        const calTotal = lens.total.filter((id) => id.target !== "Lens Thickness");
 
         setLens({
             ...lens,
             LenseThickness: opt.id,
-            total: [...calTotal, { target: "Thickness", id: opt.id, name: opt.title, price: opt.price }]
+            total: [...calTotal, { target: "Lens Thickness", id: opt.id, name: opt.title, price: opt.price }]
 
         })
     }

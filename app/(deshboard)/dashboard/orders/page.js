@@ -222,7 +222,7 @@ const OrderPage = () => {
 
                                                     <option value="">Change Status</option>
                                                     <option value="Pending">Pending</option>
-                                                    <option value="Delivered">Delivered</option>
+                                                    <option value="Dispatched">Dispatched</option>
                                                 </select>
 
                                                 <button onClick={(e) => handleUpdateStatus(e, row?._id, updateStatus)} className="w-full bg-yellow-700 text-white py-2 mt-5">Update</button>

@@ -147,16 +147,35 @@ export default function Checkout() {
 
                                 <input value={email} onChange={(e) => setemail(e.target.value)} type="email" placeholder="Email Address" className="w-full border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-600" />
 
-                                <input value={phone} onChange={(e) => setphone(e.target.value)} type="tel" placeholder="Phone Number" className="w-full border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-600" />
+                                <div>
+                                    <input value={phone} onChange={(e) => setphone(e.target.value)} type="text" placeholder="Address Line 1" className="w-full border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-600" />
+                                    <span className="text-xs text-gray-400">Street address, P.O. box, company name, c/o</span>
+                                </div>
 
-                                <input value={zipcode} onChange={(e) => setzipcode(e.target.value)} type="number" placeholder="Zip Code" className="w-full border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-600" />
+                                <div>
+                                    <input value={phone} onChange={(e) => setphone(e.target.value)} type="text" placeholder="Address Line 2" className="w-full border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-600" />
+                                    <span className="text-xs text-gray-400">Apartment, suite, unit, building, floor, etc.</span>
+                                </div>
+
+
+                                <input value={city} onChange={(e) => setcity(e.target.value)} type="text" placeholder="City" className="w-full border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-600" />
+
+
+                                <input value={phone} onChange={(e) => setphone(e.target.value)} type="text" placeholder="State/Province/Region" className="w-full border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-600" />
+
+
+                                <input value={zipcode} onChange={(e) => setzipcode(e.target.value)} type="number" placeholder="ZIP /  Postal Code" className="w-full border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-600" />
+
+
+                                <input value={phone} onChange={(e) => setphone(e.target.value)} type="text" placeholder="Country" className="w-full border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-600" />
+
                             </div>
-                            <div className="pt-5">
+                            {/* <div className="pt-5">
 
-                                <input value={city} onChange={(e) => setcity(e.target.value)} type="text" placeholder="City" className="w-full mb-5 border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-600" />
+
 
                                 <textarea value={address} onChange={(e) => setaddress(e.target.value)} placeholder="Shipping Address" className="w-full h-[150px] border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-600"></textarea>
-                            </div>
+                            </div> */}
                         </div>
 
                     </div>

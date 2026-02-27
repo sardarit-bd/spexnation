@@ -108,14 +108,14 @@ export default function ProtectiveCoatings() {
 
 
         // just for remove previous coating from total those is alredy in total
-        const calTotal = lens.total.filter((id) => id.target !== "Protective");
+        const calTotal = lens.total.filter((id) => id.target !== "Protective Coatings");
 
 
 
         setLens({
             ...lens,
             ProtectiveCoatings: [opt.id],
-            total: [...calTotal, { target: "Protective", id: opt.id, name: opt.title, price: opt.price }]
+            total: [...calTotal, { target: "Protective Coatings", id: opt.id, name: opt.title, price: opt.price }]
         });
 
     }

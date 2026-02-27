@@ -1,6 +1,6 @@
 'use client';
 
-import { FileText, Home, PackageSearch, Target, X } from 'lucide-react';
+import { FileText, Home, PackageSearch, Settings, Target, X } from 'lucide-react';
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from 'next/navigation';
@@ -11,10 +11,11 @@ import getName from "../../lib/getName";
 const Sidebar = ({ isOpen, onClose }) => {
     const menuItems = [
         { icon: Home, label: 'Dashboard', href: '/dashboard' },
+        { icon: Settings, label: 'Users', href: '/dashboard/settings' },
         { icon: FileText, label: 'Orders', href: '/dashboard/orders' },
         { icon: Target, label: 'Add Product', href: '/dashboard/addproduct' },
         { icon: PackageSearch, label: 'All Products', href: '/dashboard/allproducts' },
-        //{ icon: Settings, label: 'Settings', href: '/dashboard/settings' },
+        { icon: Settings, label: 'Settings', href: '/dashboard/settings' },
     ];
 
     const [email, setemail] = useState('');
