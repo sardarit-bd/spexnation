@@ -122,8 +122,6 @@ const AllproductPage = () => {
 
 
 
-
-
     return (
         <div className=" bg-white py-5 px-5  border border-gray-200">
             <h1 className="text-xl font-medium text-gray-600">All Products</h1>

@@ -84,7 +84,7 @@ export default function ProductSinglePage() {
                 {/* IMAGE SECTION */}
                 <div>
                     <img
-                        src={singleProducts?.product_thamnail}
+                        src={singleProducts?.product_Images?.[0]?.img}
                         className="w-full h-[300px] md:h-[400px] object-contain border border-gray-200"
                     />
 
@@ -92,7 +92,7 @@ export default function ProductSinglePage() {
                         {singleProducts?.product_Images?.map((img, i) => (
                             <img
                                 key={i}
-                                src={img}
+                                src={img?.img}
                                 className="w-20 h-20 rounded-lg object-contain border border gray-200"
                             />
                         ))}
