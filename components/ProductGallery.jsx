@@ -1,17 +1,28 @@
 'use client'
 
-import { motion } from 'framer-motion'
-import Image from 'next/image'
-import { useState } from 'react'
-import defaultImage from "../public/defaultImage.png"
+import { motion } from 'framer-motion';
+import Image from 'next/image';
+import { useState } from 'react';
+import GellaryImageShow from "../components/GallaryImageShow";
+import defaultImage from "../public/defaultImage.png";
 
-export default function ProductGallery({ product }) {
-  const [selectedImage, setSelectedImage] = useState(0)
+export default function ProductGallery({ product, activeIndex }) {
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [showGallary, setShowGallary] = useState(false);
+  const [ImageLink, setImageLink] = useState(null)
 
+
+
+  function hanldeGallaryShow(idx, thumb) {
+
+    setSelectedImage(idx);
+    setShowGallary(true);
+    setImageLink(thumb?.img);
+  }
 
 
   return (
-    <div className="flex flex-col justify-between h-full gap-0 border border-gray-200 bg-white w-full">
+    <div className="flex flex-col justify-between h-full gap-0 border border-gray-200 bg-white w-full relative">
       {/* Main Image */}
       <motion.div
         initial={{ opacity: 0, x: -45 }}
@@ -21,11 +32,11 @@ export default function ProductGallery({ product }) {
           delay: 0,
           ease: "easeOut"
         }}
-        className="bg-white rounded-lg flex items-center justify-center relative overflow-hidden group h-full">
+        className="bg-white rounded-lg flex items-center justify-center relative overflow-hidden group h-full relative">
         <Image
           width={1000}
           height={1000}
-          src={product?.product_thamnail ? product?.product_thamnail : defaultImage}
+          src={product?.product_Images[activeIndex]?.img ? product?.product_Images[activeIndex]?.img : defaultImage}
           alt="Product"
           className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500"
         />
@@ -45,14 +56,25 @@ export default function ProductGallery({ product }) {
         {product?.product_Images?.map((thumb, idx) => (
           <button
             key={idx}
-            onClick={() => setSelectedImage(idx)}
+            onMouseOver={() => hanldeGallaryShow(idx, thumb)}
+            onMouseOut={() => { setShowGallary(false); setSelectedImage(null) }}
             className={`flex-shrink-0 w-20 h-20 bg-white rounded-lg overflow-hidden transition ${selectedImage === idx ? 'border-4 border-yellow-500' : 'border-2 border-gray-10'
               }`}
           >
-            <Image src={thumb ? thumb : defaultImage} width={1000} height={1000} alt={`View ${idx + 1}`} className="w-full h-full object-contain rounded-lg" />
+            <Image src={thumb?.img ? thumb?.img : defaultImage} width={1000} height={1000} alt={`View ${idx + 1}`} className="w-full h-full object-contain rounded-lg" />
+
+
+
+            {
+              showGallary && <div className="absolute bottom-32 right-10 z-50 ">
+                <GellaryImageShow img={ImageLink} />
+              </div>
+            }
           </button>
         ))}
+
       </motion.div>
+
     </div>
   )
 }

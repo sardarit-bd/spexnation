@@ -5,6 +5,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
+import { FaMinus } from "react-icons/fa";
+import { FiPlus } from "react-icons/fi";
 import { RxCross2 } from "react-icons/rx";
 import Loading from "../../../components/Loading";
 import ProductBreadcrumb from "../../../components/ProductBreadcrumb";
@@ -86,6 +88,7 @@ export default function CartPage() {
             color: "gray",
             darkness: "light",
             prescriptionImage: '',
+            quantity: 1,
             total: []
         });
 
@@ -164,6 +167,45 @@ export default function CartPage() {
 
 
 
+    // handle quantity increase function is here
+    function handleIncrease(e, index) {
+
+        e.preventDefault();
+        const filteredData = hasData?.map((item, idx) => {
+            if (idx === index) {
+                return { ...item, quantity: item.quantity + 1 };
+            }
+            return item;
+        });
+        localStorage.setItem("lensData", JSON.stringify(filteredData));
+        window.location.reload();
+    }
+
+
+
+
+    // handle quantity decrease function is here
+    function handleDecrease(e, index) {
+
+        e.preventDefault();
+        const filteredData = hasData?.map((item, idx) => {
+            if (idx === index) {
+
+                if (item.quantity > 1) {
+                    return { ...item, quantity: item.quantity - 1 };
+                }
+            }
+            return item;
+        });
+        localStorage.setItem("lensData", JSON.stringify(filteredData));
+        window.location.reload();
+    }
+
+
+
+
+
+
     console.log(hasData);
 
 
@@ -219,23 +261,23 @@ export default function CartPage() {
                                 <div className="mt-2 flex justify-between w-full">
                                     <div className="mt-3 space-y-1 text-sm text-gray-600">
                                         <p>
-                                            <b>Color:</b>
+                                            <b>Frame Color:</b>
                                             {item?.LenColor?.name}</p>
                                     </div>
 
-                                    {/* <div className="mt-4 space-y-2 text-sm">
+                                    <div className="mt-4 space-y-2 text-sm">
                                         <div className="flex items-center gap-1">
-                                            <div className="w-8 h-8 bg-gray-200 flex items-center justify-center cursor-pointer">
+                                            <div onClick={(e) => handleDecrease(e, index)} className="w-8 h-8 bg-gray-200 flex items-center justify-center cursor-pointer">
                                                 <FaMinus />
                                             </div>
                                             <div className="w-8 h-8 bg-gray-200 flex items-center justify-center">
-                                                5
+                                                {item?.quantity}
                                             </div>
-                                            <div className="w-8 h-8 bg-gray-200 flex items-center justify-center cursor-pointer">
+                                            <div onClick={(e) => handleIncrease(e, index)} className="w-8 h-8 bg-gray-200 flex items-center justify-center cursor-pointer">
                                                 <FiPlus />
                                             </div>
                                         </div>
-                                    </div> */}
+                                    </div>
                                 </div>
 
                             </div>

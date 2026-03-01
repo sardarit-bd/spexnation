@@ -9,7 +9,7 @@ const StatusBadge = ({ type, value }) => {
 
     const deliveryStyles = {
         Pending: "bg-purple-100 text-purple-700 border-purple-300",
-        Delivered: "bg-green-100 text-green-700 border-green-300",
+        Dispatched: "bg-green-100 text-green-700 border-green-300",
     };
 
     const styles =

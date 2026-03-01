@@ -7,7 +7,7 @@ import Loading from "../components/Loading"
 import useLenseStore from '../store/useLenseStore'
 import useStepStore from '../store/useStepStore'
 
-export default function ProductDetails({ product }) {
+export default function ProductDetails({ product, activeIndex, setactiveIndex }) {
   const [selectedColor, setSelectedColor] = useState('black')
   const [isWishlisted, setIsWishlisted] = useState(false)
   const { step, setStep } = useStepStore();
@@ -15,15 +15,12 @@ export default function ProductDetails({ product }) {
   const [isLoading, setisLoading] = useState(false);
 
 
-
-  console.log(product);
-
-
   useEffect(() => {
     setLens({
       ProductDetails: product,
-      LenseName: "",
-      LenColor: product.color[0],
+      LenseName: product?.ProductTitle,
+      LenseBrand: product?.brand,
+      LenColor: product?.product_Images[activeIndex]?.color,
       LenseUseCase: "",
       LenseThickness: "",
       pdType: "1",
@@ -68,6 +65,7 @@ export default function ProductDetails({ product }) {
       color: "gray",
       darkness: "light",
       prescriptionImage: '',
+      quantity: 1,
       total: []
     });
   }, [product])
@@ -79,7 +77,7 @@ export default function ProductDetails({ product }) {
     e.preventDefault();
     setisLoading(true);
 
-    setLens({ ...lens, LenseName: "Elegance TF2249", total: [...lens.total, { target: "Frame", id: "Elegance TF2249", name: "Elegance TF2249", price: 449 }] })
+    setLens({ ...lens, LenseBrand: product?.brand, LenseName: product?.ProductTitle, total: [...lens.total, { target: "Frame", id: product?.ProductTitle, name: product?.ProductTitle, price: product?.product_price }] })
 
     setTimeout(() => {
       setisLoading(false);
@@ -87,6 +85,8 @@ export default function ProductDetails({ product }) {
       window.scrollTo(0, 0);
     }, 700);
   }
+
+
 
 
   return (
@@ -101,7 +101,7 @@ export default function ProductDetails({ product }) {
       className="space-y-6 bg-white border border-gray-200 p-4 h-full">
       {/* Product Title */}
       <div>
-        <p className="text-yellow-600 font-bold text-sm mb-1 uppercase">{product?.collection}</p>
+        <p className="text-yellow-600 font-bold text-sm mb-1 uppercase">{product?.brand}</p>
         <h1 className="text-3xl md:text-4xl font-light text-gray-900 mb-2">{product?.ProductTitle}</h1>
         <p className="text-gray-600 font-light">{product?.shortdes}</p>
       </div>
@@ -126,10 +126,10 @@ export default function ProductDetails({ product }) {
       {/* color */}
       <div className="flex items-center gap-3">
         {
-          product?.color?.map((cl, index) => {
+          product?.product_Images?.map((cl, index) => {
             return (
-              <div onClick={() => setLens({ ...lens, LenColor: cl })} className={`p-0.5 h-fit w-fit rounded-full cursor-pointer  ${lens?.LenColor?.value == cl?.value ? "border-2 border-yellow-500" : ""}`}>
-                <div style={{ backgroundColor: cl?.value }} key={index} className="w-8 h-8 rounded-full">
+              <div key={index} onClick={() => setactiveIndex(index)} className={`p-0.5 h-fit w-fit rounded-full cursor-pointer  ${activeIndex == index ? "border-2 border-yellow-500" : ""}`}>
+                <div style={{ backgroundColor: cl?.color?.[0]?.value }} key={index} className="w-8 h-8 rounded-full">
 
                 </div>
               </div>
@@ -147,7 +147,7 @@ export default function ProductDetails({ product }) {
         <p className="text-gray-600 text-sm mb-2">Includes prescription lenses</p>
         <div className="flex items-baseline gap-2">
           <span className="text-4xl font-light text-gray-900">£{product?.product_price}</span>
-          <span className="text-lg text-gray-500 line-through font-light">£599</span>
+          {/* <span className="text-lg text-gray-500 line-through font-light">£599</span> */}
         </div>
       </div>
 

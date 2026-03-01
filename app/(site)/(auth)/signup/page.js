@@ -5,15 +5,16 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import Loading from "../../../../components/Loading";
-import setCookie from "../../../../lib/setcookie";
 
 export default function SignInPage() {
 
     const router = useRouter();
     const [loading, setloading] = useState(false);
     const [formData, setFormData] = useState({
+        name: "",
         email: "",
-        password: ""
+        password: "",
+        role: "user"
     });
 
     const handleChange = (e) => {
@@ -28,7 +29,7 @@ export default function SignInPage() {
 
 
         // Make API call to add the product
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/login`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/register`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -40,20 +41,18 @@ export default function SignInPage() {
 
         if (res.success) {
             toast.success(res.message);
-            setCookie("token", res?.data?.token, 1);
             setFormData({
+                name: "",
                 email: "",
-                password: ""
+                password: "",
+                role: "user"
             });
-            router.push('/dashboard');
+            router.push('/signin');
         } else {
             toast.error(res.message);
         }
 
         setloading(false);
-
-
-
 
     };
 
@@ -65,10 +64,26 @@ export default function SignInPage() {
                 {/* Right Form Section */}
                 <div className="p-10">
                     <h3 className="text-2xl font-light text-gray-800 mb-6">
-                        Login
+                        Registations
                     </h3>
 
                     <form onSubmit={handleSubmit} className="space-y-5">
+
+                        <div>
+                            <label className="block text-sm font-medium text-gray-600 mb-1">
+                                Full Name
+                            </label>
+                            <input
+                                type="text"
+                                name="name"
+                                value={formData.name}
+                                onChange={handleChange}
+                                required
+                                className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-600"
+                                placeholder="john"
+                            />
+                        </div>
+
 
 
                         <div>
@@ -112,18 +127,16 @@ export default function SignInPage() {
                                 loading ? (
                                     <Loading />
                                 ) : (
-                                    <span>Sign In</span>
+                                    <span>Sign Up</span>
                                 )
                             }
                         </button>
                     </form>
-                    <div className="pt-3 flex items-center justify-between">
-                        <span className="">Don't have an account? <Link href="/signup" className="text-yellow-600">Sign Up</Link></span>
 
-                        <span>
-                            <Link href="/signin" className="text-yellow-600">Forgot Password</Link>
-                        </span>
+                    <div className="pt-3">
+                        <span className="">Already have an account? <Link href="/signin" className="text-yellow-600">Sign In</Link></span>
                     </div>
+
                 </div>
             </div>
             <Toaster />

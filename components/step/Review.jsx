@@ -1,6 +1,7 @@
 'use client'
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import useLenseStore from "../../store/useLenseStore";
@@ -17,7 +18,6 @@ export default function Review() {
     const { step, setStep } = useStepStore();
     const { lens, setLens } = useLenseStore();
     const [isLoading, setisLoading] = useState(false);
-
 
 
     // handle confirm function is here
@@ -161,7 +161,36 @@ export default function Review() {
                     lens?.total?.map((item, index) => {
                         return (
                             <div key={index} className="flex justify-between text-md font-medium text-gray-800/90">
-                                <span><b className="font-extrabold">{item?.target}: </b>{item.name}</span>
+                                <span className="flex flex-col items-start">
+                                    <span>
+                                        <b className="font-extrabold">
+                                            {item?.target}:
+                                        </b>
+                                        {item.name}
+                                    </span>
+                                    <span className={`${item?.name != "Clear" && item?.target == "Tints" && " flex gap-2 flex-col items-start mt-2"}`}>
+
+
+                                        {
+                                            item?.name == "Sunglasses" && item?.target == "Tints" && (
+                                                <span>
+                                                    <b className="">Darkness: </b> {lens?.darkness == 'dark' ? "Dark (20%)" : lens?.darkness == 'medium' ? "Medium (50%)" : lens?.darkness == 'light' ? "Light (80% transmission)" : null}
+                                                </span>
+                                            )
+                                        }
+
+                                        {
+                                            item?.name != "Clear" && item?.target == "Tints" && (
+                                                <span className="flex gap-2 items-start">
+                                                    <b className="">Color: </b>
+                                                    <Image src={`/${lens?.color}.png`} alt="emerald" width={1000} height={1000} className={`flex items-center justify-center text-white cursor-pointer w-20 h-20`} />
+                                                </span>
+                                            )
+                                        }
+
+
+                                    </span>
+                                </span>
                                 <span>£{item?.price}</span>
                             </div>
                         )

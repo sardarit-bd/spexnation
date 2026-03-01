@@ -1,19 +1,5 @@
-import { jwtVerify } from "jose";
 import { NextResponse } from "next/server";
-
-async function verifyJWT(token) {
-    try {
-        const secret = new TextEncoder().encode(process.env.NEXT_PUBLIC_JWT_SECRET);
-
-        const { payload } = await jwtVerify(token, secret, {
-            clockTolerance: 30
-        });
-
-        return payload;
-    } catch {
-        return null;
-    }
-}
+import verifyJWT from "./lib/verifyJWT";
 
 export async function proxy(req) {
 
