@@ -1,15 +1,18 @@
 'use client';
 
+
 import { FileText, Home, PackageSearch, Settings, Target, X } from 'lucide-react';
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from "react";
-import getEmail from "../../lib/getEmail";
-import getName from "../../lib/getName";
+import getTookn from "../../lib/getTookn";
+import verifyJWT from "../../lib/verifyJWT";
 
 const Sidebar = ({ isOpen, onClose }) => {
-    const menuItems = [
+
+
+    const menuItemsForAdmin = [
         { icon: Home, label: 'Dashboard', href: '/dashboard' },
         { icon: Settings, label: 'Users', href: '/dashboard/settings' },
         { icon: FileText, label: 'Orders', href: '/dashboard/orders' },
@@ -18,21 +21,54 @@ const Sidebar = ({ isOpen, onClose }) => {
         { icon: Settings, label: 'Settings', href: '/dashboard/settings' },
     ];
 
+
+    const menuItemsForCustomer = [
+        { icon: Home, label: 'Dashboard', href: '/dashboard' },
+        { icon: FileText, label: 'My Orders', href: '/dashboard/orders' },
+        { icon: Settings, label: 'Settings', href: '/dashboard/settings' },
+    ];
+
+
     const [email, setemail] = useState('');
     const [name, setname] = useState('');
-
-
+    const [role, setrole] = useState('');
     const pathname = usePathname();
 
     useEffect(() => {
 
-        const nm = getName();
-        const em = getEmail();
+        let isMounted = true;
 
-        setemail(em);
-        setname(nm);
+        const loadUser = async () => {
+            try {
+                const token = getTookn();
 
-    }, [])
+                if (!token) return;
+
+                const decoded = await verifyJWT(token);
+
+                if (isMounted && decoded) {
+                    setname(decoded?.name);
+                    setemail(decoded?.email);
+                    setrole(decoded?.role);
+                }
+
+            } catch (err) {
+                console.error("User load failed:", err);
+            }
+        };
+
+        loadUser();
+
+        return () => {
+            isMounted = false; // cleanup
+        };
+
+    }, []);
+
+
+    // role finder
+    const menuItems = role === 'admin' ? menuItemsForAdmin : menuItemsForCustomer;
+
 
 
     return (
@@ -66,7 +102,9 @@ const Sidebar = ({ isOpen, onClose }) => {
                     <div className="hidden lg:flex items-center justify-center p-4 border-b border-gray-200">
 
                         <div className="h-[40px]">
-                            <Image src="/logo.png" alt="Spex Nation" className=" h-full" width="1000" height="1000" />
+                            <Link className="h-full w-full" href="/">
+                                <Image src="/logo.png" alt="Spex Nation" className=" h-full" width="1000" height="1000" />
+                            </Link>
                         </div>
 
                     </div>
@@ -74,7 +112,7 @@ const Sidebar = ({ isOpen, onClose }) => {
                     {/* Navigation */}
                     <nav className="flex-1 overflow-y-auto p-4">
                         <ul className="space-y-2">
-                            {menuItems.map((item, index) => {
+                            {menuItems?.map((item, index) => {
                                 const Icon = item.icon;
                                 return (
                                     <li key={index}>

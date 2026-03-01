@@ -65,10 +65,10 @@ export default function ProductPage() {
                 <ProductBreadcrumb breadcrumbs={breadcrumbs} />
 
                 <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
-                    <div className="hidden col-span-1 p-4 border border-gray-200 bg-white max-h-[700px] sticky top-[75px]">
+                    <div className="col-span-1 p-4 border border-gray-200 bg-white max-h-[700px] sticky top-[75px]">
                         <ShopFilter />
                     </div>
-                    <div className="col-span-5 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-5">
+                    <div className="col-span-4 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-4 lg:gap-6">
                         {allProducts.map((item, index) => (
                             <div key={index} className="text-center">
                                 <ProductCard item={item} />

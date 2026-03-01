@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
@@ -40,8 +41,6 @@ export default function SignInPage() {
         if (res.success) {
             toast.success(res.message);
             setCookie("token", res?.data?.token, 1);
-            setCookie("name", res?.data?.name, 1);
-            setCookie("email", res?.data?.email, 1);
             setFormData({
                 email: "",
                 password: ""
@@ -118,6 +117,13 @@ export default function SignInPage() {
                             }
                         </button>
                     </form>
+                    <div className="pt-3 flex items-center justify-between">
+                        <span className="">Don't have an account? <Link href="/signup" className="text-yellow-600">Sign Up</Link></span>
+
+                        <span>
+                            <Link href="/signin" className="text-yellow-600">Forgot Password</Link>
+                        </span>
+                    </div>
                 </div>
             </div>
             <Toaster />

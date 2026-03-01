@@ -25,11 +25,12 @@ export default function Checkout() {
 
     const [fullname, setfullname] = useState('');
     const [email, setemail] = useState('');
-    const [phone, setphone] = useState('');
-    const [zipcode, setzipcode] = useState('');
+    const [address1, setaddress1] = useState('');
+    const [address2, setaddress2] = useState('');
     const [city, setcity] = useState('');
-    const [address, setaddress] = useState('');
-
+    const [state, setstate] = useState('');
+    const [zipcode, setzipcode] = useState('');
+    const [country, setcountry] = useState('');
 
 
     useEffect(() => {
@@ -56,7 +57,7 @@ export default function Checkout() {
 
 
 
-        if (!fullname || !email || !phone || !zipcode || !city || !address) {
+        if (!fullname || !email || !address1 || !address2 || !city || !state || !zipcode || !country) {
             toast.error("Please fill all the fields.");
             return;
         }
@@ -66,10 +67,13 @@ export default function Checkout() {
         const data = {
             fullname,
             email,
-            phone,
-            zipcode,
+            address1,
+            address2,
             city,
-            address,
+            state,
+            country,
+            zipcode,
+            country,
             hasData,
         };
 
@@ -88,10 +92,12 @@ export default function Checkout() {
             toast.success(res.message);
             setfullname('');
             setemail('');
-            setphone('');
-            setzipcode('');
+            setaddress1('');
+            setaddress2('');
             setcity('');
-            setaddress('');
+            setstate('');
+            setzipcode('');
+            setcountry('');
         } else {
             toast.error(res.message);
         }
@@ -101,12 +107,6 @@ export default function Checkout() {
     }
 
 
-
-
-
-
-
-
     const TotalCalculation = () => {
         let priceTotal = 0;
         hasData?.forEach((item) => {
@@ -114,10 +114,6 @@ export default function Checkout() {
         });
         return priceTotal;
     };
-
-
-
-
 
 
 
@@ -143,31 +139,70 @@ export default function Checkout() {
                         <div className="pt-4">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
 
-                                <input value={fullname} onChange={(e) => setfullname(e.target.value)} type="text" placeholder="Full Name" className="w-full border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-600" />
-
-                                <input value={email} onChange={(e) => setemail(e.target.value)} type="email" placeholder="Email Address" className="w-full border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-600" />
 
                                 <div>
-                                    <input value={phone} onChange={(e) => setphone(e.target.value)} type="text" placeholder="Address Line 1" className="w-full border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-600" />
+                                    <label className="text-gray-400 flex items-start gap-2">
+                                        Full Name <span className="text-xs text-red-600">*</span>
+                                    </label>
+                                    <input value={fullname} onChange={(e) => setfullname(e.target.value)} type="text" className="w-full border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-600" />
+                                </div>
+
+
+                                <div>
+                                    <label className="text-gray-400 flex items-start gap-2">
+                                        Email Address <span className="text-xs text-red-600">*</span>
+                                    </label>
+                                    <input value={email} onChange={(e) => setemail(e.target.value)} type="email" className="w-full border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-600" />
+                                </div>
+
+
+                                <div>
+                                    <label className="text-gray-400 flex items-start gap-2">
+                                        Address Line 1 <span className="text-xs text-red-600">*</span>
+                                    </label>
+                                    <input value={address1} onChange={(e) => setaddress1(e.target.value)} type="text" className="w-full border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-600" />
                                     <span className="text-xs text-gray-400">Street address, P.O. box, company name, c/o</span>
                                 </div>
 
                                 <div>
-                                    <input value={phone} onChange={(e) => setphone(e.target.value)} type="text" placeholder="Address Line 2" className="w-full border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-600" />
+                                    <label className="text-gray-400 flex items-start gap-2">
+                                        Address Line 2 <span className="text-xs text-red-600">*</span>
+                                    </label>
+                                    <input value={address2} onChange={(e) => setaddress2(e.target.value)} type="text" className="w-full border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-600" />
                                     <span className="text-xs text-gray-400">Apartment, suite, unit, building, floor, etc.</span>
                                 </div>
 
 
-                                <input value={city} onChange={(e) => setcity(e.target.value)} type="text" placeholder="City" className="w-full border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-600" />
+                                <div>
+                                    <label className="text-gray-400 flex items-start gap-2">
+                                        City <span className="text-xs text-red-600">*</span>
+                                    </label>
+                                    <input value={city} onChange={(e) => setcity(e.target.value)} type="text" className="w-full border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-600" />
+                                </div>
 
 
-                                <input value={phone} onChange={(e) => setphone(e.target.value)} type="text" placeholder="State/Province/Region" className="w-full border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-600" />
+
+                                <div>
+                                    <label className="text-gray-400 flex items-start gap-2">
+                                        State/Province/Region <span className="text-xs text-red-600">*</span>
+                                    </label>
+                                    <input value={state} onChange={(e) => setstate(e.target.value)} type="text" className="w-full border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-600" />
+                                </div>
+
+                                <div>
+                                    <label className="text-gray-400 flex items-start gap-2">
+                                        ZIP /  Postal Code <span className="text-xs text-red-600">*</span>
+                                    </label>
+                                    <input value={zipcode} onChange={(e) => setzipcode(e.target.value)} type="text" className="w-full border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-600" />
+                                </div>
 
 
-                                <input value={zipcode} onChange={(e) => setzipcode(e.target.value)} type="number" placeholder="ZIP /  Postal Code" className="w-full border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-600" />
-
-
-                                <input value={phone} onChange={(e) => setphone(e.target.value)} type="text" placeholder="Country" className="w-full border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-600" />
+                                <div>
+                                    <label className="text-gray-400 flex items-start gap-2">
+                                        Country <span className="text-xs text-red-600">*</span>
+                                    </label>
+                                    <input value={country} onChange={(e) => setcountry(e.target.value)} type="text" className="w-full border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-600" />
+                                </div>
 
                             </div>
                             {/* <div className="pt-5">

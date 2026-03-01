@@ -11,6 +11,8 @@ export default function ProductCard({ item }) {
     const [isFavorite, setIsFavorite] = useState(false);
     const [isLoading, setisLoading] = useState(false);
     const [selectedSize, setSelectedSize] = useState('M');
+    const [activeIndex, setactiveIndex] = useState(0);
+
     const router = useRouter();
 
     const product = {
@@ -51,7 +53,7 @@ export default function ProductCard({ item }) {
             {/* Image Container */}
             <div className="relative overflow-hidden bg-white">
                 <Image
-                    src={item?.product_thamnail}
+                    src={item?.product_Images[activeIndex]?.img}
                     alt={item?.ProductTitle}
                     width={1000}
                     height={1000}
@@ -88,14 +90,26 @@ export default function ProductCard({ item }) {
                 </h3>
 
                 {/* Price */}
-                <div className="flex items-center gap-3 mb-4">
+                <div className="flex items-center justify-between gap-3 my-4 mt-6">
                     <span className="text-2xl font-light text-gray-700/60">
                         £{item?.product_price}
                     </span>
 
-                    <span className="ml-auto text-sm font-semibold text-green-600 bg-green-50 px-2 py-1 rounded">
-                        {item?.status}
-                    </span>
+                    {/* color */}
+                    <div className="flex flex-col items-start">
+                        <div className="flex items-center gap-1">
+                            {
+                                item?.product_Images?.map((cl, index) => {
+                                    return (
+                                        <div key={index} onMouseOver={() => setactiveIndex(index)} className={`p-0.5 h-fit w-fit rounded-full cursor-pointer  ${activeIndex == index ? "border-2 border-yellow-500" : ""}`}>
+                                            <div style={{ backgroundColor: cl?.color?.[0]?.value }} key={index} className="w-5 h-5 rounded-full">
+                                            </div>
+                                        </div>
+                                    )
+                                })
+                            }
+                        </div>
+                    </div>
                 </div>
 
                 {/* Add to Cart Button */}

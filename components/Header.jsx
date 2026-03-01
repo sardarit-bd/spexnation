@@ -1,14 +1,76 @@
 'use client'
 
-import { Menu } from 'lucide-react';
+import { Menu, User } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import HeaderCartIcon from "../components/HeaderCartIcon";
+import getTookn from "../lib/getTookn";
+import verifyJWT from "../lib/verifyJWT";
+
+
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const pathName = usePathname();
+  const [email, setemail] = useState('');
+  const [name, setname] = useState('');
+  const [role, setrole] = useState('');
+  const [isLogedIn, setIsLogedIn] = useState(false);
+
+
+
+
+
+
+
+
+
+
+
+  useEffect(() => {
+
+    let isMounted = true;
+
+    const loadUser = async () => {
+      try {
+        const token = getTookn();
+        if (!token) return;
+
+        const decoded = await verifyJWT(token);
+
+        if (isMounted && decoded) {
+          setname(decoded?.name);
+          setemail(decoded?.email);
+          setrole(decoded?.role);
+          setIsLogedIn(true);
+        }
+
+      } catch (err) {
+        console.error("User load failed:", err);
+        setIsLogedIn(false);
+      }
+    };
+
+    loadUser();
+
+    return () => {
+      isMounted = false; // cleanup
+    };
+
+  }, []);
+
+
+
+
+
+
+
+
+
+
+
+
 
   return (
     <>
@@ -45,12 +107,26 @@ export default function Header() {
               </Link>
             </nav>
 
+
+
+
             {/* Icons */}
             <div className="flex items-center gap-4">
+
+
+              {
+                isLogedIn ? (
+                  <Link href="/dashboard" className="hidden sm:block text-gray-600 hover:text-yellow-700">
+                    <User size={26} />
+                  </Link>
+                ) : (
+                  <Link href="/signin" className="text-gray-600 hover:text-yellow-700 text-lg font-light">
+                    Sign In
+                  </Link>
+                )
+              }
+
               <HeaderCartIcon />
-              {/* <button className="hidden sm:block text-gray-600 hover:text-yellow-700">
-                <User size={26} />
-              </button> */}
               <button
                 className="md:hidden text-gray-600"
                 onClick={() => setIsOpen(!isOpen)}

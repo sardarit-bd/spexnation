@@ -22,7 +22,7 @@ export default function ProductPage() {
     const { id } = useParams();
     const [loading, setLoading] = useState(true);
     const [singleProducts, setsingleProducts] = useState([]);
-
+    const [activeIndex, setactiveIndex] = useState(0);
 
 
     const fetchProducts = async (id) => {
@@ -75,8 +75,8 @@ export default function ProductPage() {
 
             <Container>
                 <ProductBreadcrumb breadcrumbs={breadcrumbs} />
-                <ProductMainFeature product={singleProducts} />
-                <ProductTabs product={singleProducts} />
+                <ProductMainFeature product={singleProducts} activeIndex={activeIndex} setactiveIndex={setactiveIndex} />
+                <ProductTabs product={singleProducts} activeIndex={activeIndex} />
             </Container>
 
         </main>

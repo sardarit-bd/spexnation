@@ -6,7 +6,7 @@ import { useState } from 'react';
 import GellaryImageShow from "../components/GallaryImageShow";
 import defaultImage from "../public/defaultImage.png";
 
-export default function ProductGallery({ product }) {
+export default function ProductGallery({ product, activeIndex }) {
   const [selectedImage, setSelectedImage] = useState(null);
   const [showGallary, setShowGallary] = useState(false);
   const [ImageLink, setImageLink] = useState(null)
@@ -17,7 +17,7 @@ export default function ProductGallery({ product }) {
 
     setSelectedImage(idx);
     setShowGallary(true);
-    setImageLink(thumb);
+    setImageLink(thumb?.img);
   }
 
 
@@ -36,7 +36,7 @@ export default function ProductGallery({ product }) {
         <Image
           width={1000}
           height={1000}
-          src={product?.product_thamnail ? product?.product_thamnail : defaultImage}
+          src={product?.product_Images[activeIndex]?.img ? product?.product_Images[activeIndex]?.img : defaultImage}
           alt="Product"
           className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500"
         />
@@ -61,7 +61,7 @@ export default function ProductGallery({ product }) {
             className={`flex-shrink-0 w-20 h-20 bg-white rounded-lg overflow-hidden transition ${selectedImage === idx ? 'border-4 border-yellow-500' : 'border-2 border-gray-10'
               }`}
           >
-            <Image src={thumb ? thumb : defaultImage} width={1000} height={1000} alt={`View ${idx + 1}`} className="w-full h-full object-contain rounded-lg" />
+            <Image src={thumb?.img ? thumb?.img : defaultImage} width={1000} height={1000} alt={`View ${idx + 1}`} className="w-full h-full object-contain rounded-lg" />
 
 
 
