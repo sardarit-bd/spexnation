@@ -121,7 +121,7 @@ export default function SignInPage() {
                         <span className="">Don't have an account? <Link href="/signup" className="text-yellow-600">Sign Up</Link></span>
 
                         <span>
-                            <Link href="/signin" className="text-yellow-600">Forgot Password</Link>
+                            <Link href="/forgot-pass" className="text-yellow-600">Forgot Password</Link>
                         </span>
                     </div>
                 </div>

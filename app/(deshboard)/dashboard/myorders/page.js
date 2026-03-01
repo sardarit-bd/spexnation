@@ -2,12 +2,11 @@
 
 import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
-import { FaEdit } from "react-icons/fa";
 import StatusBadge from "../../../../components/Deshboard/StatusBadge";
 import Loading from "../../../../components/Loading";
 import generateOrderReport from "../../../../lib/generateOrderReport";
 
-const OrderPage = () => {
+const MyOrderPage = () => {
 
 
 
@@ -134,41 +133,14 @@ const OrderPage = () => {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     return (
         <div className=" bg-white py-5 px-5  border border-gray-200">
             <div className="flex items-center justify-between">
                 <h1 className="text-xl font-medium text-gray-600">All Orders</h1>
                 <input onChange={(e) => setsearch(e.target.value)} placeholder="Search By Order ID" text="text" className="border border-gray-200 px-3 py-1 text-sm text-gray-400 cursor-pointer focus:outline-none" />
             </div>
-            {/* overflow-x-auto */}
-            {/* overflow-hidden */}
-            <div className="mt-6 ">
-                <table className="w-full border border-gray-200 rounded-lg">
+            <div className="mt-6 overflow-x-auto">
+                <table className="w-full border border-gray-200 rounded-lg overflow-hidden">
                     <thead className="bg-gray-100">
                         <tr className="text-left">
                             <th className="p-3 border">Sl</th>
@@ -214,24 +186,6 @@ const OrderPage = () => {
                                 <td className="p-2 border text-center text-gray-500">
                                     <div className="flex items-center justify-center gap-2">
                                         <StatusBadge type="delivery" value={row?.deliveryStatus} />
-                                        <div className="text-sm text-gray-500 group relative">
-                                            <FaEdit className="cursor-pointer" />
-
-
-                                            <div className="hidden group-hover:block absolute right-0 z-50 top-3 bg-white h-fit w-[200px] border border-gray-200 shadow-md p-6">
-
-                                                <select onChange={(e) => setupdateStatus(e.target.value)} className="border border-gray-200 px-3 py-2 text-sm text-gray-400 cursor-pointer focus:outline-none w-full mb-3">
-
-                                                    <option value="">Change Status</option>
-                                                    <option value="Pending">Pending</option>
-                                                    <option value="Dispatched">Dispatched</option>
-                                                </select>
-
-                                                <button onClick={(e) => handleUpdateStatus(e, row?._id, updateStatus)} className="w-full bg-yellow-700 text-white py-2 mt-5">Update</button>
-                                            </div>
-
-
-                                        </div>
                                     </div>
                                 </td>
 
@@ -255,4 +209,4 @@ const OrderPage = () => {
     );
 };
 
-export default OrderPage;
+export default MyOrderPage;

@@ -14,7 +14,7 @@ const Sidebar = ({ isOpen, onClose }) => {
 
     const menuItemsForAdmin = [
         { icon: Home, label: 'Dashboard', href: '/dashboard' },
-        { icon: Settings, label: 'Users', href: '/dashboard/settings' },
+        { icon: Settings, label: 'Users', href: '/dashboard/users' },
         { icon: FileText, label: 'Orders', href: '/dashboard/orders' },
         { icon: Target, label: 'Add Product', href: '/dashboard/addproduct' },
         { icon: PackageSearch, label: 'All Products', href: '/dashboard/allproducts' },
@@ -24,8 +24,7 @@ const Sidebar = ({ isOpen, onClose }) => {
 
     const menuItemsForCustomer = [
         { icon: Home, label: 'Dashboard', href: '/dashboard' },
-        { icon: FileText, label: 'My Orders', href: '/dashboard/orders' },
-        { icon: Settings, label: 'Settings', href: '/dashboard/settings' },
+        { icon: FileText, label: 'My Orders', href: '/dashboard/myorders' },
     ];
 
 
