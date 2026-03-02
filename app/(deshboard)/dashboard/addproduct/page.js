@@ -2,12 +2,13 @@
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { GoPlusCircle } from "react-icons/go";
 import { RxCross2 } from "react-icons/rx";
 import Loading from "../../../../components/Loading";
 import fileToBase64 from "../../../../lib/fileToBase64";
+import getTookn from "../../../../lib/getTookn";
 const colors = [
     { name: "Black", value: "#000000" },
     { name: "Gray", value: "#808080" },
@@ -119,12 +120,12 @@ const brands = [
 
 
 
-
 const AddproductPage = () => {
 
     const router = useRouter();
 
     const [isLoading, setIsLoading] = useState(false);
+    const [token, setToken] = useState(null);
 
     const [brand, setbrand] = useState('');
     const [title, settitle] = useState('');
@@ -143,6 +144,13 @@ const AddproductPage = () => {
     const [ArmLength, setArmLength] = useState('');
     const [gellary, setgellery] = useState([]);
 
+
+
+
+    useEffect(() => {
+        const tkn = getTookn();
+        setToken(tkn);
+    }, [])
 
 
 
@@ -186,6 +194,7 @@ const AddproductPage = () => {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                "authorization": `Bearer ${token}`,
             },
             body: JSON.stringify(data),
         });

@@ -10,7 +10,9 @@ import { FiPlus } from "react-icons/fi";
 import { RxCross2 } from "react-icons/rx";
 import Loading from "../../../components/Loading";
 import ProductBreadcrumb from "../../../components/ProductBreadcrumb";
+import getTookn from "../../../lib/getTookn";
 import getTotalPrice from "../../../lib/getTotalPrice";
+import verifyJWT from "../../../lib/verifyJWT";
 import defaultImage from "../../../public/defaultImage.png";
 import useLenseStore from "../../../store/useLenseStore";
 import useStepStore from "../../../store/useStepStore";
@@ -30,6 +32,7 @@ export default function CartPage() {
     const { setLens } = useLenseStore();
     const [isLoading, setIsLoading] = useState(false);
     const [hasData, sethasData] = useState([]);
+    const [isLogedIn, setIsLogedIn] = useState(false);
     const router = useRouter();
 
 
@@ -94,7 +97,26 @@ export default function CartPage() {
 
 
 
-        sethasData(JSON.parse(localStorage.getItem("lensData")));
+        const loadUser = async () => {
+            try {
+                const token = getTookn();
+                if (!token) return;
+
+                const decoded = await verifyJWT(token);
+
+                if (decoded) {
+                    setIsLogedIn(true);
+                }
+
+            } catch (err) {
+                console.error("User load failed:", err);
+                setIsLogedIn(false);
+            }
+        };
+
+        loadUser();
+
+        sethasData(JSON.parse(localStorage.getItem("lensData")) || []);
         // Trigger header update
         window.dispatchEvent(new Event("lensUpdated"));
         window.scrollTo(0, 0);
@@ -137,6 +159,16 @@ export default function CartPage() {
             toast.error("You can Perchase Only One Product at a time");
             return;
         }
+
+
+
+        if (!isLogedIn) {
+            toast.error("You Must Login First to Checkout");
+            return;
+        }
+
+
+
 
         setIsLoading(true);
         setTimeout(() => {

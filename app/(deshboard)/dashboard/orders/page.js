@@ -6,19 +6,18 @@ import { FaEdit } from "react-icons/fa";
 import StatusBadge from "../../../../components/Deshboard/StatusBadge";
 import Loading from "../../../../components/Loading";
 import generateOrderReport from "../../../../lib/generateOrderReport";
+import getTookn from "../../../../lib/getTookn";
 
 const OrderPage = () => {
 
 
-
-
-
+    const [token, settoken] = useState(null);
     const [loading, setLoading] = useState(false);
     const [allOrders, setallOrders] = useState([]);
     const [search, setsearch] = useState('');
     const [updateStatus, setupdateStatus] = useState(false);
 
-    const fetchOrders = async () => {
+    const fetchOrders = async (tokens) => {
         setLoading(true);
         try {
             // Make API call to get all the product
@@ -26,6 +25,7 @@ const OrderPage = () => {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
+                    "authorization": `Bearer ${tokens}`,
                 }
             });
 
@@ -40,12 +40,10 @@ const OrderPage = () => {
 
 
     useEffect(() => {
-        fetchOrders();
+        const tokens = getTookn();
+        settoken(tokens);
+        fetchOrders(tokens);
     }, [])
-
-
-
-    console.log(allOrders);
 
 
 
@@ -78,12 +76,13 @@ const OrderPage = () => {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
+                    "authorization": `Bearer ${token}`,
                 },
                 body: JSON.stringify({ id, deliveryStatus: updateStatus })
             });
 
             const res = await response.json();
-            fetchOrders();
+            fetchOrders(token);
             setLoading(false);
         } catch (error) {
             console.error('Error fetching orders:', error);

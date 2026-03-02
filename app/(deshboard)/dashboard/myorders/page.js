@@ -1,50 +1,64 @@
 'use client'
 
 import { useEffect, useState } from "react";
-import toast, { Toaster } from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
 import StatusBadge from "../../../../components/Deshboard/StatusBadge";
 import Loading from "../../../../components/Loading";
 import generateOrderReport from "../../../../lib/generateOrderReport";
+import getTookn from "../../../../lib/getTookn";
+import verifyJWT from "../../../../lib/verifyJWT";
 
 const MyOrderPage = () => {
 
 
-
-
-
+    const [myID, setmyID] = useState('');
     const [loading, setLoading] = useState(false);
-    const [allOrders, setallOrders] = useState([]);
+    const [myOrders, setmyOrders] = useState([]);
     const [search, setsearch] = useState('');
     const [updateStatus, setupdateStatus] = useState(false);
 
-    const fetchOrders = async () => {
+    const fetchOrders = async (myID, tokens) => {
+
+
         setLoading(true);
         try {
             // Make API call to get all the product
-            const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/allorders`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/myorders/${myID}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
+                    "authorization": `Bearer ${tokens}`,
                 }
             });
 
             const res = await response.json();
-            setallOrders(res?.data);
+            setmyOrders(res?.data);
             setLoading(false);
         } catch (error) {
             console.error('Error fetching orders:', error);
             setLoading(false);
         }
+
     };
 
 
     useEffect(() => {
-        fetchOrders();
+
+        const tokens = getTookn();
+
+        const loadUserandFetchData = async (tokens) => {
+            const decoded = await verifyJWT(tokens);
+            const myID = decoded?.id;
+            fetchOrders(myID, tokens);
+        }
+
+        loadUserandFetchData(tokens);
+
+
     }, [])
 
 
 
-    console.log(allOrders);
 
 
 
@@ -57,46 +71,9 @@ const MyOrderPage = () => {
 
 
 
-    // update status function is here
-    async function handleUpdateStatus(e, id, updateStatus) {
-
-        e.preventDefault();
-
-        if (!updateStatus) {
-            toast.error("Please select status");
-            return;
-        }
 
 
-        setLoading(true);
-
-
-        try {
-            // Make API call to get all the product
-            const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/updateorder/${id}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ id, deliveryStatus: updateStatus })
-            });
-
-            const res = await response.json();
-            fetchOrders();
-            setLoading(false);
-        } catch (error) {
-            console.error('Error fetching orders:', error);
-            setLoading(false);
-        }
-
-
-    }
-
-
-
-
-
-    const filterData = allOrders?.filter((item) => {
+    const filterData = myOrders?.filter((item) => {
 
         if (!search) {
             return item;
@@ -136,7 +113,7 @@ const MyOrderPage = () => {
     return (
         <div className=" bg-white py-5 px-5  border border-gray-200">
             <div className="flex items-center justify-between">
-                <h1 className="text-xl font-medium text-gray-600">All Orders</h1>
+                <h1 className="text-xl font-medium text-gray-600">My Orders</h1>
                 <input onChange={(e) => setsearch(e.target.value)} placeholder="Search By Order ID" text="text" className="border border-gray-200 px-3 py-1 text-sm text-gray-400 cursor-pointer focus:outline-none" />
             </div>
             <div className="mt-6 overflow-x-auto">

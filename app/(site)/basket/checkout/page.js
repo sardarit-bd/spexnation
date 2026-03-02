@@ -1,10 +1,13 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import Loading from "../../../../components/Loading";
 import ProductBreadcrumb from "../../../../components/ProductBreadcrumb";
+import getTookn from "../../../../lib/getTookn";
 import getTotalPrice from "../../../../lib/getTotalPrice";
+import verifyJWT from "../../../../lib/verifyJWT";
 
 
 
@@ -20,8 +23,11 @@ const breadcrumbs = [
 export default function Checkout() {
 
 
+    const router = useRouter();
+
     const [isLoading, setIsLoading] = useState(false);
     const [hasData, sethasData] = useState([]);
+    const [IsLogedIn, setIsLogedIn] = useState(false);
 
     const [fullname, setfullname] = useState('');
     const [email, setemail] = useState('');
@@ -33,18 +39,46 @@ export default function Checkout() {
     const [country, setcountry] = useState('');
 
 
+
+
     useEffect(() => {
-        sethasData(JSON.parse(localStorage.getItem("lensData")));
+
+
+        const loadUser = async () => {
+            try {
+                const token = getTookn();
+                if (!token) {
+                    router.push('/basket');
+                    return;
+                };
+
+                const decoded = await verifyJWT(token);
+
+                if (decoded) {
+                    setfullname(decoded?.name);
+                    setemail(decoded?.email);
+                    setIsLogedIn(true);
+                }
+
+            } catch (err) {
+                console.error("User load failed:", err);
+                setIsLogedIn(false);
+            }
+        };
+
+        loadUser();
+
+
+        const localData = JSON.parse(localStorage.getItem("lensData")) || [];
+
+        if (localData.length === 0) {
+            router.push('/basket');
+            return;
+        }
+
+        sethasData(localData);
         window.scrollTo(0, 0);
     }, []);
-
-
-
-
-    console.log(hasData);
-
-
-
 
 
 
@@ -152,7 +186,7 @@ export default function Checkout() {
                                     <label className="text-gray-400 flex items-start gap-2">
                                         Email Address <span className="text-xs text-red-600">*</span>
                                     </label>
-                                    <input value={email} onChange={(e) => setemail(e.target.value)} type="email" className="w-full border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-600" />
+                                    <input disabled value={email} onChange={(e) => setemail(e.target.value)} type="email" className="w-full border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-600" />
                                 </div>
 
 
@@ -220,21 +254,33 @@ export default function Checkout() {
                 <div className="bg-white border p-6 h-full sticky top-28">
 
                     <div className="flex flex-col justify-between h-full">
-                        <div>
-                            <h2 className="text-xl font-light mb-4">Summary</h2>
+                        <div className="flex flex-col justify-between h-full">
+                            <div>
+                                <h2 className="text-xl font-light mb-4">Summary</h2>
 
-                            <p className="text-sm text-teal-600 mb-4">
-                                Enjoy free shipping
-                            </p>
+                                <p className="text-sm text-teal-600 mb-4">
+                                    Enjoy free shipping
+                                </p>
 
-                            <div className="space-y-3 text-sm">
-                                <div className="flex justify-between">
-                                    <span>Items:</span>
-                                    <span>{hasData?.length}</span>
+                                <div className="space-y-3 text-sm">
+                                    <div className="flex justify-between">
+                                        <span>Items:</span>
+                                        <span>{hasData?.length}</span>
+                                    </div>
+                                    <div className="flex justify-between">
+                                        <span>Subtotal</span>
+                                        <span>£{TotalCalculation()}</span>
+                                    </div>
                                 </div>
-                                <div className="flex justify-between">
-                                    <span>Subtotal</span>
-                                    <span>£{TotalCalculation()}</span>
+                            </div>
+
+                            <div>
+                                <div className="flex items-center border border-gray-200 border-dashed p-2 justify-between font-semibold mt-4 gap-5">
+                                    <span>Coupon</span>
+                                    <div className="flex items-center gap-2">
+                                        <input type="text" className="w-[130px] border border-gray-300 p-1 focus:outline-none focus:ring-2 focus:ring-yellow-600" />
+                                        <button className="bg-yellow-700 text-white text-md py-1 px-2">Apply</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
