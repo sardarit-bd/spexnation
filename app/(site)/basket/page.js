@@ -10,7 +10,9 @@ import { FiPlus } from "react-icons/fi";
 import { RxCross2 } from "react-icons/rx";
 import Loading from "../../../components/Loading";
 import ProductBreadcrumb from "../../../components/ProductBreadcrumb";
+import getTookn from "../../../lib/getTookn";
 import getTotalPrice from "../../../lib/getTotalPrice";
+import verifyJWT from "../../../lib/verifyJWT";
 import defaultImage from "../../../public/defaultImage.png";
 import useLenseStore from "../../../store/useLenseStore";
 import useStepStore from "../../../store/useStepStore";
@@ -30,6 +32,7 @@ export default function CartPage() {
     const { setLens } = useLenseStore();
     const [isLoading, setIsLoading] = useState(false);
     const [hasData, sethasData] = useState([]);
+    const [isLogedIn, setIsLogedIn] = useState(false);
     const router = useRouter();
 
 
@@ -94,7 +97,26 @@ export default function CartPage() {
 
 
 
-        sethasData(JSON.parse(localStorage.getItem("lensData")));
+        const loadUser = async () => {
+            try {
+                const token = getTookn();
+                if (!token) return;
+
+                const decoded = await verifyJWT(token);
+
+                if (decoded) {
+                    setIsLogedIn(true);
+                }
+
+            } catch (err) {
+                console.error("User load failed:", err);
+                setIsLogedIn(false);
+            }
+        };
+
+        loadUser();
+
+        sethasData(JSON.parse(localStorage.getItem("lensData")) || []);
         // Trigger header update
         window.dispatchEvent(new Event("lensUpdated"));
         window.scrollTo(0, 0);
@@ -138,6 +160,16 @@ export default function CartPage() {
             return;
         }
 
+
+
+        if (!isLogedIn) {
+            toast.error("You Must Login First to Checkout");
+            return;
+        }
+
+
+
+
         setIsLoading(true);
         setTimeout(() => {
             setIsLoading(false);
@@ -153,17 +185,16 @@ export default function CartPage() {
 
 
 
-    const TotalCalculation = () => {
+    const TotalCalculation = (quantity) => {
         let priceTotal = 0;
         hasData?.forEach((item) => {
-            priceTotal += getTotalPrice(item.total);
+            const thisQuantity = item.quantity;
+            const thisGetTotal = getTotalPrice(item.total);
+            priceTotal += thisGetTotal * thisQuantity;
         });
+
         return priceTotal;
     };
-
-
-
-
 
 
 
@@ -228,12 +259,14 @@ export default function CartPage() {
                     {hasData?.map((item, index) => (
                         <div
                             key={index}
-                            className="bg-gray-50 m-6 border p-6 flex gap-6"
+                            className="bg-gray-50 m-3 md:m-6 border p-3 md:p-6 flex flex-col md:flex-row gap-6"
                         >
                             {/* IMAGE */}
-                            <div className="w-40 shrink-0">
+                            <div className="w-20 md:w-40 shrink-0">
                                 <Image
-                                    src={item.ProductDetails?.product_thamnail ? item.ProductDetails?.product_thamnail : defaultImage}
+                                    src={item.ProductDetails?.product_Images[item?.selectedProductIndex
+                                    ].img ? item.ProductDetails?.product_Images[item?.selectedProductIndex
+                                    ].img : defaultImage}
                                     alt={item.LenseName}
                                     width={160}
                                     height={100}
@@ -261,8 +294,8 @@ export default function CartPage() {
                                 <div className="mt-2 flex justify-between w-full">
                                     <div className="mt-3 space-y-1 text-sm text-gray-600">
                                         <p>
-                                            <b>Frame Color:</b>
-                                            {item?.LenColor?.name}</p>
+                                            <b>Frame Color : </b>
+                                            {item?.LenColor[0]?.name}</p>
                                     </div>
 
                                     <div className="mt-4 space-y-2 text-sm">

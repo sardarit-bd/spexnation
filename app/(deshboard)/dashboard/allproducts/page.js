@@ -1,5 +1,6 @@
 'use client'
 
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import DashboardProductCard from "../../../../components/Deshboard/DashboardProductCard";
 import Loading from "../../../../components/Loading";
@@ -104,11 +105,6 @@ const AllproductPage = () => {
 
 
 
-
-
-
-
-
     if (loading) {
         return (
             <div className="flex items-center justify-center h-screen">
@@ -124,7 +120,10 @@ const AllproductPage = () => {
 
     return (
         <div className=" bg-white py-5 px-5  border border-gray-200">
-            <h1 className="text-xl font-medium text-gray-600">All Products</h1>
+            <div className="flex items-center justify-between">
+                <h1 className="text-xl font-medium text-gray-600">All Products</h1>
+                <Link className="text-white bg-yellow-700 py-2 px-4" href="/dashboard/addproduct">Add New Product</Link>
+            </div>
 
             <div className="mt-6 overflow-x-auto">
                 <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-5 lg:gap-6">

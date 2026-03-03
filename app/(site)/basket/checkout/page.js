@@ -1,10 +1,13 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import Loading from "../../../../components/Loading";
 import ProductBreadcrumb from "../../../../components/ProductBreadcrumb";
+import getTookn from "../../../../lib/getTookn";
 import getTotalPrice from "../../../../lib/getTotalPrice";
+import verifyJWT from "../../../../lib/verifyJWT";
 
 
 
@@ -20,8 +23,12 @@ const breadcrumbs = [
 export default function Checkout() {
 
 
+    const router = useRouter();
+
     const [isLoading, setIsLoading] = useState(false);
+    const [iscouponLoading, setiscouponLoading] = useState(false);
     const [hasData, sethasData] = useState([]);
+    const [IsLogedIn, setIsLogedIn] = useState(false);
 
     const [fullname, setfullname] = useState('');
     const [email, setemail] = useState('');
@@ -32,16 +39,131 @@ export default function Checkout() {
     const [zipcode, setzipcode] = useState('');
     const [country, setcountry] = useState('');
 
+    const [couponCode, setCouponCode] = useState('');
+    const [isApplyedShow, setisApplyedShow] = useState(false);
+    const [couponDiscount, setcouponDiscount] = useState(0);
+
+
+
 
     useEffect(() => {
-        sethasData(JSON.parse(localStorage.getItem("lensData")));
+
+
+        const loadUser = async () => {
+            try {
+                const token = getTookn();
+                if (!token) {
+                    router.push('/basket');
+                    return;
+                };
+
+                const decoded = await verifyJWT(token);
+
+                if (decoded) {
+                    setfullname(decoded?.name);
+                    setemail(decoded?.email);
+                    setIsLogedIn(true);
+                }
+
+            } catch (err) {
+                console.error("User load failed:", err);
+                setIsLogedIn(false);
+            }
+        };
+
+        loadUser();
+
+
+        const localData = JSON.parse(localStorage.getItem("lensData")) || [];
+
+        if (localData.length === 0) {
+            router.push('/basket');
+            return;
+        }
+
+        sethasData(localData);
         window.scrollTo(0, 0);
     }, []);
 
 
 
 
-    console.log(hasData);
+
+    const TotalCalculation = () => {
+        let priceTotal = 0;
+        hasData?.forEach((item) => {
+            const thisQuantity = item.quantity;
+            const thisGetTotal = getTotalPrice(item.total);
+            priceTotal += thisGetTotal * thisQuantity;
+        });
+
+        return priceTotal;
+    };
+
+
+
+
+    // handle apply coupon code funciton is here
+    async function hanldeApplyCoupon(e) {
+
+        e.preventDefault();
+
+        if (!couponCode) {
+            toast.error("Please enter a coupon code.");
+            return;
+        }
+
+        setiscouponLoading(true);
+
+        try {
+
+            // Make API call to add the product
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/applycoupon`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ couponCode }),
+            });
+
+            const res = await response.json();
+
+            if (res.success) {
+
+                setisApplyedShow(true);
+                setcouponDiscount(res?.data?.cDiscount);
+                console.log(res?.data);
+                toast.success(res.message);
+            } else {
+                toast.error(res.message);
+            }
+
+
+        } catch (error) {
+
+            console.error('Error  Applying coupon:', error);
+            toast.error(res.message);
+
+        } finally {
+            setiscouponLoading(false);
+        }
+
+    }
+
+
+
+
+
+    let gTotal = TotalCalculation();
+    let discount = gTotal * (couponDiscount / 100);
+    let grandTotal = gTotal - discount;
+
+
+
+
+
+
+
 
 
 
@@ -71,10 +193,10 @@ export default function Checkout() {
             address2,
             city,
             state,
-            country,
             zipcode,
             country,
             hasData,
+            grandTotal
         };
 
         // Make API call to add the product
@@ -107,13 +229,19 @@ export default function Checkout() {
     }
 
 
-    const TotalCalculation = () => {
-        let priceTotal = 0;
-        hasData?.forEach((item) => {
-            priceTotal += getTotalPrice(item.total);
-        });
-        return priceTotal;
-    };
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -152,7 +280,7 @@ export default function Checkout() {
                                     <label className="text-gray-400 flex items-start gap-2">
                                         Email Address <span className="text-xs text-red-600">*</span>
                                     </label>
-                                    <input value={email} onChange={(e) => setemail(e.target.value)} type="email" className="w-full border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-600" />
+                                    <input disabled value={email} onChange={(e) => setemail(e.target.value)} type="email" className="w-full border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-600" />
                                 </div>
 
 
@@ -205,12 +333,6 @@ export default function Checkout() {
                                 </div>
 
                             </div>
-                            {/* <div className="pt-5">
-
-
-
-                                <textarea value={address} onChange={(e) => setaddress(e.target.value)} placeholder="Shipping Address" className="w-full h-[150px] border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-600"></textarea>
-                            </div> */}
                         </div>
 
                     </div>
@@ -220,21 +342,52 @@ export default function Checkout() {
                 <div className="bg-white border p-6 h-full sticky top-28">
 
                     <div className="flex flex-col justify-between h-full">
-                        <div>
-                            <h2 className="text-xl font-light mb-4">Summary</h2>
+                        <div className="flex flex-col justify-between h-full">
+                            <div>
+                                <h2 className="text-xl font-light mb-4">Summary</h2>
 
-                            <p className="text-sm text-teal-600 mb-4">
-                                Enjoy free shipping
-                            </p>
+                                <p className="text-sm text-teal-600 mb-4">
+                                    Enjoy free shipping
+                                </p>
 
-                            <div className="space-y-3 text-sm">
-                                <div className="flex justify-between">
-                                    <span>Items:</span>
-                                    <span>{hasData?.length}</span>
+                                <div className="space-y-3 text-sm">
+                                    <div className="flex justify-between">
+                                        <span>Items:</span>
+                                        <span>{hasData?.length}</span>
+                                    </div>
+                                    <div className="flex justify-between">
+                                        <span>Subtotal</span>
+                                        <span>£{TotalCalculation()}</span>
+                                    </div>
                                 </div>
-                                <div className="flex justify-between">
-                                    <span>Subtotal</span>
-                                    <span>£{TotalCalculation()}</span>
+                            </div>
+
+                            <div>
+                                <div className="flex items-center border border-gray-200 border-dashed p-2 justify-between font-semibold mt-4 gap-5">
+                                    <span>Coupon</span>
+                                    <div className="flex items-center gap-2">
+                                        <input value={couponCode} onChange={(e) => setCouponCode(e.target.value)} type="text" className="w-[130px] border border-gray-300 p-1 focus:outline-none focus:ring-2 focus:ring-yellow-600" />
+                                        <button onClick={(e) => { hanldeApplyCoupon(e) }} className="bg-yellow-700 text-white text-md py-1 px-2">
+
+                                            {
+                                                iscouponLoading ? (
+                                                    <div className="py-0.5">
+                                                        <Loading />
+                                                    </div>
+                                                ) : (
+                                                    <span className="">Apply</span>
+                                                )
+                                            }
+
+                                        </button>
+                                    </div>
+                                </div>
+                                <div className="w-full">
+                                    {
+                                        isApplyedShow && (
+                                            <p className="text-green-600 px-2 py-2 bg-green-100 w-full mt-2">Coupon Applied Successfully</p>
+                                        )
+                                    }
                                 </div>
                             </div>
                         </div>
@@ -243,7 +396,7 @@ export default function Checkout() {
                             <hr />
                             <div className="flex justify-between font-semibold text-lg mt-4">
                                 <span>Order Total</span>
-                                <span>£{TotalCalculation()}</span>
+                                <span>£{grandTotal}</span>
                             </div>
 
                             <button onClick={(e) => { handleProccedToCheckout(e) }} className="w-full mt-6 bg-yellow-700 text-white py-3 rounded-lg font-light transition flex items-center justify-center">
@@ -264,6 +417,6 @@ export default function Checkout() {
                 </div>
             </div>
             <Toaster position="top-center" />
-        </section>
+        </section >
     );
 }

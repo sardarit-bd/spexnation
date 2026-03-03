@@ -1,7 +1,7 @@
 'use client';
 
 
-import { FileText, Home, PackageSearch, Settings, Target, X } from 'lucide-react';
+import { Code, FileText, Home, PackageSearch, Settings, Target, X } from 'lucide-react';
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from 'next/navigation';
@@ -18,7 +18,8 @@ const Sidebar = ({ isOpen, onClose }) => {
         { icon: FileText, label: 'Orders', href: '/dashboard/orders' },
         { icon: Target, label: 'Add Product', href: '/dashboard/addproduct' },
         { icon: PackageSearch, label: 'All Products', href: '/dashboard/allproducts' },
-        { icon: Settings, label: 'Settings', href: '/dashboard/settings' },
+        { icon: Code, label: 'Coupon Code', href: '/dashboard/coupon' },
+        //{ icon: Settings, label: 'Settings', href: '/dashboard/settings' },
     ];
 
 

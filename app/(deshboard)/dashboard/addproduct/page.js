@@ -2,12 +2,13 @@
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { GoPlusCircle } from "react-icons/go";
 import { RxCross2 } from "react-icons/rx";
 import Loading from "../../../../components/Loading";
 import fileToBase64 from "../../../../lib/fileToBase64";
+import getTookn from "../../../../lib/getTookn";
 const colors = [
     { name: "Black", value: "#000000" },
     { name: "Gray", value: "#808080" },
@@ -74,49 +75,20 @@ const colors = [
 ];
 
 const brands = [
-    "Arden",
-    "Aspire",
-    "Ben Sherman",
-    "Burberry",
-    "Caterpillar",
-    "Champion",
-    "Coach",
-    "Dolce&Gabbana",
-    "Emporio Armani",
-    "Finelight",
-    "GD Collection",
-    "Gucci",
+    "Ambri",
+    "Colt",
+    "Cube",
+    "Elite",
+    "Ferucci",
+    "Joia",
+    "MBOS",
+    "NHi",
+    "Sightique",
+    "SUNGLASSES",
+    "Synergy",
     "Visage",
-    "Harrington",
-    "Harrington Sport",
-    "Hart",
-    "Hugo Boss",
-    "Jimmy Choo",
-    "Kate Spade",
-    "Levi's",
-    "Lipsy London",
-    "London Retro",
-    "Marc Jacobs",
-    "New Balance",
-    "Oakley",
-    "Perri Kiely X LR",
-    "Persol",
-    "Pink Ribbon",
-    "Polaroid",
-    "Polo Ralph Lauren",
-    "Puma",
-    "Ralph",
-    "Ray-Ban",
-    "Scout",
-    "Scout Made In Italy",
-    "Swarovski",
-    "Ted Baker",
-    "Tiffany & Co.",
-    "Tom Ford",
-    "Tommy Hilfiger",
-    "Vogue Eyewear"
+    "Others"
 ];
-
 
 
 
@@ -125,6 +97,7 @@ const AddproductPage = () => {
     const router = useRouter();
 
     const [isLoading, setIsLoading] = useState(false);
+    const [token, setToken] = useState(null);
 
     const [brand, setbrand] = useState('');
     const [title, settitle] = useState('');
@@ -143,6 +116,13 @@ const AddproductPage = () => {
     const [ArmLength, setArmLength] = useState('');
     const [gellary, setgellery] = useState([]);
 
+
+
+
+    useEffect(() => {
+        const tkn = getTookn();
+        setToken(tkn);
+    }, [])
 
 
 
@@ -186,6 +166,7 @@ const AddproductPage = () => {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                "authorization": `Bearer ${token}`,
             },
             body: JSON.stringify(data),
         });
@@ -349,7 +330,7 @@ const AddproductPage = () => {
                             </label>
                             <select value={meterial} onChange={(e) => setmeterial(e.target.value)} className="w-full border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-600">
                                 <option className="text-gray-400 checked:text-gray-400" value="">Select Material</option>
-                                <option className="text-gray-400 checked:text-gray-400" value="Acetate">Acetate</option>
+                                <option className="text-gray-400 checked:text-gray-400" value="Stainless Steel">Stainless Steel</option>
                                 <option className="text-gray-400 checked:text-gray-400" value="Metal">Metal
                                 </option>
                                 <option className="text-gray-400 checked:text-gray-400" value="Plastic">Plastic</option>
