@@ -6,6 +6,26 @@ import toast, { Toaster } from "react-hot-toast";
 import Loading from "../../../../../components/Loading";
 import getTookn from "../../../../../lib/getTookn";
 
+
+
+const brands = [
+    "Ambri",
+    "Colt",
+    "Cube",
+    "Elite",
+    "Ferucci",
+    "Joia",
+    "MBOS",
+    "NHi",
+    "Sightique",
+    "SUNGLASSES",
+    "Synergy",
+    "Visage",
+    "Others"
+];
+
+
+
 export default function ProductSinglePage() {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -188,7 +208,8 @@ export default function ProductSinglePage() {
 
             const res = await response.json();
             toast.success(res.message);
-            router.push('/dashboard/allproducts');
+            setIsModalOpen(false);
+            fetchProducts(id);
         } catch (error) {
             console.error('Error Deleting products:', error);
         }
@@ -351,8 +372,18 @@ export default function ProductSinglePage() {
                                 <label className="text-gray-400 flex items-start gap-2">
                                     Brand
                                 </label>
-                                <input type="text" value={brand} onChange={(e) => setbrand(e.target.value)} className="border p-2 w-full"
-                                />
+                                <select value={brand} onChange={(e) => setbrand(e.target.value)} className="w-full border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-600">
+                                    <option className="text-gray-400 checked:text-gray-400" value="">Select Brand</option>
+
+                                    {
+                                        brands.map((item, i) => (
+                                            <option key={i} value={item}>{item}</option>
+                                        ))
+                                    }
+
+                                </select>
+
+
                             </div>
 
                             <div>
@@ -400,7 +431,7 @@ export default function ProductSinglePage() {
                                 </label>
                                 <select value={meterial} onChange={(e) => setmeterial(e.target.value)} className="w-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-600 p-3">
                                     <option className="text-gray-400 checked:text-gray-400" value="">Select Material</option>
-                                    <option className="text-gray-400 checked:text-gray-400" value="Acetate">Acetate</option>
+                                    <option className="text-gray-400 checked:text-gray-400" value="Stainless Steel">Stainless Steel</option>
                                     <option className="text-gray-400 checked:text-gray-400" value="Metal">Metal
                                     </option>
                                     <option className="text-gray-400 checked:text-gray-400" value="Plastic">Plastic</option>

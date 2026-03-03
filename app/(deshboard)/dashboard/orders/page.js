@@ -174,7 +174,7 @@ const OrderPage = () => {
                             <th className="p-3 border">Order ID</th>
                             <th className="p-3 border">Name</th>
                             <th className="p-3 border">Email</th>
-                            <th className="p-3 border">Phone</th>
+                            <th className="p-3 border">City</th>
                             <th className="p-3 border">Payment Status</th>
                             <th className="p-3 border">Dalivary Status</th>
                             <th className="p-3 border flex justify-center">Download</th>
@@ -203,7 +203,7 @@ const OrderPage = () => {
                                 </td>
 
                                 <td className="p-2 border text-center text-gray-500">
-                                    {row?.phone}
+                                    {row?.city}
                                 </td>
 
                                 <td className="p-2 border text-center text-gray-500">

@@ -6,6 +6,7 @@ const useLenseStore = create((set) => ({
         LenseBrand: "",
         LenseName: "",
         LenColor: {},
+        selectedProductIndex: 0,
         LenseUseCase: "",
         LenseThickness: "",
         pdType: "1",

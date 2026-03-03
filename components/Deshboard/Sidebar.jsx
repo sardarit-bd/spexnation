@@ -19,7 +19,7 @@ const Sidebar = ({ isOpen, onClose }) => {
         { icon: Target, label: 'Add Product', href: '/dashboard/addproduct' },
         { icon: PackageSearch, label: 'All Products', href: '/dashboard/allproducts' },
         { icon: Code, label: 'Coupon Code', href: '/dashboard/coupon' },
-        { icon: Settings, label: 'Settings', href: '/dashboard/settings' },
+        //{ icon: Settings, label: 'Settings', href: '/dashboard/settings' },
     ];
 
 

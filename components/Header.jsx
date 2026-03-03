@@ -102,6 +102,12 @@ export default function Header() {
               <Link href="/shop" className="text-gray-600 hover:text-yellow-700 text-lg font-light">
                 Shop
               </Link>
+              <Link href="/shop" className="text-gray-600 hover:text-yellow-700 text-lg font-light">
+                Mens
+              </Link>
+              <Link href="/shop" className="text-gray-600 hover:text-yellow-700 text-lg font-light">
+                Womens
+              </Link>
               <Link href="/contact" className="text-gray-600 hover:text-yellow-700 text-lg font-light">
                 Contact Us
               </Link>
@@ -111,12 +117,12 @@ export default function Header() {
 
 
             {/* Icons */}
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-3">
 
 
               {
                 isLogedIn ? (
-                  <Link href="/dashboard" className="hidden sm:block text-gray-600 hover:text-yellow-700">
+                  <Link href="/dashboard" className="text-gray-600 hover:text-yellow-700">
                     <User size={26} />
                   </Link>
                 ) : (
@@ -146,6 +152,16 @@ export default function Header() {
             <Link onClick={() => setIsOpen(!isOpen)} href="/shop" className="text-gray-600 hover:text-yellow-700 text-lg font-light">
               Shop
             </Link>
+
+            <Link onClick={() => setIsOpen(!isOpen)} href="/shop" className="text-gray-600 hover:text-yellow-700 text-lg font-light">
+              Mens
+            </Link>
+
+            <Link onClick={() => setIsOpen(!isOpen)} href="/shop" className="text-gray-600 hover:text-yellow-700 text-lg font-light">
+              Womens
+            </Link>
+
+
             <Link onClick={() => setIsOpen(!isOpen)} href="/contact" className="text-gray-600 hover:text-yellow-700 text-lg font-light">
               Contact Us
             </Link>

@@ -75,47 +75,19 @@ const colors = [
 ];
 
 const brands = [
-    "Arden",
-    "Aspire",
-    "Ben Sherman",
-    "Burberry",
-    "Caterpillar",
-    "Champion",
-    "Coach",
-    "Dolce&Gabbana",
-    "Emporio Armani",
-    "Finelight",
-    "GD Collection",
-    "Gucci",
+    "Ambri",
+    "Colt",
+    "Cube",
+    "Elite",
+    "Ferucci",
+    "Joia",
+    "MBOS",
+    "NHi",
+    "Sightique",
+    "SUNGLASSES",
+    "Synergy",
     "Visage",
-    "Harrington",
-    "Harrington Sport",
-    "Hart",
-    "Hugo Boss",
-    "Jimmy Choo",
-    "Kate Spade",
-    "Levi's",
-    "Lipsy London",
-    "London Retro",
-    "Marc Jacobs",
-    "New Balance",
-    "Oakley",
-    "Perri Kiely X LR",
-    "Persol",
-    "Pink Ribbon",
-    "Polaroid",
-    "Polo Ralph Lauren",
-    "Puma",
-    "Ralph",
-    "Ray-Ban",
-    "Scout",
-    "Scout Made In Italy",
-    "Swarovski",
-    "Ted Baker",
-    "Tiffany & Co.",
-    "Tom Ford",
-    "Tommy Hilfiger",
-    "Vogue Eyewear"
+    "Others"
 ];
 
 
@@ -358,7 +330,7 @@ const AddproductPage = () => {
                             </label>
                             <select value={meterial} onChange={(e) => setmeterial(e.target.value)} className="w-full border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-600">
                                 <option className="text-gray-400 checked:text-gray-400" value="">Select Material</option>
-                                <option className="text-gray-400 checked:text-gray-400" value="Acetate">Acetate</option>
+                                <option className="text-gray-400 checked:text-gray-400" value="Stainless Steel">Stainless Steel</option>
                                 <option className="text-gray-400 checked:text-gray-400" value="Metal">Metal
                                 </option>
                                 <option className="text-gray-400 checked:text-gray-400" value="Plastic">Plastic</option>

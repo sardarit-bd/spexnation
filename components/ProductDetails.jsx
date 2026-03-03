@@ -77,7 +77,7 @@ export default function ProductDetails({ product, activeIndex, setactiveIndex })
     e.preventDefault();
     setisLoading(true);
 
-    setLens({ ...lens, LenseBrand: product?.brand, LenseName: product?.ProductTitle, total: [...lens.total, { target: "Frame", id: product?.ProductTitle, name: product?.ProductTitle, price: product?.product_price }] })
+    setLens({ ...lens, LenseBrand: product?.brand, selectedProductIndex: activeIndex, LenseName: product?.ProductTitle, total: [...lens.total, { target: "Frame", id: product?.ProductTitle, name: product?.ProductTitle, price: product?.product_price }] })
 
     setTimeout(() => {
       setisLoading(false);
