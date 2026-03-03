@@ -30,8 +30,12 @@ export default function Checkout() {
     const [hasData, sethasData] = useState([]);
     const [IsLogedIn, setIsLogedIn] = useState(false);
 
+    const [userID, setuserID] = useState('');
+
     const [fullname, setfullname] = useState('');
     const [email, setemail] = useState('');
+
+
     const [address1, setaddress1] = useState('');
     const [address2, setaddress2] = useState('');
     const [city, setcity] = useState('');
@@ -61,6 +65,7 @@ export default function Checkout() {
 
                 if (decoded) {
                     setfullname(decoded?.name);
+                    setuserID(decoded?.id);
                     setemail(decoded?.email);
                     setIsLogedIn(true);
                 }
@@ -187,6 +192,7 @@ export default function Checkout() {
         setIsLoading(true);
 
         const data = {
+            userID,
             fullname,
             email,
             address1,
