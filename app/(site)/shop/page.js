@@ -21,6 +21,15 @@ export default function ProductPage() {
     const [allProducts, setAllProducts] = useState([]);
 
 
+
+    const [fopen, setfOpen] = useState(false);
+    const [selectedBrand, setslectedBrand] = useState([]);
+    const [selectedGender, setselectedGender] = useState([]);
+    const [selectedMatarial, setselectedMatarial] = useState([]);
+
+
+
+
     const fetchProducts = async () => {
         try {
             // Make API call to get all the product
@@ -64,11 +73,11 @@ export default function ProductPage() {
 
                 <ProductBreadcrumb breadcrumbs={breadcrumbs} />
 
-                <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
-                    <div className="col-span-1 p-4 border border-gray-200 bg-white max-h-[700px] sticky top-[75px]">
-                        <ShopFilter />
+                <div className="grid grid-cols-1 lg:grid-cols-5 gap-4">
+                    <div className={`lg:col-span-1 p-4 border border-gray-200 bg-white max-h-[500px] lg:max-h-[700px] w-full z-40 ${fopen ? 'sticky top-[75px]' : 'lg:sticky lg:top-[75px]'}`}>
+                        <ShopFilter fopen={fopen} setfOpen={setfOpen} selectedBrand={selectedBrand} setslectedBrand={setslectedBrand} selectedGender={selectedGender} setselectedGender={setselectedGender} selectedMatarial={selectedMatarial} setselectedMatarial={setselectedMatarial} />
                     </div>
-                    <div className="col-span-4 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-4 lg:gap-6">
+                    <div className="lg:col-span-4 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-4 lg:gap-6">
                         {allProducts.map((item, index) => (
                             <div key={index} className="text-center">
                                 <ProductCard item={item} />

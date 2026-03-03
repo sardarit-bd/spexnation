@@ -78,7 +78,7 @@ export default function Header() {
 
       {
         pathName === '/' && (
-          <div className="sBg text-white text-center py-1 text-xs md:text-sm">
+          <div className="sBg text-white text-center py-1 text-xs lg:text-sm">
             <span>EXCLUSIVE OFFER | UP TO 60% OFF | LUXURY FRAMES</span>
             <Link href="/shop" className="ml-2 underline">→ SHOP NOW</Link>
           </div>
@@ -90,12 +90,12 @@ export default function Header() {
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex-shrink-0 flex items-center gap-2">
-            <img src="/logo.png" alt="Spex Nation" className="h-10 md:h-12" />
+            <img src="/logo.png" alt="Spex Nation" className="h-10 lg:h-12" />
           </Link>
 
           <div className='flex gap-12'>
             {/* Desktop Navigation */}
-            <nav className="hidden md:flex gap-8">
+            <nav className="hidden lg:flex gap-8">
               <Link href="/" className="text-gray-600 hover:text-yellow-700 text-lg font-light">
                 Home
               </Link>
@@ -134,7 +134,7 @@ export default function Header() {
 
               <HeaderCartIcon />
               <button
-                className="md:hidden text-gray-600"
+                className="lg:hidden text-gray-600"
                 onClick={() => setIsOpen(!isOpen)}
               >
                 <Menu size={26} />
@@ -145,7 +145,7 @@ export default function Header() {
 
         {/* Mobile Menu */}
         {isOpen && (
-          <nav className="flex flex-col md:hidden bg-gray-100 border-t border-yellow-600/20 py-6 px-4 space-y-2">
+          <nav className="flex flex-col lg:hidden bg-gray-100 border-t border-yellow-600/20 py-6 px-4 space-y-2">
             <Link onClick={() => setIsOpen(!isOpen)} href="/" className="text-gray-600 hover:text-yellow-700 text-lg font-semibold">
               Home
             </Link>
