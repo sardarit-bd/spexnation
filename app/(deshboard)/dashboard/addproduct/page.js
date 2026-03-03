@@ -374,11 +374,6 @@ const AddproductPage = () => {
                         </div>
 
 
-
-
-
-
-
                         <div>
                             <label className="text-gray-400 flex items-start gap-2">
                                 {"Lens Width (mm)"}

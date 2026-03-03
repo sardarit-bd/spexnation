@@ -1,174 +1,170 @@
+'use client'
+
 import { ArrowRight } from "lucide-react";
+import { FaChevronDown } from "react-icons/fa";
 import { TiTick } from "react-icons/ti";
 
 
 
-const ShopFilter = () => {
+const brands = [
+    "Ambri",
+    "Colt",
+    "Cube",
+    "Elite",
+    "Ferucci",
+    "Joia",
+    "MBOS",
+    "NHi",
+    "Sightique",
+    "SUNGLASSES",
+    "Synergy",
+    "Visage",
+    "Others"
+];
+
+const gender = [
+    "Male",
+    "Female",
+    "Unisex"
+];
+
+
+const material = [
+    "Stainless Steel",
+    "Metal",
+    "Plastic",
+    "Titanium"
+];
+
+
+
+
+const ShopFilter = ({ fopen, setfOpen, selectedBrand, setslectedBrand, selectedGender, setselectedGender, selectedMatarial, setselectedMatarial }) => {
+
+
+
+
+
+
+    // handle selected brand is here
+    function handleSeletectedBrand(e, item) {
+
+
+        e.preventDefault();
+
+
+        if (selectedBrand?.includes(item)) {
+            setslectedBrand(prev => prev.filter((i) => i !== item));
+        } else {
+            setslectedBrand(prev => [...prev, item]);
+        }
+    }
+
+
+    // handle selected gender is here
+    function handleSeletectedGender(e, item) {
+
+
+        e.preventDefault();
+
+
+        if (selectedGender?.includes(item)) {
+            setselectedGender(prev => prev.filter((i) => i !== item));
+        } else {
+            setselectedGender(prev => [...prev, item]);
+        }
+    }
+
+
+
+
+    // handle selected matarial is here
+    function handleSeletectedMatarial(e, item) {
+
+
+        e.preventDefault();
+
+
+        if (selectedMatarial?.includes(item)) {
+            setselectedMatarial(prev => prev.filter((i) => i !== item));
+        } else {
+            setselectedMatarial(prev => [...prev, item]);
+        }
+    }
+
+
+
+
+
+
     return (
-        <div className="relative h-full">
+        <div className="relative h-full w-full select-none">
 
 
             <div className="h-full">
-                <h2 className="text-xl text-gray-500 font-bold mb-4 border-b pb-2 border-gray-100 h-fit">Filter:</h2>
 
-
-                <div className="overflow-y-scroll h-[82%]">
-
-                    <div>
-                        <h3 className="text-md text-gray-500 font-medium">
-                            Gender:
-                        </h3>
-                        <div className="ml-1">
-                            <div className="mt-3 flex items-center gap-2">
-                                <div className="w-fit">
-                                    <div className={`flex items-center justify-center text-white cursor-pointer w-4 h-4 ${confirm ? "bg-yellow-600" : "bg-transparent border border-gray-300"}`}>
-                                        <TiTick className="text-2xl" />
-                                    </div>
-                                </div>
-                                <p className="text-md text-gray-600/70">
-                                    Mens
-                                </p>
-                            </div>
-                            <div className="mt-1 flex items-center gap-2">
-                                <div className="w-fit">
-                                    <div className={`flex items-center justify-center text-white cursor-pointer w-4 h-4 ${confirm ? "bg-yellow-600" : "bg-transparent border border-gray-300"}`}>
-                                        <TiTick className="text-2xl" />
-                                    </div>
-                                </div>
-                                <p className="text-md text-gray-600/70">
-                                    Womens
-                                </p>
-                            </div>
-                            <div className="mt-1 flex items-center gap-2">
-                                <div className="w-fit">
-                                    <div className={`flex items-center justify-center text-white cursor-pointer w-4 h-4 ${confirm ? "bg-yellow-600" : "bg-transparent border border-gray-300"}`}>
-                                        <TiTick className="text-2xl" />
-                                    </div>
-                                </div>
-                                <p className="text-md text-gray-600/70">
-                                    Unisex
-                                </p>
-                            </div>
-                        </div>
+                <div className="border-b pb-2 border-gray-100 h-fit flex items-center justify-between">
+                    <h2 className="text-xl text-gray-500 font-bold ">Filter:</h2>
+                    <div onClick={() => setfOpen(!fopen)} className="hover:bg-gray-200 w-8 h-8 flex items-center justify-center cursor-pointer">
+                        <FaChevronDown className={`${fopen ? "rotate-180" : ""}`} />
                     </div>
+                </div>
 
 
-                    <div className="mt-4">
+                <div className={`overflow-y-scroll h-[82%] w-full ${fopen ? "block" : "hidden lg:block "}`}>
+
+
+
+
+                    <div className="">
                         <h3 className="text-md text-gray-500 font-medium">
                             Brand:
                         </h3>
                         <div className="ml-1">
-                            <div className="mt-3 flex items-center gap-2">
-                                <div className="w-fit">
-                                    <div className={`flex items-center justify-center text-white cursor-pointer w-4 h-4 ${confirm ? "bg-yellow-600" : "bg-transparent border border-gray-300"}`}>
-                                        <TiTick className="text-2xl" />
-                                    </div>
-                                </div>
-                                <p className="text-md text-gray-600/70">
-                                    Mens
-                                </p>
-                            </div>
-                            <div className="mt-1 flex items-center gap-2">
-                                <div className="w-fit">
-                                    <div className={`flex items-center justify-center text-white cursor-pointer w-4 h-4 ${confirm ? "bg-yellow-600" : "bg-transparent border border-gray-300"}`}>
-                                        <TiTick className="text-2xl" />
-                                    </div>
-                                </div>
-                                <p className="text-md text-gray-600/70">
-                                    Womens
-                                </p>
-                            </div>
-                            <div className="mt-1 flex items-center gap-2">
-                                <div className="w-fit">
-                                    <div className={`flex items-center justify-center text-white cursor-pointer w-4 h-4 ${confirm ? "bg-yellow-600" : "bg-transparent border border-gray-300"}`}>
-                                        <TiTick className="text-2xl" />
-                                    </div>
-                                </div>
-                                <p className="text-md text-gray-600/70">
-                                    Unisex
-                                </p>
-                            </div>
+
+                            {
+                                brands?.map((item, index) => {
+                                    return (
+                                        <div key={index} onClick={(e) => handleSeletectedBrand(e, item)} className="mt-1 flex items-center gap-2">
+                                            <div className="w-fit">
+                                                <div className={`flex items-center justify-center text-white cursor-pointer w-4 h-4 ${selectedBrand?.includes(item) ? "bg-yellow-600" : "bg-transparent border border-gray-300"}`}>
+                                                    <TiTick className="text-2xl" />
+                                                </div>
+                                            </div>
+                                            <p className="text-md text-gray-600/70">
+                                                {item}
+                                            </p>
+                                        </div>
+                                    )
+                                })
+                            }
+
+
                         </div>
                     </div>
 
 
-
-
                     <div className="mt-4">
                         <h3 className="text-md text-gray-500 font-medium">
-                            Frame Shape:
+                            Gender:
                         </h3>
                         <div className="ml-1">
-                            <div className="mt-3 flex items-center gap-2">
-                                <div className="w-fit">
-                                    <div className={`flex items-center justify-center text-white cursor-pointer w-4 h-4 ${confirm ? "bg-yellow-600" : "bg-transparent border border-gray-300"}`}>
-                                        <TiTick className="text-2xl" />
-                                    </div>
-                                </div>
-                                <p className="text-md text-gray-600/70">
-                                    Mens
-                                </p>
-                            </div>
-                            <div className="mt-1 flex items-center gap-2">
-                                <div className="w-fit">
-                                    <div className={`flex items-center justify-center text-white cursor-pointer w-4 h-4 ${confirm ? "bg-yellow-600" : "bg-transparent border border-gray-300"}`}>
-                                        <TiTick className="text-2xl" />
-                                    </div>
-                                </div>
-                                <p className="text-md text-gray-600/70">
-                                    Womens
-                                </p>
-                            </div>
-                            <div className="mt-1 flex items-center gap-2">
-                                <div className="w-fit">
-                                    <div className={`flex items-center justify-center text-white cursor-pointer w-4 h-4 ${confirm ? "bg-yellow-600" : "bg-transparent border border-gray-300"}`}>
-                                        <TiTick className="text-2xl" />
-                                    </div>
-                                </div>
-                                <p className="text-md text-gray-600/70">
-                                    Unisex
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-
-
-                    <div className="mt-4">
-                        <h3 className="text-md text-gray-500 font-medium">
-                            Frame Type:
-                        </h3>
-                        <div className="ml-1">
-                            <div className="mt-3 flex items-center gap-2">
-                                <div className="w-fit">
-                                    <div className={`flex items-center justify-center text-white cursor-pointer w-4 h-4 ${confirm ? "bg-yellow-600" : "bg-transparent border border-gray-300"}`}>
-                                        <TiTick className="text-2xl" />
-                                    </div>
-                                </div>
-                                <p className="text-md text-gray-600/70">
-                                    Mens
-                                </p>
-                            </div>
-                            <div className="mt-1 flex items-center gap-2">
-                                <div className="w-fit">
-                                    <div className={`flex items-center justify-center text-white cursor-pointer w-4 h-4 ${confirm ? "bg-yellow-600" : "bg-transparent border border-gray-300"}`}>
-                                        <TiTick className="text-2xl" />
-                                    </div>
-                                </div>
-                                <p className="text-md text-gray-600/70">
-                                    Womens
-                                </p>
-                            </div>
-                            <div className="mt-1 flex items-center gap-2">
-                                <div className="w-fit">
-                                    <div className={`flex items-center justify-center text-white cursor-pointer w-4 h-4 ${confirm ? "bg-yellow-600" : "bg-transparent border border-gray-300"}`}>
-                                        <TiTick className="text-2xl" />
-                                    </div>
-                                </div>
-                                <p className="text-md text-gray-600/70">
-                                    Unisex
-                                </p>
-                            </div>
+                            {
+                                gender?.map((item, index) => {
+                                    return (
+                                        <div key={index} onClick={(e) => handleSeletectedGender(e, item)} className="mt-1 flex items-center gap-2">
+                                            <div className="w-fit">
+                                                <div className={`flex items-center justify-center text-white cursor-pointer w-4 h-4 ${selectedGender?.includes(item) ? "bg-yellow-600" : "bg-transparent border border-gray-300"}`}>
+                                                    <TiTick className="text-2xl" />
+                                                </div>
+                                            </div>
+                                            <p className="text-md text-gray-600/70">
+                                                {item}
+                                            </p>
+                                        </div>
+                                    )
+                                })
+                            }
                         </div>
                     </div>
 
@@ -179,39 +175,71 @@ const ShopFilter = () => {
                             Material:
                         </h3>
                         <div className="ml-1">
-                            <div className="mt-3 flex items-center gap-2">
-                                <div className="w-fit">
-                                    <div className={`flex items-center justify-center text-white cursor-pointer w-4 h-4 ${confirm ? "bg-yellow-600" : "bg-transparent border border-gray-300"}`}>
-                                        <TiTick className="text-2xl" />
-                                    </div>
-                                </div>
-                                <p className="text-md text-gray-600/70">
-                                    Mens
-                                </p>
-                            </div>
-                            <div className="mt-1 flex items-center gap-2">
-                                <div className="w-fit">
-                                    <div className={`flex items-center justify-center text-white cursor-pointer w-4 h-4 ${confirm ? "bg-yellow-600" : "bg-transparent border border-gray-300"}`}>
-                                        <TiTick className="text-2xl" />
-                                    </div>
-                                </div>
-                                <p className="text-md text-gray-600/70">
-                                    Womens
-                                </p>
-                            </div>
-                            <div className="mt-1 flex items-center gap-2">
-                                <div className="w-fit">
-                                    <div className={`flex items-center justify-center text-white cursor-pointer w-4 h-4 ${confirm ? "bg-yellow-600" : "bg-transparent border border-gray-300"}`}>
-                                        <TiTick className="text-2xl" />
-                                    </div>
-                                </div>
-                                <p className="text-md text-gray-600/70">
-                                    Unisex
-                                </p>
+                            {
+                                material?.map((item, index) => {
+                                    return (
+                                        <div key={index} onClick={(e) => handleSeletectedMatarial(e, item)} className="mt-1 flex items-center gap-2">
+                                            <div className="w-fit">
+                                                <div className={`flex items-center justify-center text-white cursor-pointer w-4 h-4 ${selectedMatarial?.includes(item) ? "bg-yellow-600" : "bg-transparent border border-gray-300"}`}>
+                                                    <TiTick className="text-2xl" />
+                                                </div>
+                                            </div>
+                                            <p className="text-md text-gray-600/70">
+                                                {item}
+                                            </p>
+                                        </div>
+                                    )
+                                })
+                            }
+                        </div>
+                    </div>
+
+
+
+
+
+
+                    <div className="mt-4">
+                        <h3 className="text-md text-gray-500 font-medium">
+                            Price:
+                        </h3>
+                        <div className="">
+                            <input type="range" min="20" max="500" className="w-full" />
+                            <div className="flex items-center justify-between">
+                                <span className="text-gray-400 text-sm">£20</span>
+                                <span className="text-gray-400 text-sm">£500</span>
                             </div>
                         </div>
                     </div>
 
+
+                    <div className="mt-4">
+                        <h3 className="text-md text-gray-500 font-medium">
+                            Lens Width (mm):
+                        </h3>
+                        <div className="">
+                            <input type="range" min="20" max="500" className="w-full" />
+                            <div className="flex items-center justify-between">
+                                <span className="text-gray-400 text-sm">20</span>
+                                <span className="text-gray-400 text-sm">50</span>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div className="mt-4">
+                        <h3 className="text-md text-gray-500 font-medium">
+                            Bridge Width (mm):
+                        </h3>
+                        <div className="">
+                            <input type="range" min="20" max="500" className="w-full" />
+                            <div className="flex items-center justify-between">
+                                <span className="text-gray-400 text-sm">10</span>
+                                <span className="text-gray-400 text-sm">30</span>
+                            </div>
+                        </div>
+                    </div>
 
 
                 </div>
@@ -222,7 +250,7 @@ const ShopFilter = () => {
 
 
 
-            <div className="absolute bottom-0 w-full h-fit">
+            <div className={`${fopen ? "block" : "hidden lg:block "} ${"absolute bottom-0 w-full h-fit"}`}>
                 <button className="pBg text-white font-light px-6 py-2.5 transition flex items-center justify-center gap-2 w-full">
 
 
