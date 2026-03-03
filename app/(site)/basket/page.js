@@ -265,8 +265,8 @@ export default function CartPage() {
                             <div className="w-20 md:w-40 shrink-0">
                                 <Image
                                     src={item.ProductDetails?.product_Images[item?.selectedProductIndex
-                                    ].img ? item.ProductDetails?.product_Images[item?.selectedProductIndex
-                                    ].img : defaultImage}
+                                    ]?.img ? item.ProductDetails?.product_Images[item?.selectedProductIndex
+                                    ]?.img : defaultImage}
                                     alt={item.LenseName}
                                     width={160}
                                     height={100}
@@ -295,7 +295,7 @@ export default function CartPage() {
                                     <div className="mt-3 space-y-1 text-sm text-gray-600">
                                         <p>
                                             <b>Frame Color : </b>
-                                            {item?.LenColor[0]?.name}</p>
+                                            {item?.LenColor?.[0]?.name}</p>
                                     </div>
 
                                     <div className="mt-4 space-y-2 text-sm">

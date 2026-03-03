@@ -107,9 +107,6 @@ const MyOrderPage = () => {
 
 
 
-
-
-
     return (
         <div className=" bg-white py-5 px-5  border border-gray-200">
             <div className="flex items-center justify-between">
@@ -124,7 +121,6 @@ const MyOrderPage = () => {
                             <th className="p-3 border">Order ID</th>
                             <th className="p-3 border">Name</th>
                             <th className="p-3 border">Email</th>
-                            <th className="p-3 border">Phone</th>
                             <th className="p-3 border">Payment Status</th>
                             <th className="p-3 border">Dalivary Status</th>
                             <th className="p-3 border flex justify-center">Download</th>
@@ -150,10 +146,6 @@ const MyOrderPage = () => {
 
                                 <td className="p-2 border text-center text-gray-500">
                                     {row?.email}
-                                </td>
-
-                                <td className="p-2 border text-center text-gray-500">
-                                    {row?.phone}
                                 </td>
 
                                 <td className="p-2 border text-center text-gray-500">
