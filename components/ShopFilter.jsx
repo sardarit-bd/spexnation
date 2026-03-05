@@ -1,8 +1,9 @@
 'use client'
 
-import { ArrowRight } from "lucide-react";
 import { FaChevronDown } from "react-icons/fa";
 import { TiTick } from "react-icons/ti";
+import RangeSlider from "./RangeSlider";
+
 
 
 
@@ -23,8 +24,8 @@ const brands = [
 ];
 
 const gender = [
-    "Male",
-    "Female",
+    "Mens",
+    "Womens",
     "Unisex"
 ];
 
@@ -39,10 +40,7 @@ const material = [
 
 
 
-const ShopFilter = ({ fopen, setfOpen, selectedBrand, setslectedBrand, selectedGender, setselectedGender, selectedMatarial, setselectedMatarial }) => {
-
-
-
+const ShopFilter = ({ fopen, setfOpen, selectedBrand, setslectedBrand, selectedGender, setselectedGender, selectedMatarial, setselectedMatarial, selectedPrice, setselectedPrice, selectedLenWidth, setselectedLenWidth, selectedBrideWidth, setselectedBrideWidth, handleClearFilter, filterLength }) => {
 
 
 
@@ -104,22 +102,29 @@ const ShopFilter = ({ fopen, setfOpen, selectedBrand, setslectedBrand, selectedG
             <div className="h-full">
 
                 <div className="border-b pb-2 border-gray-100 h-fit flex items-center justify-between">
-                    <h2 className="text-xl text-gray-500 font-bold ">Filter:</h2>
-                    <div onClick={() => setfOpen(!fopen)} className="hover:bg-gray-200 w-8 h-8 flex items-center justify-center cursor-pointer">
-                        <FaChevronDown className={`${fopen ? "rotate-180" : ""}`} />
+                    <h2 className="text-xl text-gray-500 font-bold ">Filter: {filterLength}</h2>
+                    <div className="flex items-center gap-1">
+                        <div>
+                            <span onClick={(e) => { handleClearFilter(e) }} className="text-xs bg-gray-200 px-2 py-1 text-gray-600 cursor-pointer">Clear</span>
+                        </div>
+                        <div onClick={() => setfOpen(!fopen)} className="hover:bg-gray-200 w-8 h-8 flex lg:hidden items-center justify-center cursor-pointer">
+                            <FaChevronDown className={`${fopen ? "rotate-180" : ""}`} />
+                        </div>
                     </div>
                 </div>
 
 
-                <div className={`overflow-y-scroll h-[82%] w-full ${fopen ? "block" : "hidden lg:block "}`}>
+                <div className={`overflow-y-scroll h-[93%] w-full ${fopen ? "block" : "hidden lg:block "}`}>
 
 
 
 
                     <div className="">
-                        <h3 className="text-md text-gray-500 font-medium">
-                            Brand:
-                        </h3>
+                        <div className="flex items-center justify-between">
+                            <h3 className="text-md text-gray-500 font-medium">
+                                Brand:
+                            </h3>
+                        </div>
                         <div className="ml-1">
 
                             {
@@ -195,20 +200,17 @@ const ShopFilter = ({ fopen, setfOpen, selectedBrand, setslectedBrand, selectedG
                     </div>
 
 
-
-
-
-
                     <div className="mt-4">
                         <h3 className="text-md text-gray-500 font-medium">
                             Price:
                         </h3>
                         <div className="">
-                            <input type="range" min="20" max="500" className="w-full" />
-                            <div className="flex items-center justify-between">
-                                <span className="text-gray-400 text-sm">£20</span>
-                                <span className="text-gray-400 text-sm">£500</span>
-                            </div>
+                            <RangeSlider
+                                min={10}
+                                max={500}
+                                step={10}
+                                value={selectedPrice}
+                                setValue={setselectedPrice} />
                         </div>
                     </div>
 
@@ -218,11 +220,12 @@ const ShopFilter = ({ fopen, setfOpen, selectedBrand, setslectedBrand, selectedG
                             Lens Width (mm):
                         </h3>
                         <div className="">
-                            <input type="range" min="20" max="500" className="w-full" />
-                            <div className="flex items-center justify-between">
-                                <span className="text-gray-400 text-sm">20</span>
-                                <span className="text-gray-400 text-sm">50</span>
-                            </div>
+                            <RangeSlider
+                                min={20}
+                                max={50}
+                                step={10}
+                                value={selectedLenWidth}
+                                setValue={setselectedLenWidth} />
                         </div>
                     </div>
 
@@ -233,11 +236,12 @@ const ShopFilter = ({ fopen, setfOpen, selectedBrand, setslectedBrand, selectedG
                             Bridge Width (mm):
                         </h3>
                         <div className="">
-                            <input type="range" min="20" max="500" className="w-full" />
-                            <div className="flex items-center justify-between">
-                                <span className="text-gray-400 text-sm">10</span>
-                                <span className="text-gray-400 text-sm">30</span>
-                            </div>
+                            <RangeSlider
+                                min={10}
+                                max={90}
+                                step={10}
+                                value={selectedBrideWidth}
+                                setValue={setselectedBrideWidth} />
                         </div>
                     </div>
 
@@ -250,12 +254,12 @@ const ShopFilter = ({ fopen, setfOpen, selectedBrand, setslectedBrand, selectedG
 
 
 
-            <div className={`${fopen ? "block" : "hidden lg:block "} ${"absolute bottom-0 w-full h-fit"}`}>
-                <button className="pBg text-white font-light px-6 py-2.5 transition flex items-center justify-center gap-2 w-full">
+            {/* <div className={`${fopen ? "block" : "hidden lg:block "} ${"absolute bottom-0 w-full h-fit"}`}>
+                <button onClick={(e) => { handleSearchFunction(e) }} className="pBg text-white font-light px-6 py-2.5 transition flex items-center justify-center gap-2 w-full">
 
 
                     {
-                        false ? (
+                        searchLoading ? (
                             <Loading />
                         ) : (
                             <>
@@ -264,8 +268,8 @@ const ShopFilter = ({ fopen, setfOpen, selectedBrand, setslectedBrand, selectedG
                         )
                     }
                 </button>
-            </div>
-        </div>
+            </div> */}
+        </div >
     )
 }
 
