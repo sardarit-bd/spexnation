@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 'use client'
 
 import { useSearchParams } from "next/navigation";
@@ -5,7 +7,8 @@ import { useEffect, useState } from "react";
 
 export default function SuccessPage({ searchParams }) {
     const [session, setSession] = useState(null);
-    const sessionId = useSearchParams().get('session_id');
+    const searchParams = useSearchParams();
+    const sessionId = searchParams.get("session_id");
 
     console.log(sessionId);
 
