@@ -13,9 +13,17 @@ export default function SuccessPage({ searchParams }) {
         if (!sessionId) return;
 
         async function fetchData() {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/stripe-session?session_id=${sessionId}`);
-            const response = await res.json();
-            setSession(response);
+            try {
+                const res = await fetch(
+                    `${process.env.NEXT_PUBLIC_BASE_URL}/stripe-session?session_id=${sessionId}`,
+                    { cache: "no-store" });
+
+                const response = await res.json();
+                setSession(response);
+
+            } catch (err) {
+                console.error(err);
+            }
         }
 
         fetchData();
