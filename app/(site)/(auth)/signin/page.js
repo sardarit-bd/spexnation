@@ -45,7 +45,7 @@ export default function SignInPage() {
                 email: "",
                 password: ""
             });
-            router.push('/dashboard');
+            router.push('/dashboard/user');
         } else {
             toast.error(res.message);
         }

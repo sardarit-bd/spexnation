@@ -1,10 +1,10 @@
 'use client'
 
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import Container from "../../../components//Container";
 import ProductBreadcrumb from "../../../components/ProductBreadcrumb";
 import ProductCard from "../../../components/ProductCard";
-import ProductNotFound from "../../../components/ProductNotFound";
 import ShopFilter from "../../../components/ShopFilter";
 import ProductGridSkeleton from '../../../components/skalaton/ProductGridSkeleton';
 
@@ -32,6 +32,9 @@ export default function ProductPage() {
     const [selectedLenWidth, setselectedLenWidth] = useState({ min: 20, max: 50 });
     const [selectedBrideWidth, setselectedBrideWidth] = useState({ min: 10, max: 90 });
     const [filteredProducts, setfilteredProducts] = useState([]);
+
+
+    const [isDevelopment, setisDevelopment] = useState(true);
 
 
 
@@ -172,7 +175,20 @@ export default function ProductPage() {
 
 
     return (
-        <main className="h-fit bg-gray-100">
+        <main className="h-fit bg-gray-100 relative">
+
+            {isDevelopment && (
+                <div className="fixed inset-0 w-screen h-screen bg-black/40 z-50 flex items-center justify-center">
+                    <div className="w-fit h-fit bg-white px-14 py-20">
+                        <div className="text-2xl text-gray-400">
+                            Accessories page is Under Development
+                        </div>
+                        <div className="w-full flex items-center justify-center">
+                            <Link className="w-fit bg-yellow-600 text-white px-2 py-1 mt-4" href="/">Go back to Home</Link>
+                        </div>
+                    </div>
+                </div>
+            )}
 
             <Container>
 
@@ -182,32 +198,14 @@ export default function ProductPage() {
                     <div className={`lg:col-span-1 p-4 border border-gray-200 bg-white max-h-[500px] lg:max-h-[700px] w-full z-40 ${fopen ? 'sticky top-[75px]' : 'lg:sticky lg:top-[75px]'}`}>
                         <ShopFilter fopen={fopen} setfOpen={setfOpen} selectedBrand={selectedBrand} setslectedBrand={setslectedBrand} selectedGender={selectedGender} setselectedGender={setselectedGender} selectedMatarial={selectedMatarial} setselectedMatarial={setselectedMatarial} selectedPrice={selectedPrice} setselectedPrice={setselectedPrice} selectedLenWidth={selectedLenWidth} setselectedLenWidth={setselectedLenWidth} selectedBrideWidth={selectedBrideWidth} setselectedBrideWidth={setselectedBrideWidth} handleClearFilter={handleClearFilter} filterLength={filteredProducts?.length} />
                     </div>
-
-
-
-                    {
-                        filteredProducts?.length > 0 ? (
-                            <div className="lg:col-span-4 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-4 lg:gap-6">
-                                {filteredProducts?.map((item, index) => (
-                                    <div key={index} className="text-center">
-                                        <ProductCard item={item} />
-                                    </div>
-                                ))}
+                    <div className="lg:col-span-4 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-4 lg:gap-6">
+                        {filteredProducts?.map((item, index) => (
+                            <div key={index} className="text-center">
+                                <ProductCard item={item} />
                             </div>
-
-                        ) : (
-                            <div className="col-span-4">
-                                <ProductNotFound />
-                            </div>
-                        )
-                    }
-
-
-
+                        ))}
+                    </div>
                 </div>
-
-
-
             </Container>
         </main>
     )

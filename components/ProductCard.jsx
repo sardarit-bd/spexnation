@@ -53,7 +53,7 @@ export default function ProductCard({ item }) {
             {/* Image Container */}
             <div className="relative overflow-hidden bg-white">
                 <Image
-                    src={item?.product_Images[activeIndex]?.img}
+                    src={item?.product_Images[activeIndex]?.img[0]}
                     alt={item?.ProductTitle}
                     width={1000}
                     height={1000}
@@ -91,7 +91,7 @@ export default function ProductCard({ item }) {
 
                 {/* Price */}
                 <div className="flex items-center justify-between gap-3 my-4 mt-6">
-                    <span className="text-2xl font-light text-gray-700/60">
+                    <span className="text-2xl font-light text-gray-700/90">
                         £{item?.product_price}
                     </span>
 
@@ -101,7 +101,7 @@ export default function ProductCard({ item }) {
                             {
                                 item?.product_Images?.map((cl, index) => {
                                     return (
-                                        <div key={index} onMouseOver={() => setactiveIndex(index)} className={`p-0.5 h-fit w-fit rounded-full cursor-pointer  ${activeIndex == index ? "border-2 border-yellow-500" : ""}`}>
+                                        <div key={index} onMouseOver={() => setactiveIndex(index)} className={`p-0.5 h-fit w-fit rounded-full cursor-pointer  ${activeIndex == index ? "border-2 border-yellow-500" : "border border-gray-200"}`}>
                                             <div style={{ backgroundColor: cl?.color?.[0]?.value }} key={index} className="w-5 h-5 rounded-full">
                                             </div>
                                         </div>

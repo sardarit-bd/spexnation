@@ -26,7 +26,7 @@ const brands = [
 const gender = [
     "Mens",
     "Womens",
-    "Unisex"
+    // "Unisex"
 ];
 
 

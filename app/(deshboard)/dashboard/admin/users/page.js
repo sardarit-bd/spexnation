@@ -2,9 +2,9 @@
 
 import { useEffect, useState } from "react";
 import { Toaster } from "react-hot-toast";
-import Loading from "../../../../components/Loading";
-import dateAndTimeFormate from "../../../../lib/dateAndTimeFormate";
-import getTookn from "../../../../lib/getTookn";
+import Loading from "../../../../../components/Loading";
+import dateAndTimeFormate from "../../../../../lib/dateAndTimeFormate";
+import getTookn from "../../../../../lib/getTookn";
 
 const UserPage = () => {
 

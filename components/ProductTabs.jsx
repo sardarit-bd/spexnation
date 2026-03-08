@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 import defaultIMage from "../public/defaultImage.png";
 
-export default function ProductTabs({ product, activeIndex }) {
+export default function ProductTabs({ product, activeIndex, selectedImage }) {
   const [activeTab, setActiveTab] = useState('frame-info')
 
   const tabs = [
@@ -146,7 +146,7 @@ export default function ProductTabs({ product, activeIndex }) {
 
             {/* Dimension Diagram */}
             <div className="bg-white p-6 rounded-lg flex flex-col items-center justify-center">
-              <Image src={product?.product_Images[activeIndex]?.img ? product?.product_Images[activeIndex]?.img : defaultIMage} alt="Dimension Diagram" width={1000} height={1000} />
+              <Image src={product?.product_Images[activeIndex]?.img[selectedImage] ? product?.product_Images[activeIndex]?.img[selectedImage] : defaultIMage} alt="Dimension Diagram" width={1000} height={1000} />
             </div>
           </div>
         )}

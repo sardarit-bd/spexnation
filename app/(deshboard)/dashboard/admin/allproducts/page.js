@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import DashboardProductCard from "../../../../components/Deshboard/DashboardProductCard";
-import Loading from "../../../../components/Loading";
+import DashboardProductCard from "../../../../../components/Deshboard/DashboardProductCard";
+import Loading from "../../../../../components/Loading";
 
 
 const glasses = [

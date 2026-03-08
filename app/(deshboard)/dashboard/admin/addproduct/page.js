@@ -6,9 +6,9 @@ import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { GoPlusCircle } from "react-icons/go";
 import { RxCross2 } from "react-icons/rx";
-import Loading from "../../../../components/Loading";
-import fileToBase64 from "../../../../lib/fileToBase64";
-import getTookn from "../../../../lib/getTookn";
+import Loading from "../../../../../components/Loading";
+import fileToBase64 from "../../../../../lib/fileToBase64";
+import getTookn from "../../../../../lib/getTookn";
 const colors = [
     { name: "Black", value: "#000000" },
     { name: "Gray", value: "#808080" },
@@ -157,7 +157,7 @@ const AddproductPage = () => {
             ArmLength: ArmLength,
             product_Images: gellary,
             product_Discription: description,
-
+            productType: "Frame"
         }
 
 
@@ -190,7 +190,7 @@ const AddproductPage = () => {
             setArmLength('');
             setdescription('');
             setgellery([]);
-            router.push('/dashboard/allproducts');
+            router.push('/dashboard/admin/allproducts');
         } else {
             toast.error(res.message);
         }
@@ -208,13 +208,23 @@ const AddproductPage = () => {
         }
 
 
-        const file = e.target.files[0];
-        const base64 = await fileToBase64(file);
+        const files = e.target.files;
 
-        setgellery(prev => [...prev, {
-            img: base64,
-            color: [],
-        }]);
+        const base64Images = [];
+
+
+        for (const file of files) {
+            const base64 = await fileToBase64(file);
+            base64Images.push(base64);
+        }
+
+        setgellery(prev => [
+            ...prev,
+            {
+                img: base64Images, // multiple base64 images
+                color: []
+            }
+        ]);
     }
 
 
@@ -223,6 +233,35 @@ const AddproductPage = () => {
         setgellery(prev => prev.filter((_, i) => i !== index));
     }
 
+
+
+
+
+    const handleRemoveSingleGallery = (indx, index) => {
+
+
+        setgellery(prev => prev.map((item, i) => {
+
+
+            if (i === index) {
+
+                const updateImages = item.img.filter((_, si) => si !== indx);
+                if (updateImages?.length == 0) {
+                    handleRemoveGallery(index);
+                    return {
+                        ...item,
+                        img: updateImages
+                    };
+                } else {
+                    return {
+                        ...item,
+                        img: updateImages
+                    };
+                }
+            }
+            return item;
+        }));
+    }
 
 
 
@@ -248,6 +287,9 @@ const AddproductPage = () => {
 
     }
 
+
+
+    console.log(gellary);
 
 
     return (
@@ -310,7 +352,7 @@ const AddproductPage = () => {
                                 <option className="text-gray-400 checked:text-gray-400" value="">Select Gender</option>
                                 <option className="text-gray-400 checked:text-gray-400" value="Mens">Mens</option>
                                 <option className="text-gray-400 checked:text-gray-400" value="Womens">Womens</option>
-                                <option className="text-gray-400 checked:text-gray-400" value="Unisex">Unisex</option>
+                                {/* <option className="text-gray-400 checked:text-gray-400" value="Unisex">Unisex</option> */}
                             </select>
                         </div>
 
@@ -428,12 +470,31 @@ const AddproductPage = () => {
                         <div className="flex flex-col flex-wrap gap-2">
                             {
                                 gellary?.map((item, index) => (
-                                    <div key={index} className="flex items-center gap-2 border border-gray-200 p-1 relative ">
-                                        <div className="h-[60px] w-[60px] bg-gray-100 flex items-center justify-center">
-                                            <Image src={item?.img} alt="" className="w-full h-full object-cover" width={60} height={60} />
-                                        </div>
-                                        <div>
+                                    <div key={index} className="flex flex-col items-center gap-2 border border-gray-200 p-1 relative ">
+                                        <div className="w-full bg-gray-100">
 
+                                            <div className="w-full flex items-center gap-1">
+                                                {
+                                                    item?.img?.map((im, indx) => {
+                                                        return (
+                                                            <div key={indx} className="relative">
+                                                                <Image src={im} alt="" className="h-[60px] w-[60px] object-cover border border-gray-100" width={60} height={60} />
+
+                                                                <button
+                                                                    onClick={() => handleRemoveSingleGallery(indx, index)}
+                                                                    className="absolute top-0 right-0 bg-red-600 text-white text-[8px] rounded-full translate-x-1/2 -translate-y-1/2 p-0.5 z-50">
+                                                                    <RxCross2 />
+                                                                </button>
+                                                            </div>
+                                                        )
+                                                    })
+                                                }
+
+                                            </div>
+
+
+                                        </div>
+                                        <div className="w-full">
 
 
                                             <select onChange={(e) => handleColorSelect(e, index)} className="w-full border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-600">
@@ -459,7 +520,7 @@ const AddproductPage = () => {
                             }
 
                             <div className="h-[60px] w-[60px] bg-gray-100">
-                                <input onChange={(e) => { handleGallery(e) }} id="file2" type="file" className="hidden" />
+                                <input onChange={(e) => { handleGallery(e) }} id="file2" type="file" multiple className="hidden" />
                                 <label htmlFor="file2">
                                     <div className="flex items-center gap-2 justify-center flex-col cursor-pointer w-full h-full">
                                         <GoPlusCircle className="text-5xl text-gray-300" />

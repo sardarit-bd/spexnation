@@ -4,12 +4,18 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
+import { TiTick } from "react-icons/ti";
 import Loading from "../../../../components/Loading";
+
+
 
 export default function SignInPage() {
 
     const router = useRouter();
     const [loading, setloading] = useState(false);
+    const [confirm, setconfirm] = useState(false);
+
+
     const [formData, setFormData] = useState({
         name: "",
         email: "",
@@ -28,13 +34,22 @@ export default function SignInPage() {
         setloading(true);
 
 
+        const data = {
+            name: formData.name,
+            email: formData.email,
+            password: formData.password,
+            role: formData.role,
+            isNewsletter: confirm
+        };
+
+
         // Make API call to add the product
         const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/register`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(formData),
+            body: JSON.stringify(data),
         });
 
         const res = await response.json();
@@ -58,7 +73,7 @@ export default function SignInPage() {
 
     return (
         <section className="h-fit bg-gray-50 flex items-center justify-center px-4 py-4 md:py-8 lg:py-14">
-            <div className="max-w-lg w-full bg-white shadow-lg overflow-hidden grid grid-cols-1 md:grid-cols-1">
+            <div className="max-w-lg w-full bg-white shadow-lg overflow-hidden grid grid-cols-1 md:grid-cols-1 select-none">
 
 
                 {/* Right Form Section */}
@@ -116,6 +131,26 @@ export default function SignInPage() {
                                 placeholder="**********"
                             />
                         </div>
+
+
+
+                        <div className="mt-6 flex items-center gap-2 border-t pt-4" >
+
+                            <div className="w-fit">
+                                <div onClick={(e) => { setconfirm(!confirm) }} className={`flex items-center justify-center text-white cursor-pointer w-6 h-6 ${confirm ? "bg-yellow-600" : "bg-transparent border border-gray-300"}`}>
+                                    {
+                                        confirm && <TiTick className="text-2xl" />
+                                    }
+                                </div>
+                            </div>
+
+                            <p className="font-medium text-lg text-gray-600/70">
+                                Subscribe to our newsletter
+                            </p>
+                        </div>
+
+
+
 
                         <button
                             type="submit"

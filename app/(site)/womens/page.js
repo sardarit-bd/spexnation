@@ -26,7 +26,7 @@ export default function ProductPage() {
     const [searchLoading, setsearchLoading] = useState(false);
     const [fopen, setfOpen] = useState(false);
     const [selectedBrand, setslectedBrand] = useState([]);
-    const [selectedGender, setselectedGender] = useState([]);
+    const [selectedGender, setselectedGender] = useState(["Womens"]);
     const [selectedMatarial, setselectedMatarial] = useState([]);
     const [selectedPrice, setselectedPrice] = useState({ min: 10, max: 500 });
     const [selectedLenWidth, setselectedLenWidth] = useState({ min: 20, max: 50 });
@@ -67,7 +67,6 @@ export default function ProductPage() {
 
 
 
-
     // handle search function is here
     const handleSearchFunction = () => {
 
@@ -82,6 +81,7 @@ export default function ProductPage() {
 
         // gender filter
         const gFilter = brandFilter?.filter((item) => {
+
             if (selectedGender?.length > 0) {
                 return selectedGender?.includes(item?.gender);
             } else {
@@ -144,6 +144,10 @@ export default function ProductPage() {
 
     useEffect(() => {
         handleSearchFunction();
+    }, [allProducts])
+
+    useEffect(() => {
+        handleSearchFunction();
     }, [selectedBrand, selectedGender, selectedMatarial, selectedPrice, selectedLenWidth, selectedBrideWidth])
 
 
@@ -155,7 +159,7 @@ export default function ProductPage() {
     const handleClearFilter = (e) => {
         e.preventDefault();
         setslectedBrand([]);
-        setselectedGender([]);
+        setselectedGender(["Womens"]);
         setselectedMatarial([]);
         setselectedPrice({ min: 10, max: 500 });
         setselectedLenWidth({ min: 20, max: 50 });
@@ -184,7 +188,6 @@ export default function ProductPage() {
                     </div>
 
 
-
                     {
                         filteredProducts?.length > 0 ? (
                             <div className="lg:col-span-4 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-4 lg:gap-6">
@@ -209,6 +212,6 @@ export default function ProductPage() {
 
 
             </Container>
-        </main>
+        </main >
     )
 }
