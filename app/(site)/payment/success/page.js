@@ -1,5 +1,6 @@
 'use client'
 
+import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -57,12 +58,12 @@ export default function SuccessPage() {
                 </div>
 
                 <div className="mt-8 text-center">
-                    <a
+                    <Link
                         href="/dashboard/user"
                         className="inline-block bg-yellow-700 text-white px-6 py-2 rounded-lg shadow transition"
                     >
                         Go to Dashboard to view your order
-                    </a>
+                    </Link>
                 </div>
 
             </div>
