@@ -1,10 +1,82 @@
 'use client'
 
+import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
+import { GoPlusCircle } from "react-icons/go";
+import { IoIosArrowBack } from "react-icons/io";
+import { RxCross2 } from "react-icons/rx";
 import Loading from "../../../../../../components/Loading";
+import convertUrlsToBase64 from "../../../../../../lib/convertUrlsToBase64";
+import fileToBase64 from "../../../../../../lib/fileToBase64";
 import getTookn from "../../../../../../lib/getTookn";
+
+
+const colors = [
+    { name: "Black", value: "#000000" },
+    { name: "Gray", value: "#808080" },
+    { name: "Dark Gray", value: "#A9A9A9" },
+    { name: "Light Gray", value: "#D3D3D3" },
+    { name: "Silver", value: "#C0C0C0" },
+    { name: "Platinum", value: "#E5E4E2" },
+    { name: "Charcoal", value: "#36454F" },
+    { name: "Slate", value: "#708090" },
+    { name: "Ivory", value: "#FFFFF0" },
+    { name: "Azure", value: "#F0FFFF" },
+    { name: "White", value: "#FFFFFF" },
+    { name: "Tan", value: "#D2B48C" },
+    { name: "Beige", value: "#F5F5DC" },
+    { name: "Cream", value: "#FFFDD0" },
+    { name: "Plum", value: "#DDA0DD" },
+    { name: "Orchid", value: "#DA70D6" },
+    { name: "Periwinkle", value: "#CCCCFF" },
+    { name: "Mint Cream", value: "#F5FFFA" },
+    { name: "Snow", value: "#FFFAFA" },
+    { name: "Red", value: "#FF0000" },
+    { name: "Dark Red", value: "#8B0000" },
+    { name: "Crimson", value: "#DC143C" },
+    { name: "Tomato", value: "#FF6347" },
+    { name: "Coral", value: "#FF7F50" },
+    { name: "Orange", value: "#FFA500" },
+    { name: "Dark Orange", value: "#FF8C00" },
+    { name: "Gold", value: "#FFD700" },
+    { name: "Yellow", value: "#FFFF00" },
+    { name: "Light Yellow", value: "#FFFFE0" },
+    { name: "Lemon", value: "#FFF44F" },
+    { name: "Green", value: "#008000" },
+    { name: "Dark Green", value: "#006400" },
+    { name: "Lime", value: "#00FF00" },
+    { name: "Olive", value: "#808000" },
+    { name: "Mint", value: "#98FF98" },
+    { name: "Sea Green", value: "#2E8B57" },
+    { name: "Teal", value: "#008080" },
+    { name: "Cyan", value: "#00FFFF" },
+    { name: "Turquoise", value: "#40E0D0" },
+    { name: "Sky Blue", value: "#87CEEB" },
+    { name: "Light Blue", value: "#ADD8E6" },
+    { name: "Blue", value: "#0000FF" },
+    { name: "Navy", value: "#000080" },
+    { name: "Royal Blue", value: "#4169E1" },
+    { name: "Indigo", value: "#4B0082" },
+    { name: "Purple", value: "#800080" },
+    { name: "Violet", value: "#8F00FF" },
+    { name: "Lavender", value: "#E6E6FA" },
+    { name: "Magenta", value: "#FF00FF" },
+    { name: "Pink", value: "#FFC0CB" },
+    { name: "Hot Pink", value: "#FF69B4" },
+    { name: "Deep Pink", value: "#FF1493" },
+    { name: "Rose", value: "#FF007F" },
+    { name: "Brown", value: "#A52A2A" },
+    { name: "Saddle Brown", value: "#8B4513" },
+    { name: "Chocolate", value: "#D2691E" },
+    { name: "Maroon", value: "#800000" },
+    { name: "Amber", value: "#FFBF00" },
+    { name: "Peach", value: "#FFE5B4" },
+    { name: "Apricot", value: "#FBCEB1" },
+    { name: "Salmon", value: "#FA8072" },
+
+];
 
 
 
@@ -29,28 +101,6 @@ const brands = [
 export default function ProductSinglePage() {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const product = {
-        title: "Premium Sunglasses",
-        collection: "Summer Collection",
-        shortDescription: "Stylish UV protected sunglasses",
-        price: 120,
-        discount: 10,
-        quantity: 50,
-        color: "Black",
-        size: "Medium",
-        weight: "200g",
-        material: "Metal",
-        shape: "Round",
-        style: "Casual",
-        description:
-            "These premium sunglasses are designed for maximum comfort and style.",
-        thumbnail: "https://via.placeholder.com/500x400",
-        gallery: [
-            "https://via.placeholder.com/200",
-            "https://via.placeholder.com/200",
-            "https://via.placeholder.com/200",
-        ],
-    };
 
 
 
@@ -77,6 +127,28 @@ export default function ProductSinglePage() {
     const [lensHeight, setlensHeight] = useState('');
     const [BridgeWidth, setBridgeWidth] = useState('');
     const [ArmLength, setArmLength] = useState('');
+    const [selectedIndex, setSelectedIndex] = useState(0);
+    const [allImageArray, setallImageArray] = useState([]);
+
+    const [gellary, setgellery] = useState([]);
+
+
+
+    const gellaryImageUpder = async (res) => {
+
+        for (const item of res) {
+            const color = item?.color;
+            const img = item?.img || [];
+
+            // Wait for all images to convert
+            const updateImageBase = await convertUrlsToBase64(img);
+
+            // Update state after images are ready
+            setgellery(prev => [...prev, { color, img: updateImageBase }]);
+        }
+
+    }
+
 
 
 
@@ -106,7 +178,13 @@ export default function ProductSinglePage() {
             setlensHeight(res?.data?.lensHeight);
             setBridgeWidth(res?.data?.BridgeWidth);
             setArmLength(res?.data?.ArmLength);
+            gellaryImageUpder(res?.data?.product_Images);
             setdescription(res?.data?.product_Discription);
+            res?.data?.product_Images?.map((imgs, i) =>
+                imgs?.img?.map((img, ind) => (
+                    setallImageArray(prev => [...prev, img])
+                ))
+            )
             setTimeout(() => {
                 setLoading(false);
             }, 1000);
@@ -122,6 +200,7 @@ export default function ProductSinglePage() {
         settoken(tken);
         fetchProducts(id);
     }, [id])
+
 
 
 
@@ -150,7 +229,7 @@ export default function ProductSinglePage() {
 
             const res = await response.json();
             toast.success(res.message);
-            router.push('/dashboard/allproducts');
+            router.push('/dashboard/admin/allproducts');
         } catch (error) {
             console.error('Error Deleting products:', error);
         }
@@ -189,7 +268,8 @@ export default function ProductSinglePage() {
             lensHeight: lensHeight,
             BridgeWidth: BridgeWidth,
             ArmLength: ArmLength,
-            product_Discription: description
+            product_Discription: description,
+            product_Images: gellary
         };
 
 
@@ -229,6 +309,158 @@ export default function ProductSinglePage() {
 
 
 
+    // handle gallery image
+    const handleGallery = async (e) => {
+
+        const currentImageLength = gellary.length;
+
+
+        if (currentImageLength === 5) {
+            toast.error("You can add only 5 images");
+            return;
+        }
+
+
+        const files = e.target.files;
+
+        const base64Images = [];
+
+
+        for (const file of files) {
+            const base64 = await fileToBase64(file);
+            base64Images.push(base64);
+        }
+
+        setgellery(prev => [
+            ...prev,
+            {
+                img: base64Images, // multiple base64 images
+                color: []
+            }
+        ]);
+    }
+
+
+
+    // handle single image added
+    const handlesingelImageAddedGallery = async (e, index) => {
+
+
+        e.preventDefault();
+
+        const currentImageLength = gellary[index]?.img?.length;
+
+
+        if (currentImageLength === 5) {
+            toast.error("You can add only 5 images");
+            return;
+        }
+
+
+        const files = e.target.files;
+
+        const base64Images = [];
+
+
+        for (const file of files) {
+            const base64 = await fileToBase64(file);
+            base64Images.push(base64);
+        }
+
+
+        //find the targeted list and then update
+        const updatedData = gellary?.map((item, i) => {
+            if (i == index) {
+                const color = item?.color;
+                const img = item?.img;
+                const updateImageBase = [...img, ...base64Images];
+
+                if (updateImageBase.length > 5) {
+                    toast.error("You can add only 5 images");
+                    return {
+                        color: color,
+                        img: [...img]
+                    };
+                }
+
+                return {
+                    color: color,
+                    img: updateImageBase
+                };
+
+            }
+            return item;
+        })
+
+        setgellery(updatedData);
+
+    }
+
+
+    // remove gallery image
+    const handleRemoveGallery = (index) => {
+        setgellery(prev => prev.filter((_, i) => i !== index));
+    }
+
+
+
+
+
+    const handleRemoveSingleGallery = (indx, index) => {
+
+
+        setgellery(prev => prev.map((item, i) => {
+
+
+            if (i === index) {
+
+                const updateImages = item.img.filter((_, si) => si !== indx);
+                if (updateImages?.length == 0) {
+                    handleRemoveGallery(index);
+                    return {
+                        ...item,
+                        img: updateImages
+                    };
+                } else {
+                    return {
+                        ...item,
+                        img: updateImages
+                    };
+                }
+            }
+            return item;
+        }));
+    }
+
+
+
+    function handleColorSelect(e, index) {
+
+        e.preventDefault();
+
+        const selectedColor = JSON.parse(e.target.value);
+
+        setgellery(prev =>
+            prev.map((item, i) => {
+                if (i === index) {
+                    return {
+                        ...item,
+                        color: [selectedColor] // single select
+                    };
+                }
+                return item;
+            })
+        );
+
+
+
+    }
+
+
+
+
+
+
 
 
 
@@ -257,33 +489,35 @@ export default function ProductSinglePage() {
 
 
 
-    console.log(singleProducts);
-
-
-
-
-
-
-
-
     return (
         <div className="min-h-screen bg-gray-100">
             <div className="border border-gray-200 bg-white grid grid-cols-1 lg:grid-cols-2 gap-5 p-5">
                 {/* IMAGE SECTION */}
-                <div>
-                    <img
-                        src={singleProducts?.product_Images?.[0]?.img}
+                <div className="order-last">
+                    <Image
+                        height={1000}
+                        width={1000}
+                        alt="product Image big"
+                        src={allImageArray[selectedIndex]}
                         className="w-full h-[300px] md:h-[400px] object-contain border border-gray-200"
                     />
 
                     <div className="flex gap-3 mt-4 overflow-x-auto">
-                        {singleProducts?.product_Images?.map((img, i) => (
-                            <img
-                                key={i}
-                                src={img?.img}
-                                className="w-20 h-20 rounded-lg object-contain border border gray-200"
-                            />
-                        ))}
+                        {
+                            allImageArray?.map((item, index) => {
+                                return (
+                                    <Image
+                                        width={1000}
+                                        height={1000}
+                                        onClick={() => setSelectedIndex(index)}
+                                        key={`${index}`}
+                                        src={item}
+                                        className={`w-20 h-20 rounded-lg object-contain border border-gray-200 cursor-pointer ${index === selectedIndex ? "border-2 border-yellow-500" : ""}`}
+                                        alt={`product-image`}
+                                    />
+                                )
+                            })
+                        }
                     </div>
 
 
@@ -311,8 +545,14 @@ export default function ProductSinglePage() {
                 </div>
 
                 {/* DETAILS */}
-                <div className="space-y-4 border border-gray-200 p-5">
-                    <h1 className="text-2xl md:text-3xl font-bold">{singleProducts.ProductTitle}</h1>
+                <div className="space-y-4 border border-gray-200 p-5 order-first">
+                    <div className="flex items-center gap-3">
+                        <button onClick={() => { router.back() }} className=" bg-gray-200 px-1 py-1 flex items-center gap-1">
+                            <IoIosArrowBack />
+                            Back
+                        </button>
+                        <h1 className="text-2xl md:text-3xl font-bold">{singleProducts.ProductTitle}</h1>
+                    </div>
                     <p className="text-gray-500">{singleProducts.shortdes}</p>
 
                     <div className="grid grid-cols-2 gap-4 text-sm">
@@ -410,7 +650,6 @@ export default function ProductSinglePage() {
                                     <option className="text-gray-400 checked:text-gray-400" value="">Select Gender</option>
                                     <option className="text-gray-400 checked:text-gray-400" value="Mens">Mens</option>
                                     <option className="text-gray-400 checked:text-gray-400" value="Womens">Womens</option>
-                                    <option className="text-gray-400 checked:text-gray-400" value="Unisex">Unisex</option>
                                 </select>
                             </div>
 
@@ -518,6 +757,87 @@ export default function ProductSinglePage() {
                             placeholder="Description"
                             className="w-full border p-3 min-h-[120px]"
                         />
+
+
+                        <div className="pb-3">
+                            <div>
+                                <label className="text-gray-400 flex items-start gap-2">
+                                    Product Images
+                                </label>
+                                <div className="flex flex-col flex-wrap gap-2">
+                                    {
+                                        gellary?.map((item, index) => (
+                                            <div key={index} className="flex flex-col items-center gap-2 border border-gray-200 p-1 relative ">
+                                                <div className="w-full bg-gray-100">
+
+                                                    <div className="w-full flex items-center gap-1 flex-wrap">
+                                                        {
+                                                            item?.img?.map((im, indx) => {
+                                                                return (
+                                                                    <div key={indx} className="relative">
+                                                                        <Image src={im} alt="" className="h-[60px] w-[60px] object-cover border border-gray-100" width={60} height={60} />
+
+                                                                        <button
+                                                                            onClick={() => handleRemoveSingleGallery(indx, index)}
+                                                                            className="absolute top-0 right-0 bg-red-600 text-white text-[8px] rounded-full translate-x-1/2 -translate-y-1/2 p-0.5 z-50">
+                                                                            <RxCross2 />
+                                                                        </button>
+                                                                    </div>
+                                                                )
+                                                            })
+                                                        }
+
+                                                        <div>
+                                                            <div className="h-[60px] w-[60px] bg-gray-50 border border-dashed border-gray-300 ml-5">
+                                                                <input onChange={(e) => { handlesingelImageAddedGallery(e, index) }} accept=".png,.jpg,.jpeg,.webp" id={`file${index}`} type="file" multiple className="hidden" />
+                                                                <label htmlFor={`file${index}`}>
+                                                                    <div className="flex items-center gap-2 justify-center flex-col cursor-pointer w-full h-full">
+                                                                        <GoPlusCircle className="text-5xl text-gray-300" />
+                                                                    </div>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+
+
+                                                </div>
+                                                <div className="w-full">
+
+
+                                                    <select value={JSON.stringify(item?.color[0])} onChange={(e) => handleColorSelect(e, index)} className="w-full border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-600">
+                                                        <option className="text-gray-400 checked:text-gray-400" value="">Select Product Color</option>
+                                                        {
+                                                            colors?.map((cl, idx) => (
+                                                                <option key={idx} className="text-gray-900 checked:text-gray-400" style={{ backgroundColor: cl?.value }} value={JSON.stringify(cl)}>{cl?.name}</option>
+                                                            ))
+                                                        }
+                                                    </select>
+
+
+                                                </div>
+
+
+                                                <button
+                                                    onClick={() => handleRemoveGallery(index)}
+                                                    className="absolute top-0 right-0 bg-red-600 text-white text-xs p-0.5">
+                                                    <RxCross2 />
+                                                </button>
+                                            </div>
+                                        ))
+                                    }
+
+                                    <div className="h-[60px] w-[60px] bg-gray-100 border border-dashed border-gray-300">
+                                        <input onChange={(e) => { handleGallery(e) }} id="mfile2" type="file" accept=".png,.jpg,.jpeg,.webp" multiple className="hidden" />
+                                        <label htmlFor="mfile2">
+                                            <div className="flex items-center gap-2 justify-center flex-col cursor-pointer w-full h-full">
+                                                <GoPlusCircle className="text-5xl text-gray-300" />
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
                         <button onClick={(e) => { handlePruductDataUpdate(e, singleProducts._id) }} className="bg-yellow-700 text-white w-full py-3">
                             Save Changes
