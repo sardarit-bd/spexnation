@@ -3,8 +3,8 @@
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
-import Loading from "../../../../../components/Loading";
-import getTookn from "../../../../../lib/getTookn";
+import Loading from "../../../../../../components/Loading";
+import getTookn from "../../../../../../lib/getTookn";
 
 
 

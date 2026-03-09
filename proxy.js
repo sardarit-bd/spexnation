@@ -38,6 +38,30 @@ export async function proxy(req) {
         return NextResponse.redirect(new URL("/dashboard", req.url));
     }
 
+
+    if (!decoded && path.startsWith("/dashboard")) {
+
+        return NextResponse.redirect(new URL("/signin", req.url));
+    }
+
+
+
+
+    //  when user sign in as a admin and try to access user route
+    if (decoded?.role == "admin" && path.startsWith("/dashboard/user")) {
+
+        return NextResponse.redirect(new URL("/dashboard/admin", req.url));
+    }
+
+
+    //  when user sign in as a user and try to access admin route
+    if (decoded?.role == "user" && path.startsWith("/dashboard/admin")) {
+
+        return NextResponse.redirect(new URL("/dashboard/user", req.url));
+    }
+
+
+
     return NextResponse.next();
 }
 

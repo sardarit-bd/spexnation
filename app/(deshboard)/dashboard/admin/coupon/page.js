@@ -3,8 +3,8 @@
 import { Trash } from "lucide-react";
 import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
-import Loading from "../../../../components/Loading";
-import getTookn from "../../../../lib/getTookn";
+import Loading from "../../../../../components/Loading";
+import getTookn from "../../../../../lib/getTookn";
 
 
 const CouponPage = () => {

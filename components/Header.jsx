@@ -96,19 +96,24 @@ export default function Header() {
           <div className='flex gap-12'>
             {/* Desktop Navigation */}
             <nav className="hidden lg:flex gap-8">
-              <Link href="/" className="text-gray-600 hover:text-yellow-700 text-lg font-light">
+              <Link href="/" className={`${pathName == "/" ? "text-yellow-600" : "text-gray-600"} text-lg font-light`}>
                 Home
               </Link>
-              <Link href="/shop" className="text-gray-600 hover:text-yellow-700 text-lg font-light">
+              <Link href="/shop" className={`${pathName == "/shop" ? "text-yellow-600" : "text-gray-600"} text-lg font-light`}>
                 Shop
               </Link>
-              <Link href="/shop" className="text-gray-600 hover:text-yellow-700 text-lg font-light">
+              <Link href="/mens" className={`${pathName == "/mens" ? "text-yellow-600" : "text-gray-600"} text-lg font-light`}>
                 Mens
               </Link>
-              <Link href="/shop" className="text-gray-600 hover:text-yellow-700 text-lg font-light">
+              <Link href="/womens" className={`${pathName == "/womens" ? "text-yellow-600" : "text-gray-600"} text-lg font-light`}>
                 Womens
               </Link>
-              <Link href="/contact" className="text-gray-600 hover:text-yellow-700 text-lg font-light">
+
+              <Link href="/accessories" className={`${pathName == "/accessories" ? "text-yellow-600" : "text-gray-600"} text-lg font-light`}>
+                Accessories
+              </Link>
+
+              <Link href="/contact" className={`${pathName == "/contact" ? "text-yellow-600" : "text-gray-600"} text-lg font-light`}>
                 Contact Us
               </Link>
             </nav>
@@ -122,7 +127,7 @@ export default function Header() {
 
               {
                 isLogedIn ? (
-                  <Link href="/dashboard" className="text-gray-600 hover:text-yellow-700">
+                  <Link href="/dashboard/user" className="text-gray-600 hover:text-yellow-700">
                     <User size={26} />
                   </Link>
                 ) : (
@@ -153,12 +158,16 @@ export default function Header() {
               Shop
             </Link>
 
-            <Link onClick={() => setIsOpen(!isOpen)} href="/shop" className="text-gray-600 hover:text-yellow-700 text-lg font-light">
+            <Link onClick={() => setIsOpen(!isOpen)} href="/mens" className="text-gray-600 hover:text-yellow-700 text-lg font-light">
               Mens
             </Link>
 
-            <Link onClick={() => setIsOpen(!isOpen)} href="/shop" className="text-gray-600 hover:text-yellow-700 text-lg font-light">
+            <Link onClick={() => setIsOpen(!isOpen)} href="/womens" className="text-gray-600 hover:text-yellow-700 text-lg font-light">
               Womens
+            </Link>
+
+            <Link onClick={() => setIsOpen(!isOpen)} href="/accessories" className="text-gray-600 hover:text-yellow-700 text-lg font-light">
+              Accessories
             </Link>
 
 

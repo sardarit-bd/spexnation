@@ -1,7 +1,8 @@
 'use client';
 
 
-import { Code, FileText, Home, PackageSearch, Settings, Target, X } from 'lucide-react';
+import { Code, FileText, Home, PackageSearch, Puzzle, Target, User, X } from 'lucide-react';
+
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from 'next/navigation';
@@ -13,19 +14,20 @@ const Sidebar = ({ isOpen, onClose }) => {
 
 
     const menuItemsForAdmin = [
-        { icon: Home, label: 'Dashboard', href: '/dashboard' },
-        { icon: Settings, label: 'Users', href: '/dashboard/users' },
-        { icon: FileText, label: 'Orders', href: '/dashboard/orders' },
-        { icon: Target, label: 'Add Product', href: '/dashboard/addproduct' },
-        { icon: PackageSearch, label: 'All Products', href: '/dashboard/allproducts' },
-        { icon: Code, label: 'Coupon Code', href: '/dashboard/coupon' },
+        { icon: Home, label: 'Dashboard', href: '/dashboard/admin' },
+        { icon: User, label: 'Users', href: '/dashboard/admin/users' },
+        { icon: FileText, label: 'Orders', href: '/dashboard/admin/orders' },
+        { icon: Target, label: 'Add Product', href: '/dashboard/admin/addproduct' },
+        { icon: PackageSearch, label: 'All Products', href: '/dashboard/admin/allproducts' },
+        { icon: Puzzle, label: 'Add Accessories', href: '/dashboard/admin/addaccessories' },
+        { icon: Code, label: 'Coupon Code', href: '/dashboard/admin/coupon' },
         //{ icon: Settings, label: 'Settings', href: '/dashboard/settings' },
     ];
 
 
     const menuItemsForCustomer = [
-        { icon: Home, label: 'Dashboard', href: '/dashboard' },
-        { icon: FileText, label: 'My Orders', href: '/dashboard/myorders' },
+        { icon: Home, label: 'Dashboard', href: '/dashboard/user' },
+        { icon: FileText, label: 'My Orders', href: '/dashboard/user/myorders' },
     ];
 
 

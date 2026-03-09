@@ -160,16 +160,8 @@ export default function Checkout() {
 
 
     let gTotal = TotalCalculation();
-    let discount = gTotal * (couponDiscount / 100);
+    let discount = Math.round(gTotal * (couponDiscount / 100));
     let grandTotal = gTotal - discount;
-
-
-
-
-
-
-
-
 
 
 
@@ -216,6 +208,9 @@ export default function Checkout() {
 
         const res = await response.json();
 
+
+        console.log(res);
+
         if (res.success) {
             toast.success(res.message);
             setfullname('');
@@ -226,6 +221,7 @@ export default function Checkout() {
             setstate('');
             setzipcode('');
             setcountry('');
+            router.push(res?.url);
         } else {
             toast.error(res.message);
         }
@@ -233,17 +229,6 @@ export default function Checkout() {
         setIsLoading(false);
 
     }
-
-
-
-
-
-
-
-
-
-
-
 
 
 

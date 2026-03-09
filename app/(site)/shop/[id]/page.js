@@ -23,6 +23,7 @@ export default function ProductPage() {
     const [loading, setLoading] = useState(true);
     const [singleProducts, setsingleProducts] = useState([]);
     const [activeIndex, setactiveIndex] = useState(0);
+    const [selectedImage, setSelectedImage] = useState(0);
 
 
     const fetchProducts = async (id) => {
@@ -75,8 +76,8 @@ export default function ProductPage() {
 
             <Container>
                 <ProductBreadcrumb breadcrumbs={breadcrumbs} />
-                <ProductMainFeature product={singleProducts} activeIndex={activeIndex} setactiveIndex={setactiveIndex} />
-                <ProductTabs product={singleProducts} activeIndex={activeIndex} />
+                <ProductMainFeature product={singleProducts} activeIndex={activeIndex} setactiveIndex={setactiveIndex} selectedImage={selectedImage} setSelectedImage={setSelectedImage} />
+                <ProductTabs product={singleProducts} activeIndex={activeIndex} selectedImage={selectedImage} />
             </Container>
 
         </main>

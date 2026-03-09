@@ -26,7 +26,7 @@ export default function ProductPage() {
     const [searchLoading, setsearchLoading] = useState(false);
     const [fopen, setfOpen] = useState(false);
     const [selectedBrand, setslectedBrand] = useState([]);
-    const [selectedGender, setselectedGender] = useState([]);
+    const [selectedGender, setselectedGender] = useState(["Mens"]);
     const [selectedMatarial, setselectedMatarial] = useState([]);
     const [selectedPrice, setselectedPrice] = useState({ min: 10, max: 500 });
     const [selectedLenWidth, setselectedLenWidth] = useState({ min: 20, max: 50 });
@@ -144,6 +144,11 @@ export default function ProductPage() {
 
     useEffect(() => {
         handleSearchFunction();
+    }, [allProducts])
+
+
+    useEffect(() => {
+        handleSearchFunction();
     }, [selectedBrand, selectedGender, selectedMatarial, selectedPrice, selectedLenWidth, selectedBrideWidth])
 
 
@@ -183,8 +188,6 @@ export default function ProductPage() {
                         <ShopFilter fopen={fopen} setfOpen={setfOpen} selectedBrand={selectedBrand} setslectedBrand={setslectedBrand} selectedGender={selectedGender} setselectedGender={setselectedGender} selectedMatarial={selectedMatarial} setselectedMatarial={setselectedMatarial} selectedPrice={selectedPrice} setselectedPrice={setselectedPrice} selectedLenWidth={selectedLenWidth} setselectedLenWidth={setselectedLenWidth} selectedBrideWidth={selectedBrideWidth} setselectedBrideWidth={setselectedBrideWidth} handleClearFilter={handleClearFilter} filterLength={filteredProducts?.length} />
                     </div>
 
-
-
                     {
                         filteredProducts?.length > 0 ? (
                             <div className="lg:col-span-4 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-4 lg:gap-6">
@@ -201,8 +204,6 @@ export default function ProductPage() {
                             </div>
                         )
                     }
-
-
 
                 </div>
 

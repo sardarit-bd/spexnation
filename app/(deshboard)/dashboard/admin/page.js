@@ -1,8 +1,8 @@
 'use client'
 
 import { useEffect, useState } from "react";
-import Chart from "../../../components/Deshboard/Chart";
-import Loading from "../../../components/Loading";
+import Chart from "../../../../components/Deshboard/Chart";
+import Loading from "../../../../components/Loading";
 
 const DashboardPage = () => {
 

@@ -2,23 +2,12 @@
 
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import { useState } from 'react';
-import GellaryImageShow from "../components/GallaryImageShow";
 import defaultImage from "../public/defaultImage.png";
 
-export default function ProductGallery({ product, activeIndex }) {
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [showGallary, setShowGallary] = useState(false);
-  const [ImageLink, setImageLink] = useState(null)
+export default function ProductGallery({ product, activeIndex, selectedImage, setSelectedImage }) {
 
 
-
-  function hanldeGallaryShow(idx, thumb) {
-
-    setSelectedImage(idx);
-    setShowGallary(true);
-    setImageLink(thumb?.img);
-  }
+  console.log(product);
 
 
   return (
@@ -36,7 +25,7 @@ export default function ProductGallery({ product, activeIndex }) {
         <Image
           width={1000}
           height={1000}
-          src={product?.product_Images[activeIndex]?.img ? product?.product_Images[activeIndex]?.img : defaultImage}
+          src={product?.product_Images[activeIndex] ? product?.product_Images[activeIndex]?.img[selectedImage] : defaultImage}
           alt="Product"
           className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500"
         />
@@ -53,23 +42,14 @@ export default function ProductGallery({ product, activeIndex }) {
           softness: "Soft"
         }}
         className="flex gap-3 overflow-x-auto pb-8 pl-3 bg-white h-fit overflow-y-hidden">
-        {product?.product_Images?.map((thumb, idx) => (
+        {product?.product_Images?.[activeIndex]?.img?.map((thumb, idx) => (
           <button
             key={idx}
-            onMouseOver={() => hanldeGallaryShow(idx, thumb)}
-            onMouseOut={() => { setShowGallary(false); setSelectedImage(null) }}
+            onClick={() => { setSelectedImage(idx) }}
             className={`flex-shrink-0 w-20 h-20 bg-white rounded-lg overflow-hidden transition ${selectedImage === idx ? 'border-4 border-yellow-500' : 'border-2 border-gray-10'
               }`}
           >
-            <Image src={thumb?.img ? thumb?.img : defaultImage} width={1000} height={1000} alt={`View ${idx + 1}`} className="w-full h-full object-contain rounded-lg" />
-
-
-
-            {
-              showGallary && <div className="absolute bottom-32 right-10 z-50 ">
-                <GellaryImageShow img={ImageLink} />
-              </div>
-            }
+            <Image src={thumb ? thumb : defaultImage} width={1000} height={1000} alt={`View ${idx + 1}`} className="w-full h-full object-contain rounded-lg" />
           </button>
         ))}
 

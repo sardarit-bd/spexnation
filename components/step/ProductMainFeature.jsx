@@ -11,7 +11,7 @@ import Review from "./Review";
 import Transition from "./Transition";
 import VisionType from "./VissionType";
 
-const ProductMainFeature = ({ product, activeIndex, setactiveIndex }) => {
+const ProductMainFeature = ({ product, activeIndex, setactiveIndex, selectedImage, setSelectedImage }) => {
 
     const { step } = useStepStore();
 
@@ -22,7 +22,7 @@ const ProductMainFeature = ({ product, activeIndex, setactiveIndex }) => {
         <div className="grid grid-cols-1 md:grid-cols-7 gap-5 h-full">
             {/* Gallery */}
             <div className="md:col-span-3">
-                <ProductGallery product={product} activeIndex={activeIndex} />
+                <ProductGallery product={product} activeIndex={activeIndex} selectedImage={selectedImage} setSelectedImage={setSelectedImage} />
             </div>
 
             {/* Details */}

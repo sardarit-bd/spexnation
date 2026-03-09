@@ -182,6 +182,9 @@ export default function CartPage() {
 
 
 
+    console.log(hasData);
+
+
 
 
 
@@ -265,8 +268,8 @@ export default function CartPage() {
                             <div className="w-20 md:w-40 shrink-0">
                                 <Image
                                     src={item.ProductDetails?.product_Images[item?.selectedProductIndex
-                                    ]?.img ? item.ProductDetails?.product_Images[item?.selectedProductIndex
-                                    ]?.img : defaultImage}
+                                    ] ? item.ProductDetails?.product_Images[item?.selectedProductIndex
+                                    ]?.img[0] : defaultImage}
                                     alt={item.LenseName}
                                     width={160}
                                     height={100}

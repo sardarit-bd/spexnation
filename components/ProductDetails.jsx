@@ -89,6 +89,7 @@ export default function ProductDetails({ product, activeIndex, setactiveIndex })
 
 
 
+
   return (
     <motion.div
       initial={{ opacity: 0, x: -50 }}
@@ -128,8 +129,8 @@ export default function ProductDetails({ product, activeIndex, setactiveIndex })
         {
           product?.product_Images?.map((cl, index) => {
             return (
-              <div key={index} onClick={() => setactiveIndex(index)} className={`p-0.5 h-fit w-fit rounded-full cursor-pointer  ${activeIndex == index ? "border-2 border-yellow-500" : ""}`}>
-                <div style={{ backgroundColor: cl?.color?.[0]?.value }} key={index} className="w-8 h-8 rounded-full">
+              <div key={index} onClick={() => setactiveIndex(index)} className={`p-0.5 h-fit w-fit rounded-full cursor-pointer  ${activeIndex == index ? "border-2 border-yellow-500" : "border-gray-200"}`}>
+                <div style={{ backgroundColor: cl?.color?.[0]?.value }} key={index} className="w-8 h-8 rounded-full border">
 
                 </div>
               </div>
