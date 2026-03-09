@@ -202,7 +202,10 @@ const AddproductPage = () => {
     // handle gallery image
     const handleGallery = async (e) => {
 
-        if (gellary?.length >= 5) {
+        const currentImageLength = gellary.length;
+
+
+        if (currentImageLength === 5) {
             toast.error("You can add only 5 images");
             return;
         }
@@ -226,6 +229,67 @@ const AddproductPage = () => {
             }
         ]);
     }
+
+
+
+
+    // handle single image added
+    const handlesingelImageAddedGallery = async (e, index) => {
+
+
+        e.preventDefault();
+
+        const currentImageLength = gellary[index]?.img?.length;
+
+
+        if (currentImageLength === 5) {
+            toast.error("You can add only 5 images");
+            return;
+        }
+
+
+        const files = e.target.files;
+
+        const base64Images = [];
+
+
+        for (const file of files) {
+            const base64 = await fileToBase64(file);
+            base64Images.push(base64);
+        }
+
+
+        //find the targeted list and then update
+        const updatedData = gellary?.map((item, i) => {
+            if (i == index) {
+                const color = item?.color;
+                const img = item?.img;
+                const updateImageBase = [...img, ...base64Images];
+
+                if (updateImageBase.length > 5) {
+                    toast.error("You can add only 5 images");
+                    return {
+                        color: color,
+                        img: [...img]
+                    };
+                }
+
+                return {
+                    color: color,
+                    img: updateImageBase
+                };
+
+            }
+            return item;
+        })
+
+        setgellery(updatedData);
+
+    }
+
+
+
+
 
 
     // remove gallery image
@@ -473,7 +537,7 @@ const AddproductPage = () => {
                                     <div key={index} className="flex flex-col items-center gap-2 border border-gray-200 p-1 relative ">
                                         <div className="w-full bg-gray-100">
 
-                                            <div className="w-full flex items-center gap-1">
+                                            <div className="w-full flex items-center gap-1 flex-wrap">
                                                 {
                                                     item?.img?.map((im, indx) => {
                                                         return (
@@ -489,6 +553,19 @@ const AddproductPage = () => {
                                                         )
                                                     })
                                                 }
+
+
+                                                <div>
+                                                    <div className="h-[60px] w-[60px] bg-gray-50 border border-dashed border-gray-300 ml-5">
+                                                        <input onChange={(e) => { handlesingelImageAddedGallery(e, index) }} accept=".png,.jpg,.jpeg,.webp" id={`file${index}`} type="file" multiple className="hidden" />
+                                                        <label htmlFor={`file${index}`}>
+                                                            <div className="flex items-center gap-2 justify-center flex-col cursor-pointer w-full h-full">
+                                                                <GoPlusCircle className="text-5xl text-gray-300" />
+                                                            </div>
+                                                        </label>
+                                                    </div>
+                                                </div>
+
 
                                             </div>
 
@@ -519,9 +596,9 @@ const AddproductPage = () => {
                                 ))
                             }
 
-                            <div className="h-[60px] w-[60px] bg-gray-100">
-                                <input onChange={(e) => { handleGallery(e) }} id="file2" type="file" multiple className="hidden" />
-                                <label htmlFor="file2">
+                            <div className="h-[60px] w-[60px] bg-gray-100 border border-dashed border-gray-300">
+                                <input onChange={(e) => { handleGallery(e) }} accept=".png,.jpg,.jpeg,.webp" id="nfile2" type="file" multiple className="hidden" />
+                                <label htmlFor="nfile2">
                                     <div className="flex items-center gap-2 justify-center flex-col cursor-pointer w-full h-full">
                                         <GoPlusCircle className="text-5xl text-gray-300" />
                                     </div>

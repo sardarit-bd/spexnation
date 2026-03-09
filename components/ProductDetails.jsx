@@ -1,7 +1,6 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Star } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import Loading from "../components/Loading"
 import useLenseStore from '../store/useLenseStore'
@@ -110,7 +109,7 @@ export default function ProductDetails({ product, activeIndex, setactiveIndex })
 
 
 
-      <div className="flex items-center gap-1">
+      {/* <div className="flex items-center gap-1">
         {[...Array(5)].map((_, i) => (
           <Star
             key={i}
@@ -120,7 +119,7 @@ export default function ProductDetails({ product, activeIndex, setactiveIndex })
               }`}
           />
         ))}
-      </div>
+      </div> */}
 
 
 

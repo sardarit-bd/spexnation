@@ -21,14 +21,13 @@ export default function DashboardProductCard({ item }) {
 
 
 
-
     return (
         <Link href={`/dashboard/admin/allproducts/${item?._id}`}>
             <div className="w-full bg-white rounded-lg border border-gray-200 overflow-hidden hover:shadow-md transition-all duration-300 group">
                 {/* Image Container */}
                 <div className="relative overflow-hidden bg-white">
                     <Image
-                        src={item?.product_Images[0]?.img}
+                        src={item?.product_Images[0]?.img?.[0]}
                         alt={item?.ProductTitle}
                         width={1000}
                         height={1000}
