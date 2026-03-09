@@ -1,16 +1,13 @@
-export const dynamic = "force-dynamic";
-
 'use client'
 
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
-export default function SuccessPage({ searchParams }) {
+export default function SuccessPage() {
+
     const [session, setSession] = useState(null);
     const searchParams = useSearchParams();
     const sessionId = searchParams.get("session_id");
-
-    console.log(sessionId);
 
     useEffect(() => {
         if (!sessionId) return;
@@ -19,7 +16,8 @@ export default function SuccessPage({ searchParams }) {
             try {
                 const res = await fetch(
                     `${process.env.NEXT_PUBLIC_BASE_URL}/stripe-session?session_id=${sessionId}`,
-                    { cache: "no-store" });
+                    { cache: "no-store" }
+                );
 
                 const response = await res.json();
                 setSession(response);
@@ -31,25 +29,32 @@ export default function SuccessPage({ searchParams }) {
 
         fetchData();
 
-
     }, [sessionId]);
 
+    if (!sessionId)
+        return <p className="min-h-[50vh] text-center mt-20 text-red-500">No session ID provided.</p>;
 
-    if (!sessionId) return <p className="min-h-[50vh] text-center mt-20 text-red-500">No session ID provided.</p>;
-    if (!session) return <p className="min-h-[50vh] text-center mt-20">Loading your order...</p>;
-
+    if (!session)
+        return <p className="min-h-[50vh] text-center mt-20">Loading your order...</p>;
 
     return (
         <div className="h-fit py-20 bg-gray-100 flex items-center justify-center p-6">
             <div className="bg-white shadow-lg p-8 max-w-lg w-full text-center">
-                <h1 className="text-3xl font-bold text-yellow-600 mb-4">Payment Successful! </h1>
-                <p className="text-gray-700 mb-6">Thank you for your order.</p>
+
+                <h1 className="text-3xl font-bold text-yellow-600 mb-4">
+                    Payment Successful!
+                </h1>
+
+                <p className="text-gray-700 mb-6">
+                    Thank you for your order.
+                </p>
 
                 <div className="mb-4 flex gap-2 items-center justify-center">
                     <p className="text-gray-600 font-medium">Order ID:</p>
-                    <p className="text-gray-800/70">{session.client_reference_id || "N/A"}</p>
+                    <p className="text-gray-800/70">
+                        {session.client_reference_id || "N/A"}
+                    </p>
                 </div>
-
 
                 <div className="mt-8 text-center">
                     <a
@@ -59,6 +64,7 @@ export default function SuccessPage({ searchParams }) {
                         Go to Dashboard to view your order
                     </a>
                 </div>
+
             </div>
         </div>
     );
