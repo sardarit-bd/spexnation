@@ -217,7 +217,7 @@ const OrderPage = () => {
                                             <FaEdit className="cursor-pointer" />
 
 
-                                            <div className="hidden group-hover:block absolute right-0 z-50 top-3 bg-white h-fit w-[200px] border border-gray-200 shadow-md p-6">
+                                            <div className="hidden group-hover:block absolute right-0 z-50 top-0 bg-white h-fit w-[200px] border border-gray-200 shadow-md p-6 translate-y-[-100%]">
 
                                                 <select onChange={(e) => setupdateStatus(e.target.value)} className="border border-gray-200 px-3 py-2 text-sm text-gray-400 cursor-pointer focus:outline-none w-full mb-3">
 

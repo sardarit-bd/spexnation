@@ -15,19 +15,6 @@ export default function ProductCard({ item }) {
 
     const router = useRouter();
 
-    const product = {
-        name: 'Premium Wireless Headphones',
-        price: 299.99,
-        originalPrice: 399.99,
-        rating: 4.5,
-        reviews: 128,
-        image: 'https://spexnation.co.uk/wp-content/uploads/2026/01/V4671-C60.jpg',
-        badge: 'Best Seller',
-        inStock: true,
-    };
-
-
-
 
 
     // handle view function is here
@@ -117,7 +104,6 @@ export default function ProductCard({ item }) {
                 >
                     <button
                         onClick={(e) => { handleView(e, item) }}
-                        disabled={!product.inStock}
                         className="pBg text-white font-light px-6 py-3 transition flex items-center justify-center gap-2 w-full"
                     >
 

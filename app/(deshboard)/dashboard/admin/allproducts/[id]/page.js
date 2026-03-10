@@ -136,6 +136,11 @@ export default function ProductSinglePage() {
 
     const gellaryImageUpder = async (res) => {
 
+
+
+        const galleryData = [];
+
+
         for (const item of res) {
             const color = item?.color;
             const img = item?.img || [];
@@ -143,11 +148,19 @@ export default function ProductSinglePage() {
             // Wait for all images to convert
             const updateImageBase = await convertUrlsToBase64(img);
 
+            galleryData.push({
+                color,
+                img: updateImageBase
+            });
+
             // Update state after images are ready
-            setgellery(prev => [...prev, { color, img: updateImageBase }]);
+            //setgellery(prev => [...prev, { color, img: updateImageBase }]);
         }
 
+        setgellery(galleryData);
+
     }
+
 
 
 
@@ -178,8 +191,10 @@ export default function ProductSinglePage() {
             setlensHeight(res?.data?.lensHeight);
             setBridgeWidth(res?.data?.BridgeWidth);
             setArmLength(res?.data?.ArmLength);
+            setgellery([]);
             gellaryImageUpder(res?.data?.product_Images);
             setdescription(res?.data?.product_Discription);
+            setallImageArray([]);
             res?.data?.product_Images?.map((imgs, i) =>
                 imgs?.img?.map((img, ind) => (
                     setallImageArray(prev => [...prev, img])
@@ -200,8 +215,6 @@ export default function ProductSinglePage() {
         settoken(tken);
         fetchProducts(id);
     }, [id])
-
-
 
 
 
