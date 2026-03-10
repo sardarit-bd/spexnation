@@ -109,7 +109,7 @@ const Header = ({ onMenuClick }) => {
 
                     <div className="lg:hidden">
                         <div className="h-[40px] w-48">
-                            <Link className="h-full" href={'/'}>
+                            <Link className="h-full" href="/">
                                 <Image src="/logo.png" alt="Spex Nation" className=" h-full" width="1000" height="1000" />
                             </Link>
                         </div>

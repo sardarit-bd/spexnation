@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 import Loading from "../../../../components/Loading";
+import getTookn from "../../../../lib/getTookn";
+import verifyJWT from "../../../../lib/verifyJWT";
 
 const DashboardPage = () => {
 
@@ -9,16 +11,21 @@ const DashboardPage = () => {
 
     const [loading, setLoading] = useState(false);
     const [dashbaord, setdashbaord] = useState([]);
+    const [id, setid] = useState('');
 
 
-    const fetchDeshbaordData = async () => {
+
+    const fetchMyDashboardInfo = async (myID, tokens) => {
+
+
         setLoading(true);
         try {
             // Make API call to get all the product
-            const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/deshboard`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/deshboard/${myID}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
+                    "authorization": `Bearer ${tokens}`,
                 }
             });
 
@@ -26,15 +33,31 @@ const DashboardPage = () => {
             setdashbaord(res?.data);
             setLoading(false);
         } catch (error) {
-            console.error('Error fetching products:', error);
+            console.error('Error fetching orders:', error);
             setLoading(false);
         }
+
     };
 
 
+
+
     useEffect(() => {
-        fetchDeshbaordData();
+
+        const tokens = getTookn();
+
+        const loadUserandFetchData = async (tokens) => {
+            const decoded = await verifyJWT(tokens);
+            const myID = decoded?.id;
+            fetchMyDashboardInfo(myID, tokens);
+        }
+
+        loadUserandFetchData(tokens);
+
+
     }, [])
+
+
 
 
 
@@ -64,18 +87,18 @@ const DashboardPage = () => {
 
                 <div className="bg-white p-4 border flex items-center justify-center flex-col border-gray-200 h-[250px]">
                     <p className="text-gray-500 text-md">My Total Orders</p>
-                    <h2 className="text-3xl font-bold mt-2">{dashbaord?.totalOrder}</h2>
+                    <h2 className="text-3xl font-bold mt-2">{dashbaord?.myTotalOrder}</h2>
                 </div>
 
                 <div className="bg-white p-4 border border-gray-200 h-[250px] flex items-center justify-center flex-col">
                     <p className="text-gray-500 text-md">My Pending Orders</p>
-                    <h2 className="text-3xl font-bold mt-2">{dashbaord?.totalPending}</h2>
+                    <h2 className="text-3xl font-bold mt-2">{dashbaord?.myPendingOrder}</h2>
                 </div>
 
 
                 <div className="bg-white p-4 border border-gray-200 h-[250px] flex items-center justify-center flex-col">
                     <p className="text-gray-500 text-md">My Total Expenses</p>
-                    <h2 className="text-3xl font-bold mt-2">{dashbaord?.totalPending}</h2>
+                    <h2 className="text-3xl font-bold mt-2">{dashbaord?.Mytotalexpenses}</h2>
                 </div>
 
             </div>
