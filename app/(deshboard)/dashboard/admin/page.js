@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import Chart from "../../../../components/Deshboard/Chart";
 import Loading from "../../../../components/Loading";
+import getTookn from "../../../../lib/getTookn";
+import verifyJWT from "../../../../lib/verifyJWT";
 
 const DashboardPage = () => {
 
@@ -12,7 +14,7 @@ const DashboardPage = () => {
     const [dashbaord, setdashbaord] = useState([]);
 
 
-    const fetchDeshbaordData = async () => {
+    const fetchDeshbaordData = async (tokens) => {
         setLoading(true);
         try {
             // Make API call to get all the product
@@ -20,6 +22,7 @@ const DashboardPage = () => {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
+                    "authorization": `Bearer ${tokens}`,
                 }
             });
 
@@ -34,7 +37,16 @@ const DashboardPage = () => {
 
 
     useEffect(() => {
-        fetchDeshbaordData();
+
+
+        const tokens = getTookn();
+
+        const loadUserandFetchData = async (tokens) => {
+            const decoded = await verifyJWT(tokens);
+            fetchDeshbaordData(tokens);
+        }
+
+        loadUserandFetchData(tokens);
     }, [])
 
 
