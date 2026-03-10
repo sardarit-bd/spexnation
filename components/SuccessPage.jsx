@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import Loading from "./Loading";
 
 export default function SuccessPage({ sessionId }) {
 
@@ -32,8 +33,19 @@ export default function SuccessPage({ sessionId }) {
     if (!sessionId)
         return <p className="min-h-[50vh] text-center mt-20 text-red-500">No session ID provided.</p>;
 
-    if (!session)
-        return <p className="min-h-[50vh] text-center mt-20">Loading your order...</p>;
+    if (!session) {
+        return (
+            <div>
+                <div className="min-h-[50vh] flex flex-col gap-3 items-center justify-center">
+                    <div className="bg-yellow-700 px-4 py-2 rounded-md w-fit h-fit">
+                        <Loading />
+                    </div>
+                    <p>Loading your order...</p>
+                </div>
+            </div>
+        )
+    }
+
 
     return (
         <div className="h-fit py-20 bg-gray-100 flex items-center justify-center p-6">

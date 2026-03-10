@@ -50,6 +50,7 @@ export default function Checkout() {
 
 
 
+
     useEffect(() => {
 
 
@@ -194,6 +195,9 @@ export default function Checkout() {
             zipcode,
             country,
             hasData,
+            iscoupon: isApplyedShow,
+            coupondiscount: couponDiscount,
+            discountPrice: discount,
             grandTotal
         };
 
@@ -233,6 +237,7 @@ export default function Checkout() {
 
 
 
+    console.log(hasData);
 
 
 
@@ -384,6 +389,22 @@ export default function Checkout() {
                         </div>
 
                         <div className="mt-4">
+
+
+                            {isApplyedShow && (
+                                <div>
+                                    <div className="text-gray-500 flex justify-between font-semibold text-md">
+                                        <span>Subtotal</span>
+                                        <span>£{gTotal}</span>
+                                    </div>
+                                    <div className="text-gray-500 flex justify-between font-semibold text-md">
+                                        <span>Coupon Discount ({couponDiscount}%)</span>
+                                        <span>£{discount}</span>
+                                    </div>
+                                </div>
+                            )}
+
+
                             <hr />
                             <div className="flex justify-between font-semibold text-lg mt-4">
                                 <span>Order Total</span>

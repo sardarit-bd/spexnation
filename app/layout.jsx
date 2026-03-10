@@ -9,8 +9,8 @@ const arimo = Arimo({
 })
 
 export const metadata = {
-  title: 'Glasses Direct - Designer Frames & Prescription Glasses Online',
-  description: 'Shop affordable designer glasses, sunglasses and prescription frames online. Free home trial, next day delivery and expert advice.',
+  title: 'Spex Nation',
+  description: 'Explore our premium collection of optical glasses crafted for clear vision, all-day comfort, and modern style. At Spex Nation, we focus on high-quality prescription glasses designed to suit everyday wear, whether you prefer clean, minimal frames or bold contemporary looks. Our men’s and women’s optical eyewear combines durable materials with precise lens fitting, giving you stylish vision correction you can trust — with sunglasses available as a complementary option.',
 }
 
 export default function RootLayout({ children }) {
